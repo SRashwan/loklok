@@ -8,7 +8,8 @@ summary: "Dedication - Acknowledgments - ListofTables - ListofFigures - ListofAb
 cover:
   alt: "Some Uses For Olive Oil"
   relative: false
-
+  
+showToc: true
 ---
 
 ---
