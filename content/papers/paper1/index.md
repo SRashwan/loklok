@@ -15,7 +15,7 @@ cover:
 
 ##### Download
 
-- [Cover Page](../../../cover.pdf)
+- [Cover Page](cover.pdf)
 
 ---
 
