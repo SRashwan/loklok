@@ -151,7 +151,7 @@ site.Params.assets.msapplication_TileColor | default "#2e2e33" }}"> {{- /* RSS
 {{ if or .Page.Params.math .Site.Params.math }} {{- partial "math.html" .}} {{
 end }}
 
-<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="manifest" href="/loklok/manifest.webmanifest" />
 
 <meta name="mobile-web-app-capable" content="yes" />
 
@@ -164,6 +164,6 @@ end }}
 
 <script>
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js");
+    navigator.serviceWorker.register("/loklok/sw.js");
   }
 </script>
