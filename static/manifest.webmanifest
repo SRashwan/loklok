@@ -28,8 +28,8 @@
       "purpose": "maskable"
     }
   ],
-  "start_url": "/?utm_source=pwa",
-  "scope": "/",
+  "start_url": "/loklok/?utm_source=pwa",
+  "scope": "/loklok/",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "display": "standalone",
