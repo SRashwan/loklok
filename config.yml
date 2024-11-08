@@ -69,8 +69,8 @@ params:
         weight: 6
 
   socialIcons:
-    - name: CV
-      url: cv.pdf
+    - name: Cover
+      url: cover.pdf
     - name: Email
       url: mailto:sherif.rashwan@san3atech.com
 
