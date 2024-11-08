@@ -1,0 +1,90 @@
+baseURL: "/"
+title: LOKLOK Social Media Radio Platform
+theme: PaperMod
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+
+taxonomies:
+  tag: tags
+
+menu:
+  main:
+    - name: Thesis
+      url: papers/
+      weight: 2
+    - name: Planning
+      url: courses/
+      weight: 5
+
+
+params:
+  description: "I'm a Teaching Assistant in the Radio and Television Department of Mass Communication at Ahram Canadian University. Currently, I'm working on my Masters' Thesis on Social Media Radio Innovation."
+  author: LOKLOK Social Media Radio Platform
+  # googleAnalyticsID: "G-XXXXX"
+  DateFormat: "November 2024"
+  defaultTheme: light
+  hideFooter: false
+  disableThemeToggle: true
+  ShowShareButtons: false
+  ShowReadingTime: false
+  disableSpecial1stPost: true
+  disableAnchoredHeadings: true
+  ShowPostNavLinks: false
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: true
+  ShowAllPagesInArchive: false
+  MainSections: ["books", "courses", "papers", "data"]
+  ShowToc: false
+  disableScrollToTop: true
+  TocOpen: true
+  ShowWordCount: false
+  UseHugoToc: true
+  comments: false
+  math: true
+  profileMode:
+    enabled: true
+    title: Sherif Rashwan
+    subtitle: "I'm a Teaching Assistant in the Radio and Television Department of Mass Communication at Ahram Canadian University. Currently, I'm working on my Masters' Thesis on Social Media Radio Innovation.<br><br> <h2><b>Supervisors</b></h2> <br> <b>Dr. Engi Abou Elezz</b> - Associate Professor, Radio and TV Department - Faculty of Mass Communication, Beni Suef University
+<br> <b>Dr. Mostafa ElBanna</b> - Assistant Professor, Visual Communication Department - Faculty of Mass Communication, Ahram Canadian University
+"
+    imageUrl: "picture.jpeg"
+    imageWidth: 160
+    imageHeight: 160
+    buttons:
+      - name: Thesis
+        url: papers/
+      - name: Planning
+        url: courses/
+        weight: 5
+      - name: Preview Thesis (PDF)
+        url: thesis.pdf
+        weight: 6
+
+  socialIcons:
+    - name: CV
+      url: cv.pdf
+    - name: Email
+      url: mailto:sherif.rashwan@san3atech.com
+
+  assets:
+    disableScrollBarStyle: true
+  cover:
+    hiddenInList: false
+    hiddenInSingle: true
+  label:
+    text: "LOKLOK Social Media Radio Platform"
+    icon: favicon.ico
+    iconHeight: 18
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    guessSyntax: true
+    style: autumn
+  tableOfContents:
+    endLevel: 2
+    ordered: false
+    startLevel: 2

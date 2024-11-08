@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Academia on LOKLOK Social Media Radio Platform</title>
+    <link>//localhost:1313/tags/academia/</link>
+    <description>Recent content in Academia on LOKLOK Social Media Radio Platform</description>
+    <generator>Hugo -- 0.138.0</generator>
+    <language>en</language>
+    <atom:link href="//localhost:1313/tags/academia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Chapter Two - Research Framework</title>
+      <link>//localhost:1313/papers/paper3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/papers/paper3/</guid>
+      <description>This paper describes the inner hedgehog, a psychological condition widespread in academia. Published in the Journal of Socio-Experimental Psychology, 2021.</description>
+    </item>
+  </channel>
+</rss>
