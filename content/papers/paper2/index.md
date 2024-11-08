@@ -14,9 +14,7 @@ summary: "This paper studies the pulmonary efficiency of sausage dogs through se
 cover:
   alt: "Dimensions of a sausage dog"
   relative: false
-editPost:
-  URL: "https://github.com/pmichaillat/hugo-website"
-  Text: "Journal of Canine Science"
+showToc: true
 ---
 
 ---
