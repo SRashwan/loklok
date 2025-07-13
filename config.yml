@@ -26,7 +26,7 @@ params:
   author: LOKLOK Social Media Radio Platform
   # googleAnalyticsID: "G-XXXXX"
   DateFormat: "November 2024"
-  defaultTheme: dark
+  defaultTheme: light
   hideFooter: false
   disableThemeToggle: true
   ShowShareButtons: false
