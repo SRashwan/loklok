@@ -49,8 +49,11 @@ params:
   profileMode:
     enabled: true
     title: Sherif Rashwan
-    subtitle: "I'm a Teaching Assistant in the Radio and Television Department of Mass Communication at Ahram Canadian University. Currently, I'm working on my Masters' Thesis on Social Media Radio Innovation.<br><br> <h2><b>Supervisors</b></h2> <br> <b>Dr. Engi Abou Elezz</b> - Associate Professor, Radio and TV Department - Faculty of Mass Communication, Beni Suef University
-<br> <b>Dr. Mostafa ElBanna</b> - Assistant Professor, Visual Communication Department - Faculty of Mass Communication, Ahram Canadian University
+    subtitle: "I'm a Teaching Assistant in the Radio and Television Department of Mass Communication at Ahram Canadian University. Currently, I'm working on my Masters' Thesis on Social Media Radio Innovation.<br><br> <h2><b>Supervisors</b></h2> 
+		<br>         <img draggable="false" src="//localhost:1313/engi.jpg" alt="profile image" title=""
+            height="140" width="140" /> <b>Dr. Engi Aboul-Ezz</b> - Associate Professor, Radio and TV Department - Faculty of Mass Communication, Beni Suef University 
+		<br>         <img draggable="false" src="//localhost:1313/banna.jpg" alt="profile image" title=""
+            height="140" width="140" /> <b>Dr. Mostafa ElBanna</b> - Assistant Professor, Visual Communication Department - Faculty of Mass Communication, Ahram Canadian University 
 <br><br><img src='qr-code.png' style='border-radius: 10% !important;width:30%;height:30%;'></img>"
     imageUrl: "picture.jpeg"
     imageWidth: 160
