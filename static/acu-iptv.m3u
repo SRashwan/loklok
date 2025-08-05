@@ -1,5 +1,11 @@
 #EXTM3U
+#EXTINF:-1,ACU - Live Stream
+http://capable-session-tolerance-bow.trycloudflare.com/hls/stream.m3u8
 
-#EXTINF:-1, "ACU Live Stream"
-https://capable-session-tolerance-bow.trycloudflare.com/hls/stream.m3u8
+#EXTINF:-1,ACU - Live Stream
+http://capable-session-tolerance-bow.trycloudflare.com/hls/stream.m3u8
+
+#EXTINF:-1,ACU - Live Stream
+http://capable-session-tolerance-bow.trycloudflare.com/hls/stream.m3u8
+
 
