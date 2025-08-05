@@ -1,11 +1,6 @@
 #EXTM3U
-#EXTINF:-1,ACU - Live Stream
+#EXTINF:-1 tvg-name="ACU - Live Stream" tvg-logo="https://i.imgur.com/rL2v9pM.png" tvg-id="Kanali7.al" group-title="Egypt",Kanali 7 Ⓢ
 http://capable-session-tolerance-bow.trycloudflare.com/hls/stream.m3u8
 
-#EXTINF:-1,ACU - Live Stream
-http://capable-session-tolerance-bow.trycloudflare.com/hls/stream.m3u8
-
-#EXTINF:-1,ACU - Live Stream
-http://capable-session-tolerance-bow.trycloudflare.com/hls/stream.m3u8
 
 
