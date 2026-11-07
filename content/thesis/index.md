@@ -26,7 +26,7 @@ November 2026
 
 - [**Read the full thesis page by page**](read/) ? all 358 pages in the browser.
 - [Complete thesis PDF](thesis_final.pdf) - 358 pages, 41/41 package checks passed.
-- [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) - 21 pages, English first, Arabic second.
+- [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) - 20 pages, English first, Arabic second.
 - [English summary](Supervisor_Summary_EN.pdf)
 - [Arabic summary](Supervisor_Summary_AR.pdf)
 - [Thesis code and notebooks](downloads/loklok_code.zip)
@@ -325,4 +325,5 @@ Rashwan, S. M. A. (2026). *The Social Media Radio Innovation and Its Impact on U
 ## Integrity note
 
 The measured N=52 matrix is never altered to improve significance. Simulated results are never presented as measured human effects. The synthetic NMLS profile is a measurement diagnostic, not human media literacy. The Hamiltonian is a formal diagnostic, not a physical law. The BRS is a proposed metric, not a validated consequential ranking instrument.
+
 
