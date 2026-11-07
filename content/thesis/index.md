@@ -25,7 +25,7 @@ November 2026
 ## Read the full thesis
 
 - [**Read the full thesis page by page**](read/) ? all 359 pages in the browser.
-- [Complete thesis PDF](thesis_final.pdf) - 359 pages, 41/41 package checks passed.
+- [Complete thesis PDF](thesis_final.pdf) - 359 pages, 42/42 package checks passed.
 - [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) - 20 pages, English first, Arabic second.
 - [English summary](Supervisor_Summary_EN.pdf)
 - [Arabic summary](Supervisor_Summary_AR.pdf)
@@ -222,7 +222,7 @@ The defensible conclusion is that architecture, audience judgment, and measureme
    `python 02_code/pipeline/generate_figures.py --root .`
 5. Optional R checks: `Rscript 02_code/R/01_measured_wave.R`, `Rscript 02_code/R/02_cfa_invariance.R`, `Rscript 02_code/R/03_bayes_crosscheck.R`.
 6. Compile the thesis with pdfLaTeX in three passes.
-7. Run `python 07_validation/validate_package.py` and confirm 41/41 checks.
+7. Run `python 07_validation/validate_package.py` and confirm 42/42 checks.
 
 ### 8.3 Planning logic
 
@@ -325,6 +325,7 @@ Rashwan, S. M. A. (2026). *The Social Media Radio Innovation and Its Impact on U
 ## Integrity note
 
 The measured N=52 matrix is never altered to improve significance. Simulated results are never presented as measured human effects. The synthetic NMLS profile is a measurement diagnostic, not human media literacy. The Hamiltonian is a formal diagnostic, not a physical law. The BRS is a proposed metric, not a validated consequential ranking instrument.
+
 
 
 
