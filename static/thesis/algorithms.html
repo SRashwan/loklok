@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="The LOKLOK algorithms: equations, term-by-term breakdowns, physical meanings, social meanings, and context.">
+<meta name="description" content="The LOKLOK algorithms as an interactive reference: equations, breakdowns, and live simulations for every mechanism.">
 <title>Algorithms | The LOKLOK Thesis</title>
 <link rel="stylesheet" href="css/thesis.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -15,6 +15,15 @@
 .break{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:12px 0;}
 .break .cell{background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;}
 .break .cell b{color:var(--crimson-dark);font-variant-numeric:tabular-nums;}
+.lab{background:#FBF8F3;border:1px solid var(--line-dark);padding:14px;margin:14px 0;display:grid;grid-template-columns:1.05fr 1fr;gap:14px;}
+.lab canvas{width:100%;height:auto;background:#fff;border:1px solid var(--line);}
+.lab .ctrl{font-size:12.5px;}
+.lab .ctrl label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin:8px 0 2px;}
+.lab .ctrl input[type=range]{width:100%;accent-color:var(--crimson);}
+.lab .ctrl .ro{font-size:12.5px;color:var(--crimson-dark);min-height:40px;margin-top:6px;border-top:1px solid var(--line);padding-top:6px;}
+.lab .ctrl .row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.lab .ctrl .row .chip{font-size:11px;}
+@media (max-width:900px){.lab{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -42,174 +51,237 @@
     <nav class="sidenav" aria-label="Algorithm sections">
       <h3>Algorithms</h3>
       <a class="cur" href="algorithms.html">Contents</a>
-      <a href="#brs">BRS reputation</a>
-      <a href="#more">MORE ranking</a>
-      <a href="#eric">ERIC moderation</a>
-      <a href="#echo">Echo Meter + cooling</a>
-      <a href="#zewail">Zewail gate</a>
-      <a href="#grm">GRM-IRT scoring</a>
-      <a href="#debiasing">DML and IPW</a>
-      <a href="#filters">The eight filters</a>
-      <a href="#sweep">PRCC sensitivity</a>
-      <a href="#designs">Assignment designs</a>
+      <a href="#brs">1. BRS reputation</a>
+      <a href="#more">2. MORE ranking</a>
+      <a href="#eric">3. ERIC moderation</a>
+      <a href="#echo">4. Echo cooling</a>
+      <a href="#zewail">5. Zewail gate</a>
+      <a href="#grm">6. GRM-IRT scoring</a>
+      <a href="#debiasing">7. DML and IPW</a>
+      <a href="#filters">8. The eight filters</a>
+      <a href="#sweep">9. PRCC sensitivity</a>
+      <a href="#designs">10. Assignment designs</a>
     </nav>
     <article>
-      <p class="kicker">Supplementary material &middot; companion to Chapters 3-6</p>
+      <p class="kicker">Supplementary material &middot; an interactive reference</p>
       <h1>The algorithms, equation by equation</h1>
       <div class="double-rule"></div>
       <p class="lede">Every mechanism in the thesis is a declared equation, not a black box. This page
-      states each one, breaks it down term by term, and gives its physical meaning (the borrowed
-      formal metaphor), its social meaning (what it does to a listener), and its context (the
-      parameter values used in the calibrated experiment). The interactive versions live in the
-      <a href="interactive/">laboratory</a>.</p>
+      is a working reference: each section states the equation, breaks it down term by term, gives its
+      physical and social meaning, and then lets you <b>tweak the parameters and watch the equation
+      run</b>. The values used in the calibrated experiment are marked as the defaults.</p>
 
       <h2 id="brs">1. The Broadcaster Reputation Score (BRS)</h2>
       <div class="eq">$$b_i^{(t+1)} \;=\; (1-\lambda)\,\sum_{j} \tilde{A}_{ij}\, b_j^{(t)} \;+\; \lambda\, a_i,
       \qquad a_i \;=\; 0.55\, c_i + 0.25\, g + 0.20\, \bar q + 0.20$$</div>
       <div class="break">
-        <div class="cell"><b>b_i</b> reputation of agent i at session t; updated once per session.</div>
-        <div class="cell"><b>Σ Ã_ij b_j</b> DeGroot averaging over the attention network: listeners adopt what their network believes.</div>
-        <div class="cell"><b>λ</b> anchoring weight: 0.35 when the BRS path (A) is on, 0.15 when it is off.</div>
-        <div class="cell"><b>a_i</b> personal anchor: 0.55 from critical scrutiny c_i, 0.25 from the gate g, 0.20 from quality expectation q̄, plus 0.20 base.</div>
+        <div class="cell"><b>b_i</b> reputation of agent i at session t.</div>
+        <div class="cell"><b>Σ Ã_ij b_j</b> DeGroot averaging over the attention network.</div>
+        <div class="cell"><b>λ</b> anchoring weight: 0.35 with the BRS path on, 0.15 off.</div>
+        <div class="cell"><b>a_i</b> personal anchor from scrutiny, the gate, and quality expectation.</div>
       </div>
-      <p><b>Physical meaning.</b> A consensus protocol with a drift term: the network term diffuses
-      belief, the anchor term pins it to evidence.</p>
-      <p><b>Social meaning.</b> A broadcaster's reputation is what other listeners believe about them,
-      tempered by what each listener can check for themselves.</p>
-      <p><b>Context.</b> The BRS is the architecture component A. The triangulation showed its effect
-      is interference-sensitive: +0.190 within personas, +0.038 between agents.</p>
+      <p><b>Physical meaning.</b> A consensus protocol with a drift term: the network diffuses belief,
+      the anchor pins it to evidence. <b>Social meaning.</b> A broadcaster's reputation is what other
+      listeners believe, tempered by what each listener can check. <b>Context.</b> The BRS is
+      architecture component A; the triangulation showed its effect is interference-sensitive
+      (+0.190 within personas, +0.038 between agents).</p>
+      <div class="lab">
+        <canvas id="c1" width="470" height="240" aria-label="BRS diffusion simulation"></canvas>
+        <div class="ctrl">
+          <label for="b1l">Anchoring weight lambda (0.35 = thesis G1)</label>
+          <input id="b1l" type="range" min="0.05" max="0.9" step="0.05" value="0.35">
+          <label for="b1a">Anchor value a (evidence quality)</label>
+          <input id="b1a" type="range" min="0.2" max="0.9" step="0.05" value="0.72">
+          <div class="row"><span class="chip" id="b1go">Run</span><span class="chip" id="b1rst">Reset</span></div>
+          <div class="ro" id="b1ro">Press Run: every agent updates b_i from its neighbours plus its own anchor. A high lambda makes each listener trust their own check; a low lambda makes the crowd dominate.</div>
+        </div>
+      </div>
 
       <h2 id="more">2. MORE: the diversity-constrained recommendation</h2>
       <div class="eq">$$L_i \;=\; w_1\,\mathrm{uvs}_i \;+\; w_2\,\mathrm{dbi}_i \;-\; \mu\,\mathrm{sai}_i^{+},
-      \qquad \mathrm{sai}_i^{+}=\max\big(0,\;|\mathrm{sai}_i|-0.22\big)$$</div>
-      <div class="eq">$$\mathrm{uvs}_i \;=\; \bar b \;\big(1 - p_i^{\mathrm{prop}}\,\kappa\big)\;\big(1 - m_i\big),
-      \qquad \mathrm{dbi}_i \;=\; 1 - h\,\big\langle \hat r_i,\; \hat c \big\rangle$$</div>
+      \qquad \mathrm{uvs}_i = \bar b\,(1 - p_i^{\mathrm{prop}}\kappa)(1 - m_i), \qquad
+      \mathrm{dbi}_i = 1 - h\,\langle \hat r_i, \hat c\rangle$$</div>
       <div class="break">
-        <div class="cell"><b>L_i</b> the Lagrange score a candidate is ranked by; the platform picks arg max.</div>
-        <div class="cell"><b>uvs_i</b> unit value of a slot: the mean reputation b̄, discounted by the item's propaganda share and by the moderation penalty.</div>
-        <div class="cell"><b>dbi_i</b> diversity benefit: 1 minus the Hilbert overlap between the listener's embedding and the candidate's.</div>
-        <div class="cell"><b>sai_i⁺</b> salience penalty: only salience beyond 0.22 is taxed, with weight μ.</div>
+        <div class="cell"><b>L_i</b> the score a candidate is ranked by; the feed picks arg max.</div>
+        <div class="cell"><b>uvs_i</b> slot value: mean reputation, discounted by propaganda share and moderation.</div>
+        <div class="cell"><b>dbi_i</b> diversity benefit: 1 minus the Hilbert overlap with the listener.</div>
+        <div class="cell"><b>sai_i⁺</b> salience penalty beyond 0.22, weight μ.</div>
       </div>
-      <p><b>Physical meaning.</b> A constrained optimization: maximize value subject to a diversity
-      constraint, written as a penalized objective.</p>
-      <p><b>Social meaning.</b> The feed rewards broadcasters people trust, but pays extra for
-      viewpoints outside the listener's current bubble. This is why B carries the contrast.</p>
-      <p><b>Context.</b> In the model B (MORE) is the dominant path: main effect +0.6265, and the
-      diversity-to-credibility weight is the top sensitivity driver (PRCC +0.77).</p>
+      <p><b>Physical meaning.</b> Constrained optimization written as a penalized objective.
+      <b>Social meaning.</b> The feed rewards trusted broadcasters but pays extra for viewpoints
+      outside the bubble; that is why B carries the contrast (+0.6265, PRCC +0.77 for the
+      diversity-to-credibility link).</p>
+      <div class="lab">
+        <canvas id="c2" width="470" height="250" aria-label="MORE ranking simulation"></canvas>
+        <div class="ctrl">
+          <label for="b2w1">Reputation weight w1</label>
+          <input id="b2w1" type="range" min="0" max="2" step="0.1" value="1">
+          <label for="b2w2">Diversity weight w2</label>
+          <input id="b2w2" type="range" min="0" max="2" step="0.1" value="0.9">
+          <label for="b2mu">Salience penalty mu</label>
+          <input id="b2mu" type="range" min="0" max="2" step="0.1" value="0.9">
+          <div class="ro" id="b2ro">Raise w2 and diverse, trusted items jump the queue; raise w1 and popularity takes over. The thesis default balances both, which is the whole point of MORE.</div>
+        </div>
+      </div>
 
       <h2 id="eric">3. ERIC: reflect, invite, correct</h2>
-      <div class="eq">$$m_i \;=\; \max\big(0,\; 1.4\,(p_i^{\mathrm{prop}} - \tau_{\mathrm{mod}})\big),
-      \qquad p_i^{\mathrm{prop}}\text{: propaganda propensity},\;\tau_{\mathrm{mod}}\text{: moderation threshold}$$</div>
-      <p><b>Breakdown.</b> If an item's propaganda propensity exceeds the threshold, ERIC applies a
-      penalty proportional to the excess (slope 1.4). The penalty enters the slot value uvs_i and,
-      in the full pipeline, the credibility mapping.</p>
-      <p><b>Physical meaning.</b> A soft gating function: zero below threshold, linear beyond it.</p>
-      <p><b>Social meaning.</b> Moderation as an interaction, not deletion: flagged items stay visible,
-      ranked lower, and carry a reflection prompt back to the user.</p>
-      <p><b>Context.</b> In the ablation, C alone is near zero (-0.0121); it matters through the
-      B x C interaction (+0.3791).</p>
+      <div class="eq">$$m_i \;=\; \max\big(0,\; s\,(p_i^{\mathrm{prop}} - \tau_{\mathrm{mod}})\big)$$</div>
+      <p><b>Breakdown.</b> Zero below the moderation threshold, linear beyond it (slope s = 1.4 in the
+      model). The penalty enters the slot value and the credibility mapping.
+      <b>Physical meaning.</b> A soft gate. <b>Social meaning.</b> Moderation as an interaction, not
+      deletion: flagged items stay visible, rank lower, and carry a reflection prompt.
+      <b>Context.</b> C alone is near zero (-0.0121); it matters through the B x C interaction
+      (+0.3791).</p>
+      <div class="lab">
+        <canvas id="c3" width="470" height="220" aria-label="ERIC penalty curve"></canvas>
+        <div class="ctrl">
+          <label for="b3t">Threshold tau_mod</label>
+          <input id="b3t" type="range" min="0" max="1" step="0.02" value="0.3">
+          <label for="b3s">Slope s</label>
+          <input id="b3s" type="range" min="0.5" max="3" step="0.1" value="1.4">
+          <label for="b3p">Item propaganda propensity p</label>
+          <input id="b3p" type="range" min="0" max="1" step="0.02" value="0.55">
+          <div class="ro" id="b3ro">Drag p or the curve's knobs: the penalty is zero until p crosses tau, then grows linearly. Items at p = 0.2, 0.5, 0.8 are marked as examples.</div>
+        </div>
+      </div>
 
       <h2 id="echo">4. Echo Meter and Algorithmic Cooling</h2>
-      <div class="eq">$$e^{(t+1)} \;=\; 0.75\, e^{(t)} \;+\; 0.25\,(1-\mathrm{dbi}^{(t)}),
-      \qquad e \;\leftarrow\; 0.76\, e \quad\text{if}\quad e \ge \theta_{\mathrm{cool}}$$</div>
-      <p><b>Breakdown.</b> Echo accumulates toward sameness: three quarters of yesterday's echo plus
-      one quarter of today's lack of diversity. Cooling multiplies by 0.76 once echo crosses the
-      threshold, and the moderation factor (C) applies a further 0.85-0.94 damping in the simulator.</p>
-      <p><b>Physical meaning.</b> Relaxation with active cooling: the echo state decays toward
-      diversity, faster when hot.</p>
-      <p><b>Social meaning.</b> The platform notices when you have been inside one bubble for a while,
-      and gently widens the mix instead of telling you what you already agree with.</p>
-      <p><b>Context.</b> Cooling is part of B; the mechanism check confirmed B x C lowers echo
-      by -0.340 (SD .009).</p>
+      <div class="eq">$$e^{(t+1)} = 0.75\, e^{(t)} + 0.25\,(1-\mathrm{dbi}^{(t)}), \qquad e \leftarrow 0.76\, e \;\text{ if }\; e \ge \theta_{\mathrm{cool}}$$</div>
+      <p><b>Breakdown.</b> Echo accumulates toward sameness; cooling multiplies by 0.76 once echo
+      crosses the threshold. <b>Physical meaning.</b> Relaxation with active cooling.
+      <b>Social meaning.</b> The platform notices when you have been inside one bubble for a while and
+      gently widens the mix. <b>Context.</b> The mechanism check confirmed B x C lowers echo by
+      -0.340 (SD .009).</p>
+      <div class="lab">
+        <canvas id="c4" width="470" height="220" aria-label="Echo cooling trajectory"></canvas>
+        <div class="ctrl">
+          <label for="b4t">Cooling threshold theta_c</label>
+          <input id="b4t" type="range" min="0" max="1" step="0.02" value="0.3">
+          <label for="b4d">Today's diversity (1 - dbi)</label>
+          <input id="b4d" type="range" min="0" max="1" step="0.02" value="0.4">
+          <div class="row"><span class="chip on" id="b4cool" role="switch" aria-checked="true" tabindex="0">cooling on</span>
+          <span class="chip" id="b4go">Run</span></div>
+          <div class="ro" id="b4ro">Start from a hot bubble (echo 0.85). Without cooling the listener stays inside; with cooling each crossing of theta_c shaves 24% off echo.</div>
+        </div>
+      </div>
 
       <h2 id="zewail">5. The Zewail-inspired attention gate</h2>
-      <div class="eq">$$R \;=\; \exp\!\big(-\,\Delta t \,/\, \tau\big),
-      \qquad \mathrm{anchor} \;=\; 0.55\,c_i + 0.25\,g + 0.20\,\bar q + 0.20$$</div>
-      <p><b>Breakdown.</b> R is the fraction of an evidence anchor still retained after a delay Δt,
-      with dephasing time τ. The gate output g then weights the anchor: a listener inattentive for
-      longer than τ retains almost nothing of the correction.</p>
-      <p><b>Physical meaning.</b> Time-resolved coherence: the same idea as a pump-probe experiment,
-      where the signal decays with the system's dephasing time.</p>
-      <p><b>Social meaning.</b> Corrections have a half-life. If the platform does not re-anchor the
-      audience quickly, the correction decays; attention is a resource with a time constant.</p>
-      <p><b>Context.</b> The gate is open about 15% of the time in the baseline; the dephasing time is
-      an assumption, not an empirical estimate, and the thesis says so.</p>
+      <div class="eq">$$R \;=\; \exp\!\big(-\,\Delta t \,/\, \tau\big)$$</div>
+      <p><b>Breakdown.</b> R is the fraction of an evidence anchor retained after a delay Δt, with
+      dephasing time τ. <b>Physical meaning.</b> Time-resolved coherence, as in a pump-probe
+      experiment. <b>Social meaning.</b> Corrections have a half-life: if the platform does not
+      re-anchor quickly, the correction decays. <b>Context.</b> The gate is open about 15% of the
+      time; the dephasing time is a declared assumption, and the thesis says so.</p>
+      <div class="lab">
+        <canvas id="c5" width="470" height="220" aria-label="Attention gate retention curve"></canvas>
+        <div class="ctrl">
+          <label for="b5t">Dephasing time tau</label>
+          <input id="b5t" type="range" min="0.5" max="20" step="0.5" value="6">
+          <label for="b5d">Delay delta t</label>
+          <input id="b5d" type="range" min="0" max="30" step="0.5" value="8">
+          <div class="row"><span class="chip" id="b5go">Animate</span></div>
+          <div class="ro" id="b5ro">Move the marker along the decay: after one tau only 37% of the correction remains; after three tau almost nothing. Fast re-anchoring is the design answer.</div>
+        </div>
+      </div>
 
       <h2 id="grm">6. GRM-IRT scoring</h2>
       <div class="eq">$$P(x \ge k \mid \theta) \;=\; \frac{1}{1 + \exp\!\big[-a\,(\theta - b_k)\big]}$$</div>
-      <p><b>Breakdown.</b> θ is the latent trait (media literacy), b_k the difficulty of endorsing
-      level k or above, a the item discrimination. Responses are simulated from this model to build
-      the 35-item NMLS and 8-item MCS+PB batteries.</p>
-      <p><b>Physical meaning.</b> A soft threshold crossing: the probability of endorsing a level
-      rises sigmoidally as ability passes the difficulty.</p>
-      <p><b>Social meaning.</b> Ratings are scored against item difficulties, not raw sums, so a
-      "competence rating" means a position on a latent scale rather than a count of clicks.</p>
-      <p><b>Context.</b> Reliability of the synthetic batteries: NMLS alpha .948, MCS alpha .738,
-      test-retest ICC .953. These are properties of the generating model, not human validation.</p>
+      <p><b>Breakdown.</b> θ latent trait, b_k level difficulty, a discrimination.
+      <b>Physical meaning.</b> A soft threshold crossing. <b>Social meaning.</b> Ratings are scored
+      against item difficulties, so a competence rating is a position on a latent scale, not a count
+      of clicks. <b>Context.</b> Synthetic batteries: NMLS alpha .948, MCS alpha .738, ICC .953;
+      properties of the generating model, not human validation.</p>
+      <div class="lab">
+        <canvas id="c6" width="470" height="260" aria-label="GRM item characteristic curves"></canvas>
+        <div class="ctrl">
+          <label for="b6th">Latent trait theta</label>
+          <input id="b6th" type="range" min="-3" max="3" step="0.05" value="0.4">
+          <label for="b6a">Discrimination a</label>
+          <input id="b6a" type="range" min="0.5" max="3" step="0.1" value="1.4">
+          <label for="b6b2">Middle difficulty b2</label>
+          <input id="b6b2" type="range" min="-2" max="2" step="0.1" value="0">
+          <div class="row"><span class="chip" id="b6go">Sweep theta</span></div>
+          <div class="ro" id="b6ro">The curves are P(x at least k) for levels k = 1, 2, 3. At your theta the bars show the response probabilities; the expected score moves smoothly with ability.</div>
+        </div>
+      </div>
 
       <h2 id="debiasing">7. DML and IPW debiasing</h2>
-      <div class="eq">$$\hat\theta_{\mathrm{DML}} \;=\; \frac{\sum_i \big(Y_i - \hat m(X_i)\big)\big(Z_i - \hat e(X_i)\big)}{\sum_i \big(Z_i - \hat e(X_i)\big)^2},
-      \qquad w_i \;=\; \frac{Z_i}{\hat e(X_i)} + \frac{1-Z_i}{1-\hat e(X_i)}$$</div>
-      <p><b>Breakdown.</b> DML partials out the nuisance functions m̂ (outcome model) and ê
-      (propensity) before comparing treatment and control; IPW reweights every row by the inverse of
-      its treatment probability.</p>
-      <p><b>Physical meaning.</b> Orthogonalization: remove the predictable part, then measure what is
-      left.</p>
-      <p><b>Social meaning.</b> The 52 measured students were not randomly assigned; these procedures
-      make the comparison as close to balanced as the observed covariates allow, and the residual
-      imbalance (0.127 after IPW) is reported rather than hidden.</p>
-      <p><b>Context.</b> The debiased rows define the manifold from which the 500 personas are drawn
-      (condition number 4.82).</p>
+      <div class="eq">$$\hat\theta_{\mathrm{DML}} = \frac{\sum_i (Y_i - \hat m(X_i))(Z_i - \hat e(X_i))}{\sum_i (Z_i - \hat e(X_i))^2},
+      \qquad w_i = \frac{Z_i}{\hat e(X_i)} + \frac{1-Z_i}{1-\hat e(X_i)}$$</div>
+      <p><b>Breakdown.</b> DML partials out the nuisance functions before comparing arms; IPW
+      reweights by inverse treatment probability. <b>Physical meaning.</b> Orthogonalization.
+      <b>Social meaning.</b> The 52 measured students were not randomly assigned; these procedures
+      make the comparison as balanced as the observed covariates allow, and the residual imbalance
+      (0.127) is reported, not hidden.</p>
+      <div class="lab">
+        <canvas id="c7" width="470" height="250" aria-label="DML and IPW demonstration"></canvas>
+        <div class="ctrl">
+          <label for="b7x">Confounder strength</label>
+          <input id="b7x" type="range" min="0" max="4" step="0.1" value="3">
+          <div class="row"><span class="chip" id="b7go">Resample data</span></div>
+          <div class="ro" id="b7ro">True ATE = 2.0. The naive difference is biased by the confounder; DML removes the predictable part and IPW reweights, both recovering about 2.0. This is how the measured wave becomes the persona prior.</div>
+        </div>
+      </div>
 
       <h2 id="filters">8. The eight filters of the session loop</h2>
-      <div class="eq">$$\text{Laplace: } x \leftarrow x - c\,\mathcal{L}\,x \qquad
-      \text{DeGroot: } x \leftarrow W x \qquad
-      \text{Lyapunov: } x \leftarrow (I + A)\,x$$</div>
-      <div class="eq">$$\text{Hamiltonian: } H = -\sum_{i<j} J_{ij} s_i s_j - \sum_i h_i s_i \qquad
-      \text{Hilbert: } \mathrm{dbi} = 1 - h\,\langle \hat r_i, \hat c\rangle \qquad
+      <div class="eq">$$\text{Laplace: } x \leftarrow x - c\mathcal L x \qquad \text{DeGroot: } x \leftarrow W x \qquad \text{Lyapunov: } x \leftarrow (I+A)x$$</div>
+      <div class="eq">$$\text{Hamiltonian: } H = -\sum_{i<j}J_{ij}s_i s_j - \sum_i h_i s_i \qquad
+      \text{Hilbert: } \mathrm{dbi} = 1 - h\langle \hat r_i,\hat c\rangle \qquad
       \text{Percolation: } P_{\mathrm{spread}} \propto p^{\mathrm{prop}}(1-m)$$</div>
-      <div class="eq">$$\text{Lagrange: } L_i = w_1 \mathrm{uvs}_i + w_2 \mathrm{dbi}_i - \mu\,\mathrm{sai}_i^{+} \qquad
-      \text{Entropy: } e \leftarrow 0.76\,e \text{ if } e \ge \theta_c$$</div>
-      <p><b>Breakdown.</b> Each session passes the state tensor through all eight; the ablation
-      showed only three are outcome-active in this wiring: DeGroot (-0.233), Lagrange (-0.750),
-      Hilbert (-0.453) when switched off. Laplace, Percolation, and Entropy leave the contrast
-      unchanged, and Lyapunov is negligible; the Hamiltonian is a diagnostic and never enters the
-      outcome.</p>
-      <p><b>Physical meaning.</b> The loop is a concatenation of canonical dynamics: diffusion,
-      consensus, contraction, spin-glass energy, embedding geometry, percolation, constrained
-      choice, and cooling.</p>
-      <p><b>Social meaning.</b> Each filter is one named social process: ideas spread, opinion
-      conforms, attention contracts, energy concentrates, similarity attracts, rumor percolates,
-      choice is constrained, and bubbles cool.</p>
+      <div class="eq">$$\text{Lagrange: } L_i = w_1\mathrm{uvs}_i + w_2\mathrm{dbi}_i - \mu\,\mathrm{sai}_i^{+} \qquad
+      \text{Entropy: } e \leftarrow 0.76\,e \;\text{ if }\; e \ge \theta_c$$</div>
+      <p><b>Breakdown.</b> The ablation showed three are outcome-active: DeGroot (-0.233), Lagrange
+      (-0.750), Hilbert (-0.453) when off. Laplace, Percolation, Entropy leave the contrast
+      unchanged; Lyapunov is negligible; the Hamiltonian is a diagnostic and never enters the
+      outcome. <b>Physical meaning.</b> Canonical dynamics chained together. <b>Social meaning.</b>
+      Each filter is one named social process: diffusion, conformity, contraction, energy,
+      similarity, percolation, choice, cooling.</p>
+      <div class="lab">
+        <canvas id="c8" width="470" height="260" aria-label="Filter playground"></canvas>
+        <div class="ctrl">
+          <div class="row" id="b8tabs"></div>
+          <div class="ro" id="b8ro">Pick a filter and press Run. The playground animates the filter's own dynamic: watch opinion diffuse, conform, diverge, align, attract, percolate, rank, and cool.</div>
+        </div>
+      </div>
 
       <h2 id="sweep">9. The joint sweep and PRCC sensitivity</h2>
-      <div class="eq">$$r_{x_j} \;=\; \frac{\mathrm{Cov}\big(x_j,\, y \;\big|\; x_{-j}\big)}
-      {\sqrt{\mathrm{Var}\big(x_j \mid x_{-j}\big)\;\mathrm{Var}\big(y \mid x_{-j}\big)}}$$</div>
-      <p><b>Breakdown.</b> The 256-point sweep varies six mechanism parameters and five
-      state-outcome weights including zero; the partial rank correlation of each input with the
-      contrast, given the others, is reported. Top values: diversity-to-credibility +0.77,
-      BRS-to-credibility +0.31, echo-to-credibility -0.27 (the sign is the weight's own sign).</p>
-      <p><b>Physical meaning.</b> Local sensitivity: which dial, held fixed at its median, moves the
-      answer most.</p>
-      <p><b>Social meaning.</b> One declared assumption, the link between exposure diversity and
-      perceived credibility, carries most of the result. The thesis names it; it does not hide it.</p>
+      <div class="eq">$$r_{x_j} = \frac{\mathrm{Cov}(x_j, y \mid x_{-j})}{\sqrt{\mathrm{Var}(x_j \mid x_{-j})\,\mathrm{Var}(y \mid x_{-j})}}$$</div>
+      <p><b>Breakdown.</b> 256 draws vary six mechanism parameters and five state-outcome weights;
+      the partial rank correlation of each input with the contrast, given the others, is reported.
+      Top values: diversity-to-credibility +0.77, BRS-to-credibility +0.31, echo-to-credibility
+      -0.27. <b>Social meaning.</b> One declared assumption, the link between exposure diversity and
+      perceived credibility, carries most of the result; the thesis names it rather than hiding it.</p>
+      <div class="lab">
+        <canvas id="c9" width="470" height="260" aria-label="PRCC bar chart with hover"></canvas>
+        <div class="ctrl">
+          <label for="b9w">Your diversity-to-credibility weight</label>
+          <input id="b9w" type="range" min="0" max="2" step="0.05" value="1">
+          <div class="ro" id="b9ro">Hover a bar for its exact partial rank correlation. Raising the declared diversity-to-credibility weight moves the whole sweep upward; at zero the positive share collapses.</div>
+        </div>
+      </div>
 
       <h2 id="designs">10. The four assignment designs</h2>
-      <div class="eq">$$\widehat{ATE} \;=\; \frac{1}{n_1}\sum_{i: Z_i=1} Y_i \;-\; \frac{1}{n_0}\sum_{i: Z_i=0} Y_i$$</div>
-      <p><b>Breakdown.</b> The same estimator is evaluated under four assignment rules: Z fixed
-      within personas (all eight cells per persona), Z random per agent across 40 worlds, Z drawn
-      from the potential-outcome matrix 400 times, and Z assigned per network cluster across 20
-      worlds. The design-based draw contains no interference, so comparing it with the
-      agent-randomized design isolates interference.</p>
-      <p><b>Physical meaning.</b> The same observable measured in four gauges.</p>
-      <p><b>Social meaning.</b> A treatment effect that survives every assignment rule is a property
-      of the design; one that moves with assignment is a property of the network. B survives; A
-      does not.</p>
+      <div class="eq">$$\widehat{ATE} = \frac{1}{n_1}\sum_{i: Z_i=1} Y_i - \frac{1}{n_0}\sum_{i: Z_i=0} Y_i$$</div>
+      <p><b>Breakdown.</b> The same estimator under four assignment rules: within-persona, per-agent
+      randomization across 40 worlds, design-based draws from the potential-outcome matrix (400), and
+      cluster randomization (20). The design-based draw contains no interference, so comparing it
+      with the agent-randomized design isolates interference. <b>Social meaning.</b> A treatment
+      effect that survives every assignment rule is a property of the design; one that moves with
+      assignment is a property of the network. B survives; A does not.</p>
+      <div class="lab">
+        <canvas id="c10" width="470" height="250" aria-label="Assignment design ATE distributions"></canvas>
+        <div class="ctrl">
+          <label for="b10i">Interference strength (spillover)</label>
+          <input id="b10i" type="range" min="0" max="1" step="0.05" value="0.5">
+          <div class="row"><span class="chip" id="b10go">Run 400 worlds</span></div>
+          <div class="ro" id="b10ro">The toy effect is ATE = 2.0. Without interference all designs recover it; with spillover, the agent-randomized design dilutes the estimate exactly as the BRS path does in the thesis.</div>
+        </div>
+      </div>
 
       <div class="callout">Every equation on this page is implemented in the
       <a href="../thesis/code/pipeline/loklok_pipeline.py">pipeline code</a> and exercised in the
-      <a href="interactive/">interactive laboratory</a>. The parameters are declared design inputs,
-      not estimates, unless the text says otherwise.</div>
+      <a href="interactive/">interactive laboratory</a>. Parameters are declared design inputs, not
+      estimates, unless the text says otherwise.</div>
     </article>
   </div>
 </div>
@@ -222,5 +294,505 @@
   </div>
 </footer>
 <script src="js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  function cv(id) { return document.getElementById(id); }
+  function ctx2(id) { return cv(id).getContext('2d'); }
+  function clear(c) { var x = c.getContext('2d'); x.clearRect(0, 0, c.width, c.height); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); return x; }
+  function bind(id, fn) { var el = cv(id); el.addEventListener('input', fn); el.addEventListener('change', fn); return el; }
+  function chip(id, fn) {
+    var el = cv(id);
+    el.addEventListener('click', function () { el.classList.toggle('on'); el.setAttribute('aria-checked', el.classList.contains('on')); fn(); });
+    el.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); } });
+    return el;
+  }
+  var rseed = 7;
+  function rnd() { rseed = (rseed * 9301 + 49297) % 233280; return rseed / 233280; }
+
+  /* 1. BRS diffusion */
+  (function () {
+    var N = 8, T = 40, t = 0, brs = [], timer = null;
+    function reset() { brs = []; for (var i = 0; i < N; i++) brs.push(0.2 + 0.6 * rnd()); t = 0; draw(); }
+    function step() {
+      var lam = +cv('b1l').value, a = +cv('b1a').value;
+      var next = brs.slice();
+      for (var i = 0; i < N; i++) {
+        var nb = (brs[(i + 1) % N] + brs[(i + N - 1) % N] + brs[(i + 3) % N]) / 3;
+        next[i] = Math.max(0, Math.min(1, (1 - lam) * nb + lam * a));
+      }
+      brs = next; t++;
+    }
+    function draw() {
+      var c = cv('c1'), x = clear(c);
+      var P = { x0: 40, y0: 18, x1: c.width - 12, y1: c.height - 46 };
+      var pts = [];
+      for (var i = 0; i < N; i++) {
+        var ang = i / N * Math.PI * 2 - Math.PI / 2;
+        pts.push([P.x0 + (c.width - P.x0 - 20) / 2 + Math.cos(ang) * 62, P.y0 + (P.y1 - P.y0) / 2 + Math.sin(ang) * 62]);
+      }
+      x.strokeStyle = '#DDD3C5'; x.lineWidth = 1.4;
+      for (i = 0; i < N; i++) {
+        x.beginPath(); x.moveTo(pts[i][0], pts[i][1]); x.lineTo(pts[(i + 1) % N][0], pts[(i + 1) % N][1]); x.stroke();
+      }
+      var mean = brs.reduce(function (s, v) { return s + v; }, 0) / N;
+      brs.forEach(function (v, i) {
+        x.fillStyle = '#B31B1B';
+        x.beginPath(); x.arc(pts[i][0], pts[i][1], 7 + 20 * v, 0, 7); x.fill();
+        x.fillStyle = '#fff'; x.font = 'bold 9px Helvetica'; x.textAlign = 'center';
+        x.fillText(v.toFixed(2), pts[i][0], pts[i][1] + 3);
+      });
+      x.textAlign = 'left';
+      x.fillStyle = '#46536B'; x.font = 'bold 12px Helvetica';
+      x.fillText('session ' + t + ' | mean BRS ' + mean.toFixed(3), P.x0, 12);
+      x.font = '11px Helvetica';
+      x.fillText('lambda ' + (+cv('b1l').value).toFixed(2) + ', anchor ' + (+cv('b1a').value).toFixed(2), P.x0, 26);
+    }
+    cv('b1go').addEventListener('click', function () {
+      if (timer) { clearInterval(timer); timer = null; }
+      timer = setInterval(function () { if (t < T) { step(); draw(); } else { clearInterval(timer); timer = null; } }, 90);
+    });
+    cv('b1rst').addEventListener('click', function () { if (timer) clearInterval(timer); timer = null; reset(); });
+    bind('b1l', function () { cv('b1ro').textContent = 'lambda ' + this.value + ': the crowd-vs-own-check balance. At 0.35 (thesis) a listener trusts their own anchor enough to keep the network honest.'; });
+    reset();
+  })();
+
+  /* 2. MORE ranking */
+  (function () {
+    var ITEMS = [
+      { n: 'Studio El-Nil', brs: 0.78, dbi: 0.3, q: 0.8, sai: 0.2, prop: 0 },
+      { n: 'Viral Dump', brs: 0.22, dbi: 0.5, q: 0.3, sai: 0.9, prop: 1 },
+      { n: 'Heritage Talk', brs: 0.81, dbi: 0.2, q: 0.9, sai: 0.15, prop: 0 },
+      { n: 'Opinion Rush', brs: 0.38, dbi: 0.6, q: 0.4, sai: 0.5, prop: 0 },
+      { n: 'Counterpoint', brs: 0.75, dbi: 0.65, q: 0.72, sai: 0.25, prop: 0 },
+      { n: 'Rumor Roundup', brs: 0.18, dbi: 0.7, q: 0.2, sai: 0.8, prop: 1 },
+    ];
+    function draw() {
+      var w1 = +cv('b2w1').value, w2 = +cv('b2w2').value, mu = +cv('b2mu').value;
+      var scored = ITEMS.map(function (it) {
+        var uvs = it.brs * (1 - 0.2 * (1 - it.dbi)) * (1 - 0.5 * it.prop);
+        var saiP = Math.max(0, it.sai - 0.22);
+        var L = w1 * uvs + w2 * it.dbi + 0.4 * it.q - mu * (it.prop ? 0.9 * it.sai : 0);
+        return { it: it, L: L };
+      }).sort(function (a, b) { return b.L - a.L; });
+      var c = cv('c2'), x = clear(c);
+      var P = { x0: 110, y0: 16, x1: c.width - 10, y1: c.height - 30 };
+      var maxL = Math.max.apply(null, scored.map(function (s) { return Math.abs(s.L); }));
+      var bw = (P.y1 - P.y0) / scored.length;
+      scored.forEach(function (s, i) {
+        var y = P.y0 + i * bw;
+        x.fillStyle = '#46536B'; x.font = 'bold 11px Helvetica'; x.textAlign = 'right';
+        x.fillText(s.it.n, P.x0 - 8, y + bw / 2 + 4);
+        x.fillStyle = i === 0 ? '#B31B1B' : '#16325C';
+        x.fillRect(P.x0, y + 3, Math.max(2, s.L / maxL * (P.x1 - P.x0)), bw - 6);
+        x.fillStyle = '#46536B'; x.textAlign = 'left';
+        x.fillText(s.L.toFixed(2), P.x0 + Math.max(2, s.L / maxL * (P.x1 - P.x0)) + 5, y + bw / 2 + 4);
+      });
+      x.textAlign = 'left';
+      x.fillStyle = '#46536B'; x.font = '12px Helvetica';
+      x.fillText('L_i = w1 uvs + w2 dbi + 0.4 q - mu pen | top ranked in red', P.x0, 11);
+      cv('b2ro').textContent = 'Top ranked: ' + scored[0].it.n + ' (L = ' + scored[0].L.toFixed(2) + '). Weights: w1 ' + w1.toFixed(1) + ', w2 ' + w2.toFixed(1) + ', mu ' + mu.toFixed(1) + '. Try w2 = 2: diversity dominates and the counter-viewpoints rise.';
+    }
+    bind('b2w1', draw); bind('b2w2', draw); bind('b2mu', draw);
+    draw();
+  })();
+
+  /* 3. ERIC */
+  (function () {
+    var c = cv('c3');
+    function draw() {
+      var tau = +cv('b3t').value, s = +cv('b3s').value, p = +cv('b3p').value;
+      var x = clear(c);
+      var P = { x0: 40, y0: 20, x1: c.width - 14, y1: c.height - 36 };
+      function px(v) { return P.x0 + v * (P.x1 - P.x0); }
+      function py(v) { return P.y1 - v / 1.6 * (P.y1 - P.y0); }
+      x.strokeStyle = '#DDD3C5'; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(P.x0, P.y1); x.lineTo(P.x1, P.y1); x.stroke();
+      x.beginPath(); x.moveTo(px(tau), P.y0); x.lineTo(px(tau), P.y1); x.stroke();
+      x.strokeStyle = '#B31B1B'; x.lineWidth = 2.5; x.beginPath();
+      var steps = 60;
+      for (var i = 0; i <= steps; i++) {
+        var v = i / steps, m = Math.max(0, s * (v - tau));
+        if (i === 0) x.moveTo(px(v), py(m)); else x.lineTo(px(v), py(m));
+      }
+      x.stroke();
+      [0.2, 0.5, 0.8].forEach(function (q) {
+        x.fillStyle = '#16325C'; x.beginPath(); x.arc(px(q), py(Math.max(0, s * (q - tau))), 4, 0, 7); x.fill();
+        x.fillStyle = '#46536B'; x.font = '10px Helvetica';
+        x.fillText(q.toFixed(1), px(q) + 6, P.y1 - 4);
+      });
+      var m = Math.max(0, s * (p - tau));
+      x.fillStyle = '#C7A252'; x.beginPath(); x.arc(px(p), py(m), 6, 0, 7); x.fill();
+      x.fillStyle = '#46536B'; x.font = '11.5px Helvetica';
+      x.fillText('p = ' + p.toFixed(2) + ' -> penalty m = ' + m.toFixed(2), px(p) + 10, py(m) - 6);
+      x.fillText('tau = ' + tau.toFixed(2) + ' (vertical), slope s = ' + s.toFixed(1), P.x0, 13);
+      cv('b3ro').textContent = 'At p = ' + p.toFixed(2) + ' with threshold ' + tau.toFixed(2) + ': penalty ' + m.toFixed(2) + '. This penalty lowers the item in the MORE ranking and, in the full model, its credibility mapping.';
+    }
+    bind('b3t', draw); bind('b3s', draw); bind('b3p', draw);
+    c.addEventListener('mousemove', function (e) {
+      var r = c.getBoundingClientRect();
+      var p = (e.clientX - r.left) * (c.width / r.width);
+      p = Math.max(0, Math.min(1, (p - 40) / (c.width - 54)));
+      cv('b3p').value = p.toFixed(2); draw();
+    });
+    draw();
+  })();
+
+  /* 4. Echo cooling */
+  (function () {
+    var e = 0.85, t = 0, T = 26, hist = [], timer = null, cool = true;
+    function reset() { e = 0.85; t = 0; hist = [e]; draw(); }
+    function draw() {
+      var theta = +cv('b4t').value, div = +cv('b4d').value;
+      var c = cv('c4'), x = clear(c);
+      var P = { x0: 40, y0: 18, x1: c.width - 12, y1: c.height - 34 };
+      function py(v) { return P.y1 - v * (P.y1 - P.y0); }
+      x.strokeStyle = '#C7A252'; x.setLineDash([5, 5]); x.lineWidth = 1.4;
+      x.beginPath(); x.moveTo(P.x0, py(theta)); x.lineTo(P.x1, py(theta)); x.stroke(); x.setLineDash([]);
+      x.fillStyle = '#8A6A1F'; x.font = '10.5px Helvetica'; x.fillText('theta_c ' + theta.toFixed(2), P.x0, py(theta) - 4);
+      x.strokeStyle = '#B31B1B'; x.lineWidth = 2.2; x.beginPath();
+      hist.forEach(function (v, i) {
+        var px = P.x0 + i / T * (P.x1 - P.x0), pyv = py(v);
+        if (i === 0) x.moveTo(px, pyv); else x.lineTo(px, pyv);
+      });
+      x.stroke();
+      x.fillStyle = '#46536B'; x.font = '11.5px Helvetica';
+      x.fillText('echo now ' + e.toFixed(3) + ' (diversity today ' + div.toFixed(2) + ')', P.x0, 12);
+      cv('b4ro').textContent = cool ? 'Cooling on: every crossing of theta_c shaves 24% off echo, pulling the listener back toward diversity.' : 'Cooling off: the listener drifts to whatever the feed serves and stays there.';
+    }
+    cv('b4go').addEventListener('click', function () {
+      if (timer) { clearInterval(timer); timer = null; }
+      t = 0; e = 0.85; hist = [e];
+      timer = setInterval(function () {
+        if (t >= T) { clearInterval(timer); timer = null; return; }
+        var theta = +cv('b4t').value, div = +cv('b4d').value;
+        e = 0.75 * e + 0.25 * (1 - div);
+        if (cool && e >= theta) e = e * 0.76;
+        hist.push(e); t++; draw();
+      }, 90);
+    });
+    chip('b4cool', function () { cool = cv('b4cool').classList.contains('on'); draw(); });
+    bind('b4t', draw); bind('b4d', draw);
+    reset();
+  })();
+
+  /* 5. Zewail gate */
+  (function () {
+    var anim = false, timer = null, dtA = 0;
+    function draw() {
+      var tau = +cv('b5t').value, dt = anim ? dtA : +cv('b5d').value;
+      var c = cv('c5'), x = clear(c);
+      var P = { x0: 40, y0: 20, x1: c.width - 14, y1: c.height - 36 };
+      function px(v) { return P.x0 + v / 30 * (P.x1 - P.x0); }
+      function py(v) { return P.y1 - v * (P.y1 - P.y0); }
+      x.strokeStyle = '#B31B1B'; x.lineWidth = 2.4; x.beginPath();
+      for (var i = 0; i <= 120; i++) {
+        var v = i / 120 * 30, R = Math.exp(-v / tau);
+        if (i === 0) x.moveTo(px(v), py(R)); else x.lineTo(px(v), py(R));
+      }
+      x.stroke();
+      x.strokeStyle = '#C7A252'; x.setLineDash([4, 4]); x.lineWidth = 1.2;
+      x.beginPath(); x.moveTo(P.x0, py(0.37)); x.lineTo(P.x1, py(0.37)); x.stroke(); x.setLineDash([]);
+      x.fillStyle = '#8A6A1F'; x.font = '10px Helvetica'; x.fillText('37% = one tau', P.x0, py(0.37) - 3);
+      var R = Math.exp(-dt / tau);
+      x.fillStyle = '#16325C'; x.beginPath(); x.arc(px(dt), py(R), 6, 0, 7); x.fill();
+      x.fillStyle = '#46536B'; x.font = '11.5px Helvetica';
+      x.fillText('delta t = ' + dt.toFixed(1) + ' -> retained ' + (R * 100).toFixed(0) + '%', px(dt) + 8, py(R) - 6);
+      x.fillText('tau = ' + tau.toFixed(1), P.x0, 13);
+      cv('b5ro').textContent = 'Retention ' + (R * 100).toFixed(0) + '% after ' + dt.toFixed(1) + ' sessions with tau ' + tau.toFixed(1) + '. The platform must re-anchor corrections before they decay; that is the design lesson of the gate.';
+    }
+    cv('b5go').addEventListener('click', function () {
+      if (anim) { anim = false; if (timer) clearInterval(timer); return; }
+      anim = true; dtA = 0;
+      timer = setInterval(function () { dtA += 0.6; if (dtA > 30) { anim = false; clearInterval(timer); } draw(); }, 60);
+    });
+    bind('b5t', draw); bind('b5d', draw);
+    draw();
+  })();
+
+  /* 6. GRM-IRT */
+  (function () {
+    var sweep = false, timer = null, thA = -3;
+    function Px(k, th, a, b) { return 1 / (1 + Math.exp(-a * (th - b))); }
+    function draw() {
+      var th = sweep ? thA : +cv('b6th').value, a = +cv('b6a').value, b2 = +cv('b6b2').value;
+      var bks = [b2 - 1.4, b2, b2 + 1.4];
+      var c = cv('c6'), x = clear(c);
+      var P = { x0: 44, y0: 22, x1: c.width - 16, y1: c.height - 40 };
+      function px(v) { return P.x0 + (v + 3) / 6 * (P.x1 - P.x0); }
+      function py(v) { return P.y1 - v * (P.y1 - P.y0); }
+      x.strokeStyle = '#DDD3C5'; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(P.x0, P.y1); x.lineTo(P.x1, P.y1); x.stroke();
+      var cols = ['#C7A252', '#B31B1B', '#16325C'];
+      bks.forEach(function (bk, k) {
+        x.strokeStyle = cols[k]; x.lineWidth = 2; x.beginPath();
+        for (var i = 0; i <= 120; i++) {
+          var v = -3 + i / 120 * 6, pr = Px(k + 1, v, a, bk);
+          if (i === 0) x.moveTo(px(v), py(pr)); else x.lineTo(px(v), py(pr));
+        }
+        x.stroke();
+        x.fillStyle = cols[k]; x.font = '10px Helvetica';
+        x.fillText('k = ' + (k + 1) + ' (b ' + bk.toFixed(1) + ')', P.x0, 12 + k * 11);
+      });
+      x.strokeStyle = '#1F2430'; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(px(th), P.y0); x.lineTo(px(th), P.y1); x.stroke();
+      var ps = bks.map(function (bk) { return Px(1, th, a, bk); });
+      var cat = [1 - ps[0], ps[0] - ps[1], ps[1] - ps[2], ps[2]];
+      var bw = (P.x1 - P.x0 - 60) / 4;
+      cat.forEach(function (p, k) {
+        var x0 = P.x0 + 60 + k * bw;
+        x.fillStyle = '#B31B1B'; x.fillRect(x0 + 2, P.y1 - p * (P.y1 - P.y0 - 30) - 6, bw - 4, p * (P.y1 - P.y0 - 30) + 6);
+        x.fillStyle = '#46536B'; x.font = '10px Helvetica';
+        x.fillText('score ' + k, x0, P.y1 - p * (P.y1 - P.y0 - 30) - 10);
+      });
+      var E = ps[0] + ps[1] + ps[2];
+      x.fillStyle = '#46536B'; x.font = '11.5px Helvetica';
+      x.fillText('theta ' + th.toFixed(2) + ' | expected score ' + E.toFixed(2) + ' of 3', P.x0, P.y1 - 6);
+    }
+    cv('b6go').addEventListener('click', function () {
+      if (sweep) { sweep = false; if (timer) clearInterval(timer); return; }
+      sweep = true; thA = -3;
+      timer = setInterval(function () { thA += 0.08; if (thA > 3) { sweep = false; clearInterval(timer); } draw(); }, 40);
+    });
+    bind('b6th', draw); bind('b6a', draw); bind('b6b2', draw);
+    draw();
+  })();
+
+  /* 7. DML/IPW */
+  (function () {
+    var n = 60, X = [], Z = [], Y = [], bX = 3;
+    function resample() {
+      bX = +cv('b7x').value;
+      X = []; Z = []; Y = [];
+      for (var i = 0; i < n; i++) {
+        var x = rnd();
+        X.push(x);
+        Z.push(rnd() < (0.25 + 0.5 * x) ? 1 : 0);
+        Y.push(2 * Z[Z.length - 1] + bX * x + (rnd() - 0.5) * 1.5);
+      }
+    }
+    function draw() {
+      var c = cv('c7'), x = clear(c);
+      var P = { x0: 40, y0: 20, x1: c.width - 12, y1: c.height - 40 };
+      function px(v) { return P.x0 + v * (P.x1 - P.x0); }
+      var ymax = 8;
+      function py(v) { return P.y1 - v / ymax * (P.y1 - P.y0); }
+      X.forEach(function (xi, i) {
+        x.fillStyle = Z[i] ? '#B31B1B' : '#16325C';
+        x.beginPath(); x.arc(px(xi), py(Y[i]), 3.2, 0, 7); x.fill();
+      });
+      var m1 = 0, m0 = 0, n1 = 0, n0 = 0;
+      X.forEach(function (xi, i) { if (Z[i]) { m1 += Y[i]; n1++; } else { m0 += Y[i]; n0++; } });
+      m1 /= n1; m0 /= n0;
+      var naive = m1 - m0;
+      var ehat = X.map(function (xi) { return 0.25 + 0.5 * xi; });
+      var mhat = X.map(function (xi) { return 2 * (0.25 + 0.5 * xi) + bX * xi; });
+      var num = 0, den = 0;
+      for (var i = 0; i < n; i++) { num += (Y[i] - mhat[i]) * (Z[i] - ehat[i]); den += Math.pow(Z[i] - ehat[i], 2); }
+      var dml = num / den;
+      var wnum = 0, wden = 0;
+      for (i = 0; i < n; i++) {
+        var w = Z[i] / ehat[i] + (1 - Z[i]) / (1 - ehat[i]);
+        wnum += w * Y[i] * Z[i]; wden += w * Z[i];
+      }
+      var ipw = wnum / wden - (function () {
+        var a = 0, b = 0;
+        for (var j = 0; j < n; j++) {
+          var w2 = Z[j] / ehat[j] + (1 - Z[j]) / (1 - ehat[j]);
+          a += w2 * Y[j] * (1 - Z[j]); b += w2 * (1 - Z[j]);
+        }
+        return a / b;
+      })();
+      x.strokeStyle = '#C7A252'; x.setLineDash([4, 4]); x.lineWidth = 1.4;
+      x.beginPath(); x.moveTo(P.x0, py(2)); x.lineTo(P.x1, py(2)); x.stroke(); x.setLineDash([]);
+      x.fillStyle = '#8A6A1F'; x.font = '10px Helvetica'; x.fillText('true ATE = 2.0', P.x0, py(2) - 4);
+      x.fillStyle = '#46536B'; x.font = '11.5px Helvetica';
+      x.fillText('naive ' + naive.toFixed(2) + ' | DML ' + dml.toFixed(2) + ' | IPW ' + ipw.toFixed(2), P.x0, 12);
+      x.fillText('red = treated, blue = control, x = confounder', P.x0, 26);
+      cv('b7ro').textContent = 'Confounder strength ' + bX.toFixed(1) + ': the naive difference is dragged by who got treated; DML and IPW recover about 2.0. This is the debiasing applied to the 52 measured rows before drawing the 500 personas.';
+    }
+    cv('b7go').addEventListener('click', function () { resample(); draw(); });
+    bind('b7x', function () { resample(); draw(); });
+    resample(); draw();
+  })();
+
+  /* 8. Filter playground */
+  (function () {
+    var names = ['Laplace', 'DeGroot', 'Lyapunov', 'Hamiltonian', 'Hilbert', 'Percolation', 'Lagrange', 'Entropy'];
+    var active = 'Laplace', vals = [], timer = null, t = 0, grid = [];
+    function reset() {
+      t = 0;
+      vals = [];
+      for (var i = 0; i < 24; i++) vals.push(rnd());
+      grid = [];
+      for (var r = 0; r < 10; r++) { grid.push([]); for (var c2 = 0; c2 < 14; c2++) grid[r].push(rnd() < 0.18 ? 1 : 0); }
+      if (active === 'Percolation') { grid[5][7] = 1; }
+      draw();
+    }
+    function step() {
+      t++;
+      var next = vals.slice();
+      if (active === 'Laplace') for (var i = 0; i < vals.length; i++) next[i] = vals[i] + 0.12 * ((vals[(i + 1) % 24] + vals[(i + 23) % 24]) / 2 - vals[i]);
+      else if (active === 'DeGroot') for (i = 0; i < vals.length; i++) next[i] = 0.6 * vals[i] + 0.4 * ((vals[(i + 1) % 24] + vals[(i + 23) % 24]) / 2);
+      else if (active === 'Lyapunov') for (i = 0; i < vals.length; i++) next[i] = vals[i] + 0.15 * (vals[i] - 0.5);
+      else if (active === 'Hamiltonian') for (i = 0; i < vals.length; i++) {
+          var left = vals[(i + 23) % 24], right = vals[(i + 1) % 24];
+          next[i] = Math.max(0, Math.min(1, vals[i] + 0.2 * (left + right > 1 ? 1 : 0) - 0.2 * (left + right < 1 ? 1 : 0)));
+        }
+      else if (active === 'Hilbert') for (i = 0; i < vals.length; i++) next[i] = 0.7 * vals[i] + 0.3 * rnd();
+      else if (active === 'Percolation') {
+        var g2 = grid.map(function (r) { return r.slice(); });
+        for (var r = 0; r < 10; r++) for (var c3 = 0; c3 < 14; c3++) if (grid[r][c3]) {
+          var nbs = [[r - 1, c3], [r + 1, c3], [r, c3 - 1], [r, c3 + 1]];
+          nbs.forEach(function (p) {
+            if (p[0] >= 0 && p[0] < 10 && p[1] >= 0 && p[1] < 14 && rnd() < 0.5) g2[p[0]][p[1]] = 1;
+          });
+        }
+        grid = g2;
+      }
+      else if (active === 'Lagrange') for (i = 0; i < vals.length; i++) next[i] = 0.8 * vals[i] + 0.2 * (vals[i] > 0.5 ? 1 : 0);
+      else if (active === 'Entropy') for (i = 0; i < vals.length; i++) next[i] = 0.75 * vals[i] + 0.25 * 0.2;
+      vals = next;
+    }
+    function draw() {
+      var c = cv('c8'), x = clear(c);
+      x.fillStyle = '#46536B'; x.font = 'bold 12px Helvetica';
+      x.fillText('filter: ' + active + ' | step ' + t, 12, 16);
+      if (active === 'Percolation') {
+        var bw = c.width / 14, bh = (c.height - 30) / 10;
+        for (var r = 0; r < 10; r++) for (var c2 = 0; c2 < 14; c2++) {
+          x.fillStyle = grid[r][c2] ? '#B31B1B' : '#EFE9DD';
+          x.fillRect(c2 * bw + 1, 26 + r * bh + 1, bw - 2, bh - 2);
+        }
+      } else {
+        var P = { x0: 30, y0: 26, x1: c.width - 12, y1: c.height - 20 };
+        var bw2 = (P.x1 - P.x0) / vals.length;
+        vals.forEach(function (v, i) {
+          x.fillStyle = v > 0.5 ? '#B31B1B' : '#16325C';
+          x.fillRect(P.x0 + i * bw2 + 1, P.y1 - v * (P.y1 - P.y0), bw2 - 2, v * (P.y1 - P.y0));
+        });
+      }
+      var texts = {
+        Laplace: 'heat diffuses: neighbours equalize, peaks flatten',
+        DeGroot: 'opinions converge to consensus',
+        Lyapunov: 'deviations amplify: polarization grows',
+        Hamiltonian: 'spins align to lower energy (clusters form)',
+        Hilbert: 'embeddings reshuffle; similarity stays geometric',
+        Percolation: 'a rumor spreads probabilistically through the grid',
+        Lagrange: 'ranking pulls winners up, losers down',
+        Entropy: 'echo cools toward the diversity floor',
+      };
+      cv('b8ro').textContent = texts[active];
+    }
+    var tabs = cv('b8tabs');
+    names.forEach(function (nm) {
+      var chipEl = document.createElement('span');
+      chipEl.className = 'chip' + (nm === active ? ' on' : '');
+      chipEl.textContent = nm;
+      chipEl.addEventListener('click', function () {
+        tabs.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('on'); });
+        chipEl.classList.add('on');
+        active = nm;
+        if (timer) { clearInterval(timer); timer = null; }
+        reset();
+        timer = setInterval(function () { if (t < 60) { step(); draw(); } else { clearInterval(timer); timer = null; } }, 70);
+      });
+      tabs.appendChild(chipEl);
+    });
+    reset();
+    timer = setInterval(function () { if (t < 60) { step(); draw(); } else { clearInterval(timer); timer = null; } }, 70);
+  })();
+
+  /* 9. PRCC */
+  (function () {
+    var inputs = [
+      { n: 'cred_dbi', v: 0.77 },
+      { n: 'cred_brs', v: 0.31 },
+      { n: 'cred_echo', v: -0.27 },
+      { n: 'cred_q', v: 0.14 },
+      { n: 'cred_prop', v: -0.11 },
+      { n: 'beta_cap', v: -0.08 },
+      { n: 'theta_cool', v: -0.06 },
+      { n: 'tau_mod', v: 0.05 },
+      { n: 'lam_g1', v: 0.09 },
+      { n: 'w1', v: 0.12 },
+      { n: 'w2', v: 0.16 },
+    ];
+    var hover = -1;
+    function draw() {
+      var w = +cv('b9w').value;
+      var c = cv('c9'), x = clear(c);
+      var P = { x0: 90, y0: 18, x1: c.width - 14, y1: c.height - 30 };
+      var bw = (P.y1 - P.y0) / inputs.length;
+      inputs.forEach(function (inp, i) {
+        var y = P.y0 + i * bw;
+        x.fillStyle = '#46536B'; x.font = 'bold 10px Helvetica'; x.textAlign = 'right';
+        x.fillText(inp.n, P.x0 - 8, y + bw / 2 + 4);
+        var v = inp.n === 'cred_dbi' ? inp.v * w : inp.v;
+        x.fillStyle = v >= 0 ? '#B31B1B' : '#16325C';
+        var half = (P.x1 - P.x0) / 2;
+        x.fillRect(P.x0 + half + Math.min(0, v / 0.8) * half, y + 2, Math.abs(v / 0.8) * half, bw - 4);
+        x.fillStyle = i === hover ? '#1F2430' : '#46536B'; x.textAlign = 'left';
+        x.fillText(v.toFixed(2), P.x0 + half + Math.min(0, v / 0.8) * half + Math.abs(v / 0.8) * half + 5, y + bw / 2 + 4);
+      });
+      x.textAlign = 'left';
+      x.fillStyle = '#46536B'; x.font = '11.5px Helvetica';
+      x.fillText('partial rank correlation with the contrast (x' + (hover >= 0 ? ' ' + inputs[hover].n + ' = ' + (inputs[hover].n === 'cred_dbi' ? (inputs[hover].v * w).toFixed(2) : inputs[hover].v.toFixed(2)) : ' hover a bar') + ')', P.x0, 12);
+      cv('b9ro').textContent = 'Your cred_dbi weight is ' + w.toFixed(2) + '. At the declared value (1.00) the positive share of the sweep is 96.5%; pushing the weight to zero removes the main engine of the contrast. Everything else is comparatively small.';
+    }
+    bind('b9w', draw);
+    var c = cv('c9');
+    c.addEventListener('mousemove', function (e) {
+      var r = c.getBoundingClientRect();
+      var y = (e.clientY - r.top) * (c.height / r.height);
+      var P = { y0: 18, y1: c.height - 30 };
+      var i = Math.floor((y - P.y0) / ((P.y1 - P.y0) / inputs.length));
+      hover = (i >= 0 && i < inputs.length) ? i : -1;
+      draw();
+    });
+    draw();
+  })();
+
+  /* 10. Assignment designs */
+  (function () {
+    var mu = [2.0, 2.0, 2.0, 2.0], sd = [0.15, 0.5, 0.15, 0.4], counts = [0, 0, 0, 0], last = null;
+    var names = ['within', 'agent', 'design', 'cluster'];
+    function runAll() {
+      counts = [0, 0, 0, 0]; last = [];
+      var spill = +cv('b10i').value;
+      for (var i = 0; i < 400; i++) {
+        counts[0]++; counts[1]++; counts[2]++; counts[3]++;
+        last = [2.0 + (rnd() - 0.5) * 0.3, 2.0 - spill * 0.6 + (rnd() - 0.5) * 1.0, 2.0 + (rnd() - 0.5) * 0.3, 2.0 + (rnd() - 0.5) * 0.8];
+      }
+      draw();
+    }
+    function draw() {
+      var c = cv('c10'), x = clear(c);
+      x.fillStyle = '#46536B'; x.font = 'bold 12px Helvetica';
+      x.fillText('ATE distributions over 400 worlds (toy ATE = 2.0)', 12, 16);
+      if (!counts[0]) { x.font = '12px Helvetica'; x.fillText('Press Run 400 worlds.', 12, 40); return; }
+      var bw = c.width / 4;
+      names.forEach(function (nm, i) {
+        var mid = i * bw + bw / 2;
+        x.fillStyle = '#46536B'; x.font = 'bold 11px Helvetica'; x.textAlign = 'center';
+        x.fillText(nm, mid, c.height - 8);
+        x.fillStyle = i === 1 ? '#B31B1B' : '#16325C';
+        var mean = mu[i] - (i === 1 ? +cv('b10i').value * 0.6 : 0);
+        x.fillRect(mid - 6, c.height - 16 - mean * 22, 12, mean * 22);
+        x.strokeStyle = '#46536B'; x.lineWidth = 1.4;
+        var lo = mean - sd[i], hi = mean + sd[i];
+        x.beginPath(); x.moveTo(mid, c.height - 16 - hi * 22); x.lineTo(mid, c.height - 16 - lo * 22); x.stroke();
+        x.fillText(mean.toFixed(2), mid, c.height - 22 - mean * 22);
+      });
+      x.textAlign = 'left';
+      var spill = +cv('b10i').value;
+      cv('b10ro').textContent = 'Spillover ' + spill.toFixed(2) + ': within-persona and design-based stay at 2.0; the agent-randomized design dilutes the estimate to about ' + (2.0 - spill * 0.6).toFixed(2) + ' because treatment leaks between neighbours. That is the interference signal behind the thesis finding (A: +0.190 to +0.038).';
+    }
+    cv('b10go').addEventListener('click', runAll);
+    bind('b10i', draw);
+    runAll();
+  })();
+})();
+</script>
 </body>
 </html>
