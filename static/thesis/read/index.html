@@ -57,7 +57,7 @@
   </aside>
   <main class="main">
     <div class="toolbar">
-      <span class="pageinfo" id="pageInfo">Page 1 of 359</span>
+      <span class="pageinfo" id="pageInfo">Page 1 of 361</span>
       <span class="hint">Use â† â†’ keys to move. The page list follows the PDF bookmarks.</span>
     </div>
     <div class="chapter" id="chapter"></div>
@@ -68,7 +68,7 @@
   </main>
 </div>
 <script>
-const TOTAL = 359;
+const TOTAL = 361;
 const IMG = (n) => `../pages/page-${String(n).padStart(3,'0')}.webp`;
 let manifest = null;
 let current = 1;
@@ -122,5 +122,6 @@ document.addEventListener('keydown', (e)=>{ if(e.target.tagName==='INPUT') retur
 </script>
 </body>
 </html>
+
 
 

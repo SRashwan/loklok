@@ -1,5 +1,5 @@
 {
-  "pages": 359,
+  "pages": 361,
   "toc": [
     {
       "level": 1,
@@ -1002,549 +1002,554 @@
       "page": 247
     },
     {
+      "level": 3,
+      "title": "Randomized-Assignment Triangulation",
+      "page": 248
+    },
+    {
       "level": 2,
       "title": "Calibration and Bayesian Update",
-      "page": 248
+      "page": 250
     },
     {
       "level": 3,
       "title": "Calibration to the Refined Sample",
-      "page": 249
+      "page": 251
     },
     {
       "level": 3,
       "title": "Bayesian Update of Model Parameters",
-      "page": 249
+      "page": 251
     },
     {
       "level": 2,
       "title": "Result of the Trade-off for Platform Design",
-      "page": 250
+      "page": 253
     },
     {
       "level": 1,
       "title": "Discussion and Conclusion",
-      "page": 252
+      "page": 254
     },
     {
       "level": 2,
       "title": "What the Results Mean for EST",
-      "page": 252
+      "page": 254
     },
     {
       "level": 3,
       "title": "RQ1: Structural Determination",
-      "page": 253
+      "page": 255
     },
     {
       "level": 3,
       "title": "RQ2: Diversity and the Thermodynamic Analogy",
-      "page": 254
+      "page": 256
     },
     {
       "level": 3,
       "title": "RQ3: Psychometric Accountability",
-      "page": 254
+      "page": 256
     },
     {
       "level": 3,
       "title": "RQ4: Integration of the Constructs",
-      "page": 255
-    },
-    {
-      "level": 2,
-      "title": "Relation to Mass Communication Scholarship",
-      "page": 255
-    },
-    {
-      "level": 2,
-      "title": "Implications for Platform Design",
-      "page": 256
-    },
-    {
-      "level": 2,
-      "title": "Limitations and Robustness",
       "page": 257
     },
     {
       "level": 2,
-      "title": "Recommendations for Further Research",
+      "title": "Relation to Mass Communication Scholarship",
+      "page": 257
+    },
+    {
+      "level": 2,
+      "title": "Implications for Platform Design",
+      "page": 258
+    },
+    {
+      "level": 2,
+      "title": "Limitations and Robustness",
       "page": 259
+    },
+    {
+      "level": 2,
+      "title": "Recommendations for Further Research",
+      "page": 261
     },
     {
       "level": 2,
       "title": "Integrated Contribution to Social Media Radio Research",
-      "page": 259
+      "page": 261
     },
     {
       "level": 3,
       "title": "Practical Recommendations Matched to the Evidence",
-      "page": 260
+      "page": 262
     },
     {
       "level": 3,
       "title": "A Sequenced Research Programme",
-      "page": 260
+      "page": 262
     },
     {
       "level": 3,
       "title": "Hallucination as a Measured Phenomenon, Not Only a Bug",
-      "page": 262
-    },
-    {
-      "level": 2,
-      "title": "Mixed-Methods Interpretation: RQ5 and RQ6",
-      "page": 263
-    },
-    {
-      "level": 3,
-      "title": "What the Prototype FGD Adds",
       "page": 264
     },
     {
       "level": 2,
-      "title": "Student Rating and the Meaning of Impact",
+      "title": "Mixed-Methods Interpretation: RQ5 and RQ6",
       "page": 265
+    },
+    {
+      "level": 3,
+      "title": "What the Prototype FGD Adds",
+      "page": 267
+    },
+    {
+      "level": 2,
+      "title": "Student Rating and the Meaning of Impact",
+      "page": 267
     },
     {
       "level": 2,
       "title": "The Final Calibrated Upgrade: What It Adds and What It Does Not",
-      "page": 266
+      "page": 268
     },
     {
       "level": 2,
       "title": "Conclusion",
-      "page": 267
+      "page": 270
     },
     {
       "level": 1,
       "title": "Supplied Field Questionnaire and Scoring Key",
-      "page": 282
+      "page": 284
     },
     {
       "level": 2,
       "title": "Information and Consent Wording",
-      "page": 282
+      "page": 284
     },
     {
       "level": 2,
       "title": "Section 0: About You",
-      "page": 283
+      "page": 285
     },
     {
       "level": 2,
       "title": "Section A: Judging a Radio Broadcaster",
-      "page": 283
+      "page": 285
     },
     {
       "level": 2,
       "title": "Section B: The Broadcast Experience",
-      "page": 285
+      "page": 287
     },
     {
       "level": 2,
       "title": "Section C: Overall Rating",
-      "page": 285
+      "page": 287
     },
     {
       "level": 2,
       "title": "Scoring and Analysis Boundaries",
-      "page": 285
+      "page": 287
     },
     {
       "level": 1,
       "title": "Instrument Calibration Report: Post-Broadcast Battery",
-      "page": 287
+      "page": 289
     },
     {
       "level": 2,
       "title": "Protocol",
-      "page": 287
+      "page": 289
     },
     {
       "level": 2,
       "title": "Item-Level Diagnostics",
-      "page": 287
+      "page": 289
     },
     {
       "level": 2,
       "title": "Collapse Decision",
-      "page": 288
+      "page": 290
     },
     {
       "level": 1,
       "title": "Historical Simulation and Bayesian Analysis Summary",
-      "page": 289
+      "page": 291
     },
     {
       "level": 2,
       "title": "Primary Endpoints",
-      "page": 289
+      "page": 291
     },
     {
       "level": 2,
       "title": "Results",
-      "page": 289
-    },
-    {
-      "level": 1,
-      "title": "Measurement Invariance: Follow-Up Procedure",
       "page": 291
     },
     {
       "level": 1,
-      "title": "Formal Assumptions and Sample-Size Planning",
+      "title": "Measurement Invariance: Follow-Up Procedure",
       "page": 293
+    },
+    {
+      "level": 1,
+      "title": "Formal Assumptions and Sample-Size Planning",
+      "page": 295
     },
     {
       "level": 2,
       "title": "Anchored Reputation-Update Contraction",
-      "page": 293
+      "page": 295
     },
     {
       "level": 2,
       "title": "Scope of the Free-Energy Analogy",
-      "page": 293
+      "page": 295
     },
     {
       "level": 2,
       "title": "Planning Calculation and Actual Recruitment",
-      "page": 294
+      "page": 296
     },
     {
       "level": 1,
       "title": "Qualitative Codebook, Case Audit, and Integration Record",
-      "page": 296
+      "page": 298
     },
     {
       "level": 2,
       "title": "Audit and Interpretive Scope",
-      "page": 299
+      "page": 301
     },
     {
       "level": 1,
       "title": "Prototype Focus-Group Report and Evidence Audit",
-      "page": 300
+      "page": 302
     },
     {
       "level": 2,
       "title": "Purpose and Evidentiary Scope",
-      "page": 300
+      "page": 302
     },
     {
       "level": 2,
       "title": "Study Context and Reporting Completeness",
-      "page": 301
+      "page": 303
     },
     {
       "level": 2,
       "title": "Analytical Approach and Source Verification",
-      "page": 304
-    },
-    {
-      "level": 3,
-      "title": "A Provisional, Framework-Informed Reading",
-      "page": 304
-    },
-    {
-      "level": 3,
-      "title": "Language, Translation, and Quotations",
-      "page": 304
-    },
-    {
-      "level": 3,
-      "title": "Proposed Verification Sequence",
-      "page": 305
-    },
-    {
-      "level": 2,
-      "title": "Review of the Supplemental Analysis Export",
       "page": 306
     },
     {
       "level": 3,
-      "title": "Internal Consistency and Translation Checks",
-      "page": 307
+      "title": "A Provisional, Framework-Informed Reading",
+      "page": 306
     },
     {
       "level": 3,
-      "title": "What Changes in the Interpretation",
-      "page": 308
+      "title": "Language, Translation, and Quotations",
+      "page": 306
+    },
+    {
+      "level": 3,
+      "title": "Proposed Verification Sequence",
+      "page": 307
     },
     {
       "level": 2,
-      "title": "Provisional Thematic Interpretation",
+      "title": "Review of the Supplemental Analysis Export",
+      "page": 308
+    },
+    {
+      "level": 3,
+      "title": "Internal Consistency and Translation Checks",
       "page": 309
     },
     {
       "level": 3,
-      "title": "FGD-T1: Contextual Listening and Selective Publication",
+      "title": "What Changes in the Interpretation",
       "page": 310
     },
     {
-      "level": 3,
-      "title": "FGD-T2: Collaborative Broadcasting and Choice",
+      "level": 2,
+      "title": "Provisional Thematic Interpretation",
       "page": 311
     },
     {
       "level": 3,
-      "title": "FGD-T3: Institutional Eligibility, Trust, and Privacy",
+      "title": "FGD-T1: Contextual Listening and Selective Publication",
       "page": 312
     },
     {
       "level": 3,
-      "title": "FGD-T4: Interface Cues, Invitations, and Idle Content",
-      "page": 313
-    },
-    {
-      "level": 2,
-      "title": "Working Codebook and Relationships",
+      "title": "FGD-T2: Collaborative Broadcasting and Choice",
       "page": 313
     },
     {
       "level": 3,
-      "title": "Relationship to Epistemic Systems Theory",
+      "title": "FGD-T3: Institutional Eligibility, Trust, and Privacy",
+      "page": 314
+    },
+    {
+      "level": 3,
+      "title": "FGD-T4: Interface Cues, Invitations, and Idle Content",
       "page": 315
     },
     {
       "level": 2,
-      "title": "Lexical Counts: Audit and Proposed Reanalysis",
-      "page": 316
+      "title": "Working Codebook and Relationships",
+      "page": 315
+    },
+    {
+      "level": 3,
+      "title": "Relationship to Epistemic Systems Theory",
+      "page": 317
     },
     {
       "level": 2,
-      "title": "Reported Recording Characteristics",
+      "title": "Lexical Counts: Audit and Proposed Reanalysis",
       "page": 318
     },
     {
       "level": 2,
-      "title": "Observational Evidence and Timing Audit",
+      "title": "Reported Recording Characteristics",
       "page": 320
     },
     {
       "level": 2,
-      "title": "Reflexivity, Ethics, and Inclusive Interpretation",
+      "title": "Observational Evidence and Timing Audit",
       "page": 322
     },
     {
       "level": 2,
-      "title": "Design Implications and Further Evaluation",
-      "page": 323
+      "title": "Reflexivity, Ethics, and Inclusive Interpretation",
+      "page": 324
     },
     {
       "level": 2,
-      "title": "Limitations, Transferability, and Conclusion",
+      "title": "Design Implications and Further Evaluation",
       "page": 325
     },
     {
       "level": 2,
-      "title": "Evidence Requirements Before Study Integration",
-      "page": 326
+      "title": "Limitations, Transferability, and Conclusion",
+      "page": 327
     },
     {
-      "level": 1,
-      "title": "Student Rating Measurement Specification",
+      "level": 2,
+      "title": "Evidence Requirements Before Study Integration",
       "page": 328
     },
     {
       "level": 1,
-      "title": "Source Availability and Reproduction",
+      "title": "Student Rating Measurement Specification",
       "page": 330
+    },
+    {
+      "level": 1,
+      "title": "Source Availability and Reproduction",
+      "page": 332
     },
     {
       "level": 2,
       "title": "What Can Be Reproduced Now",
-      "page": 330
+      "page": 332
     },
     {
       "level": 2,
       "title": "What Requires Additional Material",
-      "page": 330
+      "page": 332
     },
     {
       "level": 2,
       "title": "Implementation and Measurement Boundaries",
-      "page": 331
+      "page": 333
     },
     {
       "level": 2,
       "title": "Reserved Results: LLM Platform-in-the-Loop Extension",
-      "page": 331
+      "page": 333
     },
     {
       "level": 3,
       "title": "Reserved Agent Hallucination and Divergence Diagnostics",
-      "page": 332
+      "page": 334
     },
     {
       "level": 3,
       "title": "Reserved FGD-Informed Rule-Based and LLM Comparisons",
-      "page": 333
+      "page": 335
     },
     {
       "level": 1,
       "title": "Defense Readiness Map",
-      "page": 335
+      "page": 337
     },
     {
       "level": 2,
       "title": "Operational Meaning of ``Impact'' in the Title",
-      "page": 335
+      "page": 337
     },
     {
       "level": 2,
       "title": "RQ–Hypothesis–Evidence Alignment Matrix",
-      "page": 336
+      "page": 338
     },
     {
       "level": 2,
       "title": "Calibration, Validation, and Generalisation",
-      "page": 336
+      "page": 338
     },
     {
       "level": 2,
       "title": "Broadcaster Reputation Score (BRS): Consolidated Status",
-      "page": 337
+      "page": 339
     },
     {
       "level": 2,
       "title": "Pending Computational Validation",
-      "page": 337
+      "page": 339
     },
     {
       "level": 1,
       "title": "Reproducibility and Final Upgrade Archive",
-      "page": 339
+      "page": 341
     },
     {
       "level": 2,
       "title": "Archive Structure",
-      "page": 339
+      "page": 341
     },
     {
       "level": 2,
       "title": "Exact Reproduction Commands",
-      "page": 340
-    },
-    {
-      "level": 2,
-      "title": "Code Map",
-      "page": 341
-    },
-    {
-      "level": 2,
-      "title": "Final Claim–Evidence Matrix",
-      "page": 341
-    },
-    {
-      "level": 2,
-      "title": "Defense Questions Specific to the Upgrade",
       "page": 342
     },
     {
       "level": 2,
-      "title": "Final Quality Gate",
+      "title": "Code Map",
+      "page": 343
+    },
+    {
+      "level": 2,
+      "title": "Final Claim–Evidence Matrix",
+      "page": 343
+    },
+    {
+      "level": 2,
+      "title": "Defense Questions Specific to the Upgrade",
       "page": 344
+    },
+    {
+      "level": 2,
+      "title": "Final Quality Gate",
+      "page": 346
     },
     {
       "level": 1,
       "title": "Review Package and Versioned Reproduction",
-      "page": 345
-    },
-    {
-      "level": 2,
-      "title": "Available and Pending Evidence",
-      "page": 345
-    },
-    {
-      "level": 2,
-      "title": "Regeneration Without Silent Changes",
-      "page": 346
-    },
-    {
-      "level": 2,
-      "title": "Research Notes and Graph",
       "page": 347
     },
     {
       "level": 2,
-      "title": "Submission Checks",
+      "title": "Available and Pending Evidence",
+      "page": 347
+    },
+    {
+      "level": 2,
+      "title": "Regeneration Without Silent Changes",
       "page": 348
+    },
+    {
+      "level": 2,
+      "title": "Research Notes and Graph",
+      "page": 349
+    },
+    {
+      "level": 2,
+      "title": "Submission Checks",
+      "page": 350
     },
     {
       "level": 1,
       "title": "List of Symbols and Abbreviations",
-      "page": 349
+      "page": 351
     },
     {
       "level": 2,
       "title": "EST Symbols",
-      "page": 349
+      "page": 351
     },
     {
       "level": 2,
       "title": "Measurement Symbols",
-      "page": 350
+      "page": 352
     },
     {
       "level": 2,
       "title": "Abbreviations",
-      "page": 351
+      "page": 353
     },
     {
       "level": 1,
       "title": "Versioned Evidence Update",
-      "page": 353
+      "page": 355
     },
     {
       "level": 2,
       "title": "Input Status",
-      "page": 353
+      "page": 355
     },
     {
       "level": 2,
       "title": "FGD Narrative Integration",
-      "page": 353
+      "page": 355
     },
     {
       "level": 1,
       "title": "Statistical Audit, Bayesian Diagnostics, and Reproducibility",
-      "page": 354
+      "page": 356
     },
     {
       "level": 2,
       "title": "Provenance Split of the Audit Blocks",
-      "page": 354
+      "page": 356
     },
     {
       "level": 2,
       "title": "Bayesian Diagnostics Certificate",
-      "page": 354
+      "page": 356
     },
     {
       "level": 3,
       "title": "Fresh SMC-ABC Calibration",
-      "page": 354
+      "page": 356
     },
     {
       "level": 3,
       "title": "Parsed Beta-Binomial SR' Consensus",
-      "page": 355
+      "page": 357
     },
     {
       "level": 3,
       "title": "Inherited PyMC Hierarchical Model",
-      "page": 356
+      "page": 358
     },
     {
       "level": 2,
       "title": "Joint Display: Synthetic Agents Against Real Qualitative Records",
-      "page": 356
+      "page": 358
     },
     {
       "level": 2,
       "title": "Reproducibility Manifest",
-      "page": 357
+      "page": 359
     }
   ]
 }

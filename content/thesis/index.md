@@ -24,8 +24,8 @@ November 2026
 
 ## Read the full thesis
 
-- [**Read the full thesis page by page**](read/) ? all 359 pages in the browser.
-- [Complete thesis PDF](thesis_final.pdf) - 359 pages, 42/42 package checks passed.
+- [**Read the full thesis page by page**](read/) ? all 361 pages in the browser.
+- [Complete thesis PDF](thesis_final.pdf) - 361 pages, 43/43 package checks passed.
 - [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) - 20 pages, English first, Arabic second.
 - [English summary](Supervisor_Summary_EN.pdf)
 - [Arabic summary](Supervisor_Summary_AR.pdf)
@@ -41,7 +41,7 @@ The 52-student wave is measured, cross-sectional, and descriptive. The 500 perso
 
 This thesis asks whether the design of a social media radio platform can improve how university students judge what they hear, without losing the audience. It proposes LOKLOK, a platform built on four ideas: a reputation score for broadcasters, recommendations constrained to keep viewpoints varied, moderation with prompts for reflection, and a built-in measurement surface. Epistemic Systems Theory is offered as the framework that links these design choices to audience judgment.
 
-A live trial was not possible, so the evidence has three layers. The measured layer is a questionnaire completed by 52 students (60 were collected and 8 were removed) who were riding Uber in 6th of October City, Giza. Perceived benefit averaged 5.12 on a seven-point scale (SD = 0.87) and correlated with the overall star rating (rho = .67). The credibility and perceived-benefit scales were both reliable (alpha = .96 and .95), but the factor model fitted poorly, so no claim of structural validity is made. The qualitative layer, a group-session transcript and a researcher's self-report, was used to check assumptions and contains little participant speech about the mechanisms themselves. Three independent coders labelled 193 segments with pairwise Cohen's kappa of .76 to .86, but a local 7B model (micro-F1 .19 zero-shot, .32 with human-gold examples) and a first-pass assistant coding (.45) did not reach the code-level reliability gate for any mechanism code; the qualitative layer therefore remains an assumption audit rather than model evidence. The modelling layer is a calibrated in-silico experiment: 500 synthetic personas, drawn from the debiased distribution anchored in the 52 respondents, were run through eight combinations of three design components over 18 listening sessions, with the status-quo arm anchored to the measured mean.
+A live trial was not possible, so the evidence has three layers. The measured layer is a questionnaire completed by 52 students (60 were collected and 8 were removed) who were riding Uber in 6th of October City, Giza. Perceived benefit averaged 5.12 on a seven-point scale (SD = 0.87) and correlated with the overall star rating (rho = .67). The credibility and perceived-benefit scales were both reliable (alpha = .96 and .95), but the factor model fitted poorly, so no claim of structural validity is made. The qualitative layer, a group-session transcript and a researcher's self-report, was used to check assumptions and contains little participant speech about the mechanisms themselves. Three independent coders labelled 193 segments with pairwise Cohen's kappa of .76 to .86, but a local 7B model (micro-F1 .19 zero-shot, .32 with human-gold examples) and a first-pass assistant coding (.45) did not reach the code-level reliability gate for any mechanism code; the qualitative layer therefore remains an assumption audit rather than model evidence. A randomized-assignment triangulation of the same eight cells kept the diversity component (+0.63) and the engagement trade-off in every design but attenuated the BRS component from +0.19 within-persona to +0.04 between agents. The modelling layer is a calibrated in-silico experiment: 500 synthetic personas, drawn from the debiased distribution anchored in the 52 respondents, were run through eight combinations of three design components over 18 listening sessions, with the status-quo arm anchored to the measured mean.
 
 In this model the full design raised the evaluative rating by 0.83 points (95% interval 0.78 to 0.88) and a competence-format rating by 11.3 points on a 100-point scale, while engagement fell by 0.18 on a 0 to 1 scale. Most of the gain came from the diversity component, with moderation contributing mainly through its interaction with it. Across 256 draws that varied the assumed weights and mechanism parameters, the contrast was positive in 96.5% of cases but ranged from -0.24 to +1.81, and it depended chiefly on one declared link between exposure diversity and credibility.
 
@@ -50,6 +50,20 @@ These are model-based implications, not treatment effects. The sample is a conve
 ## Qualitative machine-coding audit
 
 Three independent human coders labelled 193 usable FGD/self-report segments on a 25-code codebook. Pairwise Cohen's kappa was .762, .852, and .861, and the majority label formed the human gold. The local Qwen2.5-7B zero-shot pass reached micro-F1 .193, with 32.0% of its evidence quotes not exact substrings of the source. A leakage-safe five-fold pass with one human-gold exemplar per target raised micro-F1 to .320 and lowered fabrication to 16.1%. A first-pass Claude coding reached micro-F1 .452, with I01 and I07 usable and C12, I03, I06, and I13 descriptive only. No mechanism code C01 to C05 passed the usability gate in either Qwen condition: C05 had eight reference positives but was dropped at kappa .259 zero-shot and .323 with gold examples. C04 reached .659 with gold examples but had only five positives and remained insufficient. E1 to E3 were therefore not run. The qualitative layer remains an assumption audit and candidate design vocabulary, not a calibration target or an input to the simulated contrast.
+
+## Randomized ABM triangulation
+
+The eight A/B/C cells were re-analyzed under four designs: the saved within-persona full factorial (A), an agent-randomized ABM with 40 independent worlds (B), a design-based randomization with 400 assignment draws and no interference, and a cluster-randomized ABM with 20 worlds (C).
+
+- The contrast stays positive in every design: +0.827 within-persona, +0.630 between agents, +0.807 design-based, +0.659 cluster-randomized.
+- The engagement cost is the most stable quantity: -0.217, -0.232, -0.217, -0.226.
+- The diversity main effect is nearly identical everywhere (+0.626, +0.628, +0.627).
+- The BRS main effect collapses from +0.190 within-persona to +0.038 between agents, then recovers to +0.182 in the interference-free design. BRS diffusion is the interference-sensitive component.
+- Placebo sham factor D: -0.003 on SReval, -0.082 on SRcomp. Pre-treatment negative-control outcome: +0.001, -0.008, 0.000.
+- Mechanism directions correct: B raised chosen diversity +1.299, A raised BRS +0.019, B×C lowered echo -0.340.
+- Qualitative gate remains unmet (0 of 4 mechanism codes usable). Exploratory E1 moved the sweep median from +0.567 to +0.585; exploratory E2 trait shifts changed the between-agent contrast by -0.043 and -0.042. E3 remains not run.
+
+All of this is model-conditional triangulation, not a human causal claim.
 
 ## Key results
 
@@ -222,7 +236,7 @@ The defensible conclusion is that architecture, audience judgment, and measureme
    `python 02_code/pipeline/generate_figures.py --root .`
 5. Optional R checks: `Rscript 02_code/R/01_measured_wave.R`, `Rscript 02_code/R/02_cfa_invariance.R`, `Rscript 02_code/R/03_bayes_crosscheck.R`.
 6. Compile the thesis with pdfLaTeX in three passes.
-7. Run `python 07_validation/validate_package.py` and confirm 42/42 checks.
+7. Run `python 07_validation/validate_package.py` and confirm 43/43 checks.
 
 ### 8.3 Planning logic
 
@@ -325,6 +339,7 @@ Rashwan, S. M. A. (2026). *The Social Media Radio Innovation and Its Impact on U
 ## Integrity note
 
 The measured N=52 matrix is never altered to improve significance. Simulated results are never presented as measured human effects. The synthetic NMLS profile is a measurement diagnostic, not human media literacy. The Hamiltonian is a formal diagnostic, not a physical law. The BRS is a proposed metric, not a validated consequential ranking instrument.
+
 
 
 
