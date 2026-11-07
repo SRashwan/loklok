@@ -26,8 +26,8 @@
   .main { padding:18px 22px 34px 22px; }
   .toolbar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 12px 0; }
   .toolbar .pageinfo { color:var(--muted); font-size:13px; margin-left:4px; }
-  .stage { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
-  .stage img { display:block; width:100%; height:auto; border:1px solid #eef1f5; background:#fff; }
+  .stage { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px; box-shadow:0 1px 2px rgba(0,0,0,.04); overflow:auto; }
+  .stage img { display:block; width:var(--zoom,100%); max-width:none; height:auto; border:1px solid #eef1f5; background:#fff; }
   .stage .caption { color:var(--muted); font-size:12px; margin-top:8px; text-align:center; }
   .chapter { font-weight:600; margin:4px 0 10px 0; color:#111; }
   .hint { color:var(--muted); font-size:12px; }
@@ -43,6 +43,7 @@
   <h1>LOKLOK Thesis — Full Reader</h1>
   <a class="btn" href="../">Thesis overview</a>
   <a class="btn" href="../thesis_final.pdf">Download PDF</a>
+  <button id="titlePage" type="button">Title page</button>
   <div class="spacer"></div>
   <button id="prev" type="button">← Previous</button>
   <input id="pageInput" type="number" min="1" value="1" aria-label="Page number" style="width:78px">
@@ -68,7 +69,7 @@
 </div>
 <script>
 const TOTAL = 355;
-const IMG = (n) => `../pages/page-${String(n).padStart(3,'0')}.jpg`;
+const IMG = (n) => `../pages/page-${String(n).padStart(3,'0')}.webp`;
 let manifest = null;
 let current = 1;
 
@@ -112,6 +113,8 @@ fetch('../pages/manifest.json').then(r=>r.json()).then(data=>{
   setPage(q || 1, false);
 }).catch(()=>{ setPage(1,false); });
 document.getElementById('prev').onclick = ()=>setPage(current-1);
+document.getElementById('titlePage').onclick = ()=>setPage(1);
+document.getElementById('zoom').onchange = (e)=>{ document.documentElement.style.setProperty('--zoom', e.target.value + '%'); };
 document.getElementById('next').onclick = ()=>setPage(current+1);
 document.getElementById('go').onclick = ()=>setPage(document.getElementById('pageInput').value);
 document.getElementById('pageInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') setPage(e.target.value); });
