@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The Epistemic Platform Blueprint: how to build platforms that raise epistemic value, from the LOKLOK thesis: algorithms, measurement, psychometrics, EMA, and evaluation.">
+<title>Platform Blueprint | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+.diag{background:#fff;border:1px solid var(--line);padding:10px;overflow-x:auto;}
+.diag .node{cursor:pointer;}
+.diag .node rect{fill:#16325C;stroke:#0E1420;transition:fill .2s;}
+.diag .node text{fill:#fff;font-size:11.5px;font-family:var(--sans);}
+.diag .node:hover rect,.diag .node:focus rect{fill:var(--crimson);outline:none;}
+.diag .node.side rect{fill:#8A6A1F;}
+.diag .edge{stroke:#C7A252;stroke-width:1.6;fill:none;marker-end:url(#arr);}
+.explain{background:var(--paper-2);border:1px solid var(--line);padding:14px 16px;margin:12px 0;font-size:14.5px;}
+.explain b{color:var(--crimson-dark);}
+.steps{counter-reset:st;margin:14px 0;}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;margin:10px 0;background:#fff;border:1px solid var(--line);padding:12px 14px;}
+.step .n{counter-increment:st;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--crimson);}
+.step .n::after{content:counter(st);}
+.step .t{font-size:14.5px;}
+.step .t b{color:var(--ink);}
+.eq{background:#fff;border:1px solid var(--line);padding:14px 16px;margin:12px 0;overflow-x:auto;}
+.rolegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:14px 0;}
+.role{border:1px solid var(--line);background:#fff;padding:16px;border-top:3px solid var(--gold);}
+.role h3{margin:0 0 8px;font-size:17px;}
+.role li{font-size:13.5px;margin:5px 0;}
+.antip{border:1px solid #E4C1C1;background:#FBF3F3;padding:12px 14px;margin:10px 0;font-size:14px;}
+.pseudo{background:#101824;color:#C9D8EA;border-radius:6px;padding:14px;margin:12px 0;font-size:12.5px;line-height:1.6;overflow-x:auto;font-family:Consolas,Menlo,monospace;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="abstract.html">Abstract</a>
+      <a href="guide.html">Reading Guide</a>
+      <a href="algorithms.html">Algorithms</a>
+      <a href="references.html">References</a>
+      <a href="results.html">Results</a>
+      <a href="interactive/">Interactive</a>
+      <a href="blueprint.html">Blueprint</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="university.html">University</a>
+      <a href="read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Platform Blueprint</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Blueprint sections">
+      <h3>Blueprint</h3>
+      <a class="cur" href="blueprint.html">Contents</a>
+      <a href="#principles">1. Design principles</a>
+      <a href="#diagram">2. The platform stack</a>
+      <a href="#feed">3. The home feed algorithm</a>
+      <a href="#ranking">4. Rankings and reputation</a>
+      <a href="#measure">5. Measurement and psychometrics</a>
+      <a href="#ema">6. EMA, dedicated section</a>
+      <a href="#launch">7. Evaluation before launch</a>
+      <a href="#roles">8. Playbooks by role</a>
+      <a href="#antipatterns">9. Anti-patterns</a>
+    </nav>
+    <article>
+      <p class="kicker">A practical reference &middot; built from the thesis findings</p>
+      <h1>The Epistemic Platform Blueprint</h1>
+      <div class="double-rule"></div>
+      <p class="lede">How to build a platform that raises what people are able to judge, not just what
+      they click. This page converts Epistemic Systems Theory, the LOKLOK mechanisms, and the
+      calibrated-experiment findings into a replicable recipe for researchers, developers, and
+      platform teams. Every number links back to the thesis; the interactive implementations are in
+      the <a href="interactive/">laboratory</a>.</p>
+
+      <h2 id="principles">1. Six design principles</h2>
+      <div class="break" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;">
+        <div class="cell" style="background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;"><b>P1 Anchor reputation.</b> Every source carries a reputation score updated by evidence (BRS). Without an anchor, the feed optimizes noise.</div>
+        <div class="cell" style="background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;"><b>P2 Constrain diversity.</b> Rank by trust plus viewpoint spread (MORE). Diversity is a hard constraint, not a decoration: B carries the contrast (+0.6265).</div>
+        <div class="cell" style="background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;"><b>P3 Measure with accountability.</b> Publish reliability and validity separately; never claim structure the data did not show.</div>
+        <div class="cell" style="background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;"><b>P4 Close the participation loop.</b> Moderation reflects and invites correction (ERIC); corrections have a half-life, so re-anchor quickly (the gate).</div>
+        <div class="cell" style="background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;"><b>P5 Evaluate assignment-robustly.</b> A claim must survive four assignment designs and placebo controls; the BRS path did not, and that is a finding, not a failure.</div>
+        <div class="cell" style="background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;"><b>P6 Report the null.</b> The qualitative gate was not met, and the thesis says so. A pre-set rule you keep is worth more than a threshold you moved.</div>
+      </div>
+
+      <h2 id="diagram">2. The platform stack, clickable</h2>
+      <div class="diag rv" style="text-align:center;">
+        <svg viewBox="0 0 1080 500" role="img" aria-label="Block diagram of the epistemic platform stack; click a node to read its explanation">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C7A252"/></marker>
+          </defs>
+          <g class="node" tabindex="0" data-exp="node1"><rect x="30" y="180" width="150" height="64" rx="4"/><text x="105" y="207" text-anchor="middle">Content pool</text><text x="105" y="226" text-anchor="middle">(episodes, posts, sources)</text></g>
+          <g class="node" tabindex="0" data-exp="node2"><rect x="220" y="180" width="150" height="64" rx="4"/><text x="295" y="207" text-anchor="middle">Debias DML + IPW</text><text x="295" y="226" text-anchor="middle">(covariate balance)</text></g>
+          <g class="node" tabindex="0" data-exp="node3"><rect x="410" y="180" width="150" height="64" rx="4"/><text x="485" y="207" text-anchor="middle">Persona prior Q0</text><text x="485" y="226" text-anchor="middle">(spectral manifold)</text></g>
+          <g class="node" tabindex="0" data-exp="node4"><rect x="600" y="60" width="170" height="64" rx="4"/><text x="685" y="87" text-anchor="middle">BRS reputation</text><text x="685" y="106" text-anchor="middle">(anchored DeGroot)</text></g>
+          <g class="node" tabindex="0" data-exp="node5"><rect x="600" y="144" width="170" height="64" rx="4"/><text x="685" y="171" text-anchor="middle">MORE ranking</text><text x="685" y="190" text-anchor="middle">(diversity constraint)</text></g>
+          <g class="node" tabindex="0" data-exp="node6"><rect x="600" y="228" width="170" height="64" rx="4"/><text x="685" y="255" text-anchor="middle">ERIC moderation</text><text x="685" y="274" text-anchor="middle">(reflect, invite, correct)</text></g>
+          <g class="node" tabindex="0" data-exp="node7"><rect x="600" y="312" width="170" height="64" rx="4"/><text x="685" y="339" text-anchor="middle">Cooling + Zewail gate</text><text x="685" y="358" text-anchor="middle">(echo, attention tau)</text></g>
+          <g class="node" tabindex="0" data-exp="node8"><rect x="820" y="180" width="210" height="64" rx="4"/><text x="925" y="205" text-anchor="middle">Session loop x18</text><text x="925" y="224" text-anchor="middle">(eight filters, 500 personas)</text></g>
+          <g class="node" tabindex="0" data-exp="node9"><rect x="360" y="330" width="200" height="64" rx="4"/><text x="460" y="357" text-anchor="middle">Measurement surface</text><text x="460" y="376" text-anchor="middle">(SR eval, SR comp, engagement)</text></g>
+          <g class="node side" tabindex="0" data-exp="node10"><rect x="360" y="430" width="200" height="52" rx="4"/><text x="460" y="453" text-anchor="middle">EMA probes</text><text x="460" y="468" text-anchor="middle">(pre, post, echo, weekly)</text></g>
+          <g class="node side" tabindex="0" data-exp="node11"><rect x="660" y="430" width="210" height="52" rx="4"/><text x="765" y="453" text-anchor="middle">Evaluation layer</text><text x="765" y="468" text-anchor="middle">(triangulation, placebo, sweep)</text></g>
+          <path class="edge" d="M180,212 L218,212"/>
+          <path class="edge" d="M370,212 L408,212"/>
+          <path class="edge" d="M560,212 L598,212"/>
+          <path class="edge" d="M685,124 L685,142"/>
+          <path class="edge" d="M685,208 L685,226"/>
+          <path class="edge" d="M685,292 L685,310"/>
+          <path class="edge" d="M770,212 L818,212"/>
+          <path class="edge" d="M925,244 L925,300 L460,300 L460,328"/>
+          <path class="edge" d="M460,394 L460,428"/>
+          <path class="edge" d="M560,456 L658,456"/>
+          <path class="edge" d="M460,428 L320,428 L320,212 L218,212" stroke-dasharray="6 5"/>
+          <path class="edge" d="M870,456 L870,380 L932,380 L932,246" stroke-dasharray="6 5"/>
+        </svg>
+      </div>
+      <div class="explain" id="diagexp"><b>Click a node</b> in the diagram to read what it does and where the thesis reports it. Dashed arrows are feedback loops: reputation evidence flows back into BRS, and the evaluation layer audits the loop.</div>
+
+      <h2 id="feed">3. The home feed algorithm, step by step</h2>
+      <p>The recipe the thesis's feed applet implements (<a href="interactive/feed.html">try it live</a>):</p>
+      <div class="pseudo">for each candidate item i:
+    sim_i  = 1 - |angle_i - viewpoint_user|          # similarity to the listener
+    dbi_i  = |angle_i - viewpoint_user|              # diversity distance
+    echo_i = sim_i * echo_susceptibility_user        # echo exposure
+    if cooling_on and echo_i &gt;= theta_c: echo_i *= 0.76
+    uvs_i  = mean(BRS) * (1 - prop_i * kappa) * (1 - m_i)   # slot value
+    m_i    = max(0, s * (prop_i - tau_mod))                # ERIC penalty
+    L_i    = w1 * uvs_i + w2 * dbi_i + w4 * quality_i - mu * sai_i+   # MORE objective
+rank candidates by L_i (epistemic-first) or by engagement_i (engagement-first)</div>
+      <div class="eq">$$L_i = w_1\,\mathrm{uvs}_i + w_2\,\mathrm{dbi}_i + w_4\,q_i - \mu\,\mathrm{sai}_i^{+}$$</div>
+      <p>Parameter defaults and what to tune (full derivations on the <a href="algorithms.html">Algorithms page</a>):</p>
+      <table class="data">
+        <thead><tr><th>Parameter</th><th class="num">Thesis default</th><th>Tuning guidance</th></tr></thead>
+        <tbody>
+          <tr><td>w1 (reputation)</td><td class="num">1.0</td><td>Raise for trust-heavy markets (news, health).</td></tr>
+          <tr><td>w2 (diversity)</td><td class="num">0.9</td><td>Raise for polarized audiences; this is the contrast engine.</td></tr>
+          <tr><td>mu (salience penalty)</td><td class="num">0.9</td><td>Raise to suppress outrage bait; threshold 0.22.</td></tr>
+          <tr><td>s, tau_mod (ERIC)</td><td class="num">1.4 / 0.3</td><td>Softer for satire-heavy catalogs; steeper for safety-critical ones.</td></tr>
+          <tr><td>theta_c (cooling)</td><td class="num">0.3</td><td>Lower it to cool echo earlier; cooling multiplies echo by 0.76.</td></tr>
+          <tr><td>tau (attention gate)</td><td class="num">declared</td><td>Estimate it from real telemetry before believing any retention number.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="ranking">4. Rankings and reputation</h2>
+      <div class="eq">$$b_i^{(t+1)} = (1-\lambda)\sum_j \tilde A_{ij} b_j^{(t)} + \lambda\, a_i, \qquad a_i = 0.55\,c_i + 0.25\,g + 0.20\,\bar q + 0.20$$</div>
+      <ul>
+        <li><b>Reputation is a network consensus with an evidence anchor.</b> The anchor keeps the crowd honest; lambda = 0.35 when the BRS path is on.</li>
+        <li><b>Never rank on reputation alone.</b> The triangulation showed the reputation path is interference-sensitive (+0.190 within-persona, +0.038 between agents); pair it with the diversity objective, which is assignment-robust.</li>
+        <li><b>Cold start:</b> anchor new broadcasters at the quality expectation q_bar and let evidence move them; do not inherit the previous owner's score.</li>
+        <li><b>Update gates:</b> corrections decay like exp(-dt/tau); schedule re-anchoring within the coherence window, not next week.</li>
+      </ul>
+
+      <h2 id="measure">5. Measurement and psychometrics, complete</h2>
+      <p>This is the thesis's full measurement layer: the instruments, how scoring works, what the
+      reliability numbers are, and exactly which validity claims are (and are not) made.</p>
+
+      <h3>5.1 The instruments</h3>
+      <table class="data">
+        <caption>All instruments used in the thesis, with their psychometric results.</caption>
+        <thead><tr><th>Instrument</th><th>Items</th><th>Scale</th><th>Reliability reported</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Broadcaster Rating Scale (BRS)</td><td class="num">11</td><td>7-point</td><td>alpha = .957</td><td>Measured wave: audience evaluation of a broadcaster</td></tr>
+          <tr><td>Perceived Benefit (PB)</td><td class="num">5</td><td>7-point</td><td>alpha = .947, omega = .962</td><td>Measured wave: post-broadcast benefit; anchors G0 at 5.119</td></tr>
+          <tr><td>Star rating</td><td class="num">1</td><td>stars</td><td>not a scale</td><td>Convergent outcome; Spearman rho = .67 with PB</td></tr>
+          <tr><td>Ride duration, interaction level, context</td><td class="num">3</td><td>mixed</td><td>covariates</td><td>Context and DML/IPW balancing</td></tr>
+          <tr><td>NMLS competence profile</td><td class="num">35</td><td>GRM-IRT</td><td>alpha = .948, omega = .953, lambda6 = .952</td><td>Competence-format student rating (0-100), four domains</td></tr>
+          <tr><td>MCS + PB battery</td><td class="num">8</td><td>GRM-IRT</td><td>alpha = .738, omega = .816, lambda6 = .719</td><td>Second simulated battery</td></tr>
+        </tbody>
+      </table>
+
+      <h3>5.2 How scoring is done</h3>
+      <ul>
+        <li><b>SR eval</b>: the 1-7 evaluative rating, computed as the model's latent credibility trajectory mapped onto the rating scale; G0 anchored to the measured PB mean (5.119).</li>
+        <li><b>SR comp</b>: the NMLS 35-item profile scored with the Samejima graded response model
+        <span class="eq" style="display:inline-block;padding:6px 10px;margin:4px;">\(P(x \ge k \mid \theta) = \frac{1}{1+\exp[-a(\theta-b_k)]}\)</span>
+        then rescaled to the 0-100 display, without redefining the published instrument.</li>
+        <li><b>Engagement</b>: the declared state-outcome mapping
+        <span class="eq" style="display:inline-block;padding:6px 10px;margin:4px;">\(\mathrm{eng} = 0.74 + 0.35(e-.30) - 0.10(\mathrm{dbi}-1) + 0.08(q-.5)\)</span>
+        reported both as the session average (-0.183) and the terminal measure (-0.217).</li>
+        <li><b>Psychometric accountability (EST-P3)</b>: reliability coefficients are computed in the
+        model (alpha, omega, Guttman lambda6, split-half, test-retest ICC = .953); these are properties
+        of the generating model, not human validation.</li>
+      </ul>
+
+      <h3>5.3 Validity, stated exactly as the thesis states it</h3>
+      <table class="data">
+        <thead><tr><th>Claim</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Internal consistency (alpha and omega)</td><td>Reported: high for BRS and PB in the measured wave; high in the synthetic batteries</td></tr>
+          <tr><td>Structural validity (single-factor CFA)</td><td><span class="verdict bad">Not established</span> the CFA fit was poor, so no structural validity is claimed</td></tr>
+          <tr><td>Measurement invariance</td><td><span class="verdict mix">Not estimated</span> group figures describe observed scores, not comparable latent means</td></tr>
+          <tr><td>BRS as a consequential ranking instrument</td><td><span class="verdict bad">Not validated</span> it is a proposed score, not a high-stakes decision tool</td></tr>
+          <tr><td>NMLS as human media literacy</td><td><span class="verdict mix">Simulated</span> responses are generated from the GRM, not administered to humans</td></tr>
+        </tbody>
+      </table>
+      <p>For production platforms, the thesis's psychometric guidance: report alpha <i>and</i> omega
+      (McNeish, 2018; Flora, 2020), use dynamic fit-index cutoffs for CFA (McNeish &amp; Wolf, 2023),
+      test invariance before comparing groups (Putnick &amp; Bornstein, 2016), guard against common
+      method bias (Podsakoff et al., 2024), and follow the AERA/APA/NCME Standards (2014) and APA JARS
+      (Appelbaum et al., 2018; Levitt et al., 2018). All of these are in the
+      <a href="references.html">reference shelf</a>.</p>
+
+      <h2 id="ema">6. EMA: the Ecological Momentary Assessment, dedicated section</h2>
+      <p>Yes, the thesis specifies EMA, and it is stated clearly (Chapter 5, Section "The Ecological
+      Momentary Assessment Schedule", p. 125 of the PDF; symbol list entry "EMA"; and the Zewail gate
+      figure caption, where "the EMA probe is the delayed measurement"). Its status, in one honest
+      paragraph:</p>
+      <div class="callout"><b>What the thesis specifies.</b> Four measurement windows: pre-broadcast
+      (PR1-PR3), post-broadcast (PB1-PB5 plus the star rating), echo-triggered (EM1-EM3), and weekly
+      (WK1-WK15). The intended post-broadcast trigger is within 30 seconds of an episode ending, and
+      the echo trigger is linked to the platform's diversity indicator. These timing rules describe
+      the <i>intended</i> EMA implementation. <b>What the thesis does not claim.</b> The supplied
+      cross-sectional exports contain no session timestamps, so compliance with the 30-second window
+      cannot be assessed; the results are post-broadcast questionnaire results, not demonstrated
+      longitudinal or real-time behavioural effects. In the ABM, EMA is not a running measurement
+      loop: the Zewail gate uses the EMA probe as the delayed measurement in its pump-probe analogy,
+      and the 18-session schedule is a simulation design, not an EMA schedule. The field wave anchors
+      the model level; the EMA windows are the specification a real deployment must implement.</div>
+      <table class="data">
+        <caption>The four EMA windows as specified (Chapter 5).</caption>
+        <thead><tr><th>Window</th><th>Items</th><th>Trigger</th><th>Status in the thesis</th></tr></thead>
+        <tbody>
+          <tr><td>Pre-broadcast</td><td>PR1-PR3</td><td>Before an episode starts</td><td>Specified; not demonstrated in the field wave</td></tr>
+          <tr><td>Post-broadcast</td><td>PB1-PB5 + star</td><td>Within 30 seconds of episode end</td><td>Administered as a post-broadcast questionnaire; no timestamps to verify the window</td></tr>
+          <tr><td>Echo-triggered</td><td>EM1-EM3</td><td>Diversity indicator crosses the echo threshold</td><td>Specified; the trigger is tied to the platform's diversity indicator</td></tr>
+          <tr><td>Weekly</td><td>WK1-WK15</td><td>Fixed weekly schedule</td><td>Specified for the deployment plan</td></tr>
+        </tbody>
+      </table>
+      <p><b>EMA implementation guide for platforms.</b> (1) Instrument every trigger with a server
+      timestamp and measure compliance as the share of probes answered inside the window; (2) keep
+      post-broadcast probes to the five PB items plus the star so the window stays under a minute;
+      (3) tie echo triggers to the same diversity indicator that drives cooling, so measurement and
+      intervention share one definition; (4) store pre/post pairs per episode to enable real
+      within-person change estimation later; (5) treat EMA as the field twin of the simulation's
+      session measurements: 18 simulated sessions is a schedule, EMA is the human version of it.</p>
+
+      <h2 id="launch">7. Evaluation before launch: the readiness ladder</h2>
+      <div class="steps">
+        <div class="step"><div class="n"></div><div class="t"><b>Step 1: Specify.</b> Write the ranking objective, the reputation update, and the measurement model as equations before any code ships (Chapters 3-4).</div></div>
+        <div class="step"><div class="n"></div><div class="t"><b>Step 2: Calibrate in silico.</b> Anchor personas to a measured wave (DML + IPW debiasing, spectral manifold), declare every weight, and report the sweep (Section 6.10).</div></div>
+        <div class="step"><div class="n"></div><div class="t"><b>Step 3: Triangulate assignment.</b> Run within-persona, agent-randomized, design-based, and cluster-randomized designs; expect the reputation path to weaken between agents (Section 6.12.17).</div></div>
+        <div class="step"><div class="n"></div><div class="t"><b>Step 4: Run controls.</b> Placebo factors, negative controls, mechanism checks, topology checks, and adversarial content stress (Section 6.12).</div></div>
+        <div class="step"><div class="n"></div><div class="t"><b>Step 5: Pilot the agent formalism.</b> A single-shot LLM appraisal reproduces direction but not magnitude or engagement sign (Section 6.13); treat it as triangulation, not validation.</div></div>
+        <div class="step"><div class="n"></div><div class="t"><b>Step 6: Field with frozen allocations.</b> The prospective platform experiment: frozen treatment allocations, disclosed LLM-agent logs, EMA windows implemented, and a pre-set stop rule (Chapter 5, plan).</div></div>
+      </div>
+
+      <h2 id="roles">8. Playbooks by role</h2>
+      <div class="rolegrid">
+        <div class="role"><h3>For researchers</h3><ul>
+          <li>Report alpha and omega, never alpha alone.</li>
+          <li>State the CFA fit even when it is poor; do not move the usability gate.</li>
+          <li>Label intervals: persona variation, not human sampling error.</li>
+          <li>Pre-register the machine-coding gate and the four assignment designs.</li>
+          <li>Estimate invariance before any cross-group latent comparison.</li>
+        </ul></div>
+        <div class="role"><h3>For developers</h3><ul>
+          <li>Implement the ranking objective as a pure function of declared parameters.</li>
+          <li>Log every trigger timestamp (EMA compliance is a metric, not a promise).</li>
+          <li>Keep the gate, cooling, and ERIC as switchable components for ablation.</li>
+          <li>Version the persona prior and the weights together with the model artifact.</li>
+          <li>Serve the trade-off dashboard: epistemic gain vs engagement cost, live.</li>
+        </ul></div>
+        <div class="role"><h3>For platform and business teams</h3><ul>
+          <li>Adopt a two-number KPI: rating quality up (+0.827) and engagement cost (-0.183), never engagement alone.</li>
+          <li>Expect the reputation feature to underperform in noisy networks; the diversity objective is the robust asset.</li>
+          <li>Correct fast: attention decays with the dephasing time, so re-anchor within the window.</li>
+          <li>Budget for the honest null: some machine-coding goals will fail, and publishing that builds trust.</li>
+        </ul></div>
+      </div>
+
+      <h2 id="antipatterns">9. Anti-patterns to avoid</h2>
+      <div class="antip"><b>Engagement-only ranking.</b> The engagement-first feed concentrates echo; the thesis measured the cost of the alternative and chose to report it.</div>
+      <div class="antip"><b>Moving the gate after the fact.</b> The usability rule (8 positives, kappa &gt;= .60, &lt;= 5% fabrication) was kept when it failed. A threshold you move is not a test.</div>
+      <div class="antip"><b>Claiming structural validity from reliability.</b> High alpha with a poor CFA is a mixed result, reported as mixed.</div>
+      <div class="antip"><b>Treating simulated intervals as human confidence.</b> They describe generated personas; the human causal claim remains future work.</div>
+
+      <div class="callout">Everything on this page is implemented and exercised: the
+      <a href="algorithms.html">algorithms reference</a>, the <a href="interactive/feed.html">live feed</a>,
+      the <a href="interactive/sim.html">pipeline simulator</a>, the
+      <a href="interactive/stats.html">inference animation</a>, and the
+      <a href="references.html">reference shelf</a>.</div>
+      <p><a class="btn" href="interactive/">Open the laboratory &rarr;</a>
+      <a class="btn" href="thesis_final.pdf">Download the thesis</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="algorithms.html">Algorithms</a></li><li><a href="interactive/">Interactive laboratory</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var EXPS = {
+    node1: '<b>Content pool.</b> Everything a broadcaster can publish. In the thesis: episodes, posts, and sources; the qualitative corpora supplied the design vocabulary. Key rule: the pool is filtered, never silently deleted.',
+    node2: '<b>Debias (DML + IPW).</b> The measured wave was not randomized; DML partials out the nuisance functions and IPW reweights by inverse propensity. The debiased rows define the manifold the personas are drawn from (condition number 4.82).',
+    node3: '<b>Persona prior Q0.</b> A spectral manifold (PCA + LLE + Laplacian eigenmaps) over the debiased rows, then a fitted distribution from which 500 personas are drawn. This is calibration, not population inference.',
+    node4: '<b>BRS reputation.</b> Anchored DeGroot consensus: the network term diffuses belief, the anchor pins it to evidence (lambda 0.35). Interference-sensitive: +0.190 within-persona, +0.038 between agents.',
+    node5: '<b>MORE ranking.</b> The diversity-constrained objective L = w1 uvs + w2 dbi + w4 q - mu sai. The dominant path: B main effect +0.6265, and the diversity-to-credibility link is the top sensitivity driver (PRCC +0.77).',
+    node6: '<b>ERIC moderation.</b> Soft gate m = max(0, s(p - tau)): flagged items stay visible, rank lower, and carry a reflection prompt. C alone is near zero; it matters through B x C (+0.3791).',
+    node7: '<b>Cooling and the Zewail gate.</b> Echo cools by 0.76 past the threshold; attention decays like exp(-dt/tau). The gate is open about 15% of the time and is not inert (ablation +0.194 when off).',
+    node8: '<b>The session loop.</b> 500 personas x 8 cells x 18 sessions through eight filters. The ablation shows three are outcome-active: DeGroot, Lagrange, Hilbert.',
+    node9: '<b>Measurement surface.</b> SR eval (1-7), SR comp (0-100 via GRM-IRT), engagement (0-1). Headline: +0.827, +11.30, -0.183.',
+    node10: '<b>EMA probes.</b> The four windows (pre, post, echo, weekly) with the 30-second post-broadcast trigger. Specified in Chapter 5; not demonstrated in the field wave. See the EMA section below.',
+    node11: '<b>Evaluation layer.</b> Four assignment designs, placebo and negative controls, mechanism checks, the 256-point sweep, and the honest null policy. Dashed loop: the evaluation feeds back into the ranking weights.',
+  };
+  document.querySelectorAll('.diag .node').forEach(function (g) {
+    g.addEventListener('click', function () { document.getElementById('diagexp').innerHTML = EXPS[g.getAttribute('data-exp')]; });
+    g.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); g.click(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
