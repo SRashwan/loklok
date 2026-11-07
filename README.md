@@ -4,7 +4,7 @@
 
 A master's thesis and its complete web companion: Epistemic Systems Theory, the LOKLOK platform, a measured student wave, and a calibrated in-silico experiment, published as a classical academic website with an interactive laboratory. This README contains the full thesis digest: research questions, hypotheses, framework, methods, every result table, figures, and the browsable source code.
 
-**Author:** Sherif Mohamed Abd Elmonem Rashwan
+**Author:** Sherif Rashwan
 **Degree:** M.A. Defense, Media Innovations, Faculty of Mass Communication, Ahram Canadian University
 **Supervisors:** Dr. Engi Aboul-Ezz (Beni Suef University) and Dr. Mostafa El Banna (Ahram Canadian University)
 **Date:** November 2026
@@ -403,18 +403,18 @@ contents used by the reader.
 ## 14. Citation
 
 ```text
-Rashwan, S. M. A. E. (2026). The Social Media Radio Innovation and Its Impact on
+Rashwan, S. (2026). The Social Media Radio Innovation and Its Impact on
 University Students' Ratings: An Exploratory Study. Master's thesis, Ahram Canadian
 University, Faculty of Mass Communication, Egypt.
 ```
 
 ## 15. Contact
 
-Sherif Mohamed Abd Elmonem Rashwan, Teaching Assistant, Radio and Television
+Sherif Rashwan, Teaching Assistant, Radio and Television
 Department, Faculty of Mass Communication, Ahram Canadian University.
 Email: sherif.rashwan@san3atech.com
 
 ---
 
-Copyright (c) 2026 Sherif Mohamed Abd Elmonem Rashwan. All model-based numbers are
+Copyright (c) 2026 Sherif Rashwan. All model-based numbers are
 conditional on the stated design and are not human treatment effects.
