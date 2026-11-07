@@ -93,10 +93,15 @@ body.j{background:var(--paper);}
   }
 
   fetch('downloads/thesis_jats.xml').then(function (r) { return r.text(); }).then(function (txt) {
+    /* the DOCTYPE references the remote NLM DTD; browsers do not fetch external DTDs,
+       so strip the declaration before handing the document to the DOM parser */
+    txt = txt.replace(/<!DOCTYPE[^>]*>/, '');
     var parser = new DOMParser();
     xml = parser.parseFromString(txt, 'application/xml');
-    if (xml.getElementsByTagName('parsererror').length) {
-      doc.innerHTML = '<p class="meta">The JATS file could not be parsed. Download it and open it in a JATS-aware tool.</p>';
+    var pe = xml.getElementsByTagName('parsererror');
+    if (pe.length) {
+      doc.innerHTML = '<p class="meta">The JATS file could not be parsed (' +
+        (pe[0].textContent || 'parser error') + '). Please download it and open it in a JATS-aware tool.</p>';
       return;
     }
     render();

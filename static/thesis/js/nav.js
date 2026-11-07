@@ -21,6 +21,7 @@
     { id: 'quality', label: 'Quality', href: 'quality.html' },
     { id: 'edition', label: 'Interactive Edition', href: 'edition.html' },
     { id: 'jats', label: 'JATS Reader', href: 'jats.html' },
+    { id: 'colab', label: 'Colab Scripts', href: 'colab.html' },
     { id: 'references', label: 'References', href: 'references.html' },
     { id: 'downloads', label: 'Downloads', href: 'downloads.html' },
     { id: 'university', label: 'University &amp; People', href: 'university.html' },

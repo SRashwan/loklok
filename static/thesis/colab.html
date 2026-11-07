@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="All 14 Google Colab notebooks of the LOKLOK thesis: what each script does, its results, and one-click opening in Colab or nbviewer.">
+<title>Colab Scripts | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<style>
+.nbgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin:16px 0;}
+.nb{background:#fff;border:1px solid var(--line);padding:18px 18px 14px;display:flex;flex-direction:column;border-top:3px solid #F9AB00;}
+.nb h3{margin:0 0 6px;font-size:16.5px;font-family:var(--serif);}
+.nb .purp{font-size:13px;color:var(--slate);flex:1;margin-bottom:10px;}
+.nb .res{list-style:none;margin:0 0 10px;padding:0;border-top:1px dashed var(--line);padding-top:8px;}
+.nb .res li{font-size:12.5px;color:var(--ink);margin:4px 0;padding-left:14px;position:relative;}
+.nb .res li::before{content:"\25b8";position:absolute;left:0;color:var(--crimson);font-size:11px;top:1px;}
+.nb .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.nb .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
+.nb .actions a{font-size:12px;font-weight:700;border:1px solid var(--line-dark);color:var(--slate);padding:5px 10px;border-radius:3px;text-decoration:none;}
+.nb .actions a:hover{border-color:var(--crimson);color:var(--crimson-dark);}
+.nb .actions a.primary{background:#F9AB00;border-color:#E29A00;color:#4A3200;}
+.nb .actions a.primary:hover{background:#E29A00;color:#fff;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Colab Scripts</span></div>
+
+<div class="wrap">
+  <p class="kicker">The computational record &middot; 14 notebooks</p>
+  <h1>The Colab scripts, script by script</h1>
+  <div class="double-rule"></div>
+  <p class="lede rv">Every Google Colab notebook used to run the thesis's computations is listed here
+  with what it does, the key results its saved outputs carry, and one-click buttons to open it in
+  Google Colab or nbviewer. The notebooks are also browsable as files in this repository.</p>
+
+  <div class="controls rv">
+    <div class="control" style="flex:2;min-width:260px;"><label for="q">Filter scripts</label>
+      <input id="q" type="search" style="width:100%;padding:8px 10px;border:1px solid var(--line-dark);font-size:14px;" placeholder="e.g. triangulation, sweep, Gemini, Qwen..."></div>
+    <div class="control"><label>Hardware</label>
+      <span class="chip on" id="hAll">All</span>
+      <span class="chip" id="hGpu">GPU / T4</span>
+      <span class="chip" id="hCpu">CPU</span></div>
+  </div>
+
+  <p class="counts rv" id="counts" style="font-size:13px;color:var(--muted);"></p>
+  <div class="nbgrid rv" id="grid"></div>
+
+  <div class="callout rv">Results lines are the notebook's own saved outputs, cross-checked against
+  the pipeline CSVs and the thesis sections they cite. Where a notebook re-ran an earlier variant,
+  the line says so rather than double-counting the finding.</div>
+  <p><a class="btn" href="downloads.html">All downloads &rarr;</a>
+  <a class="btn" href="references.html">The reference shelf &rarr;</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="blueprint.html">Platform blueprint</a></li><li><a href="quality.html">Research quality</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var ALL = null, filter = 'all', query = '';
+  var grid = document.getElementById('grid');
+  var GH = 'https://github.com/SRashwan/loklok/blob/main/static/thesis/code/colab/';
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  function isGpu(nb) { return nb.badges.some(function (b) { return b.indexOf('GPU') >= 0; }); }
+
+  function render() {
+    var list = ALL.filter(function (nb) {
+      if (filter === 'gpu' && !isGpu(nb)) return false;
+      if (filter === 'cpu' && isGpu(nb)) return false;
+      if (query) {
+        var q = query.toLowerCase();
+        if ((nb.title + ' ' + nb.purpose + ' ' + nb.results.join(' ')).toLowerCase().indexOf(q) < 0) return false;
+      }
+      return true;
+    });
+    document.getElementById('counts').textContent = list.length + ' of ' + ALL.length + ' notebooks shown';
+    grid.innerHTML = '';
+    list.forEach(function (nb) {
+      var card = document.createElement('div');
+      card.className = 'nb';
+      var res = nb.results.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('');
+      var badges = nb.badges.concat([nb.code_cells + ' code cells', nb.cells + ' cells total'])
+        .map(function (b) { return '<span class="tag">' + esc(b) + '</span>'; }).join('');
+      card.innerHTML =
+        '<h3>' + esc(nb.title) + '</h3>' +
+        '<div class="purp">' + esc(nb.purpose) + '</div>' +
+        (res ? '<ul class="res">' + res + '</ul>' : '') +
+        '<div class="meta">' + badges + '</div>' +
+        '<div class="actions">' +
+        '<a class="primary" href="https://colab.research.google.com/github/SRashwan/loklok/blob/main/static/thesis/code/colab/' + esc(nb.file) + '" target="_blank" rel="noopener">Open in Colab</a>' +
+        '<a href="https://nbviewer.org/github/SRashwan/loklok/blob/main/static/thesis/code/colab/' + esc(nb.file) + '" target="_blank" rel="noopener">nbviewer</a>' +
+        '<a href="code/colab/' + esc(nb.file) + '">Raw notebook</a>' +
+        '</div>';
+      grid.appendChild(card);
+    });
+  }
+
+  fetch('data/colab.json').then(function (r) { return r.json(); }).then(function (d) {
+    ALL = d.notebooks;
+    document.getElementById('q').addEventListener('input', function () { query = this.value.trim(); render(); });
+    [['hAll', 'all'], ['hGpu', 'gpu'], ['hCpu', 'cpu']].forEach(function (p) {
+      document.getElementById(p[0]).addEventListener('click', function () {
+        filter = p[1];
+        ['hAll', 'hGpu', 'hCpu'].forEach(function (x) { document.getElementById(x).classList.remove('on'); });
+        this.classList.add('on');
+        render();
+      });
+    });
+    render();
+  });
+})();
+</script>
+</body>
+</html>

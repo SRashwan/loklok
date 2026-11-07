@@ -1,0 +1,207 @@
+{
+ "notebooks": [
+  {
+   "file": "LOKLOK_ABM_Triangulation_T4.ipynb",
+   "title": "LOKLOK randomized ABM triangulation (Colab T4 or CPU)",
+   "purpose": "This notebook keeps the existing within-persona 2x2x2 ABM (Pipeline A) and adds two randomized-assignment designs, then compares them instead of averaging them. **Pipelines** - **A: within-persona full factorial.** Every persona runs in all eight A/B/C cells. Read from the saved v8 artifacts. This is the primary thesis result. - **B: agent-randomized ABM.** Each simulated agent is randomly assigne",
+   "cells": 14,
+   "code_cells": 12,
+   "badges": [
+    "T4 GPU",
+    "BGE-M3",
+    "Qwen 7B",
+    "AWQ"
+   ],
+   "results": [
+    "Within-persona +0.827; agent-randomized +0.630 [0.384, 0.851]; design-based +0.807; cluster +0.659",
+    "Terminal engagement -0.217 / -0.232 / -0.217 / -0.226; B stays near +0.63; A +0.190 to +0.038",
+    "Placebo D -0.003; mechanism checks pass; E1-E3 gate: not eligible (Section 6.12.17)"
+   ]
+  },
+  {
+   "file": "LOKLOK_Balance_Analysis_Colab.ipynb",
+   "title": "LOKLOK - Balanced Multi-Source Analysis",
+   "purpose": "Tests all data streams: 1. 52-row primary vs 60-row all-questionnaire sensitivity. 2. Held-out predictive comparison: context vs psychometrics vs semantic features. 3. Structured qualitative coding of FGD, self-report, and PO. 4. Content-supply calibration from the Uber-review corpus. 5. Representativeness audit. Output: `loklok_v8_balance_results.zip`",
+   "cells": 7,
+   "code_cells": 6,
+   "badges": [
+    "T4 GPU"
+   ],
+   "results": [
+    "60 vs 52 balance report; predictive and representativeness checks",
+    "Feeds the debiasing decision reported in Sections 5.x and 6.8"
+   ]
+  },
+  {
+   "file": "LOKLOK_Gemini_vs_Rule_ABM_Colab.ipynb",
+   "title": "LOKLOK Pilot: Gemini Persona Agents vs the Rule-Based ABM",
+   "purpose": "This notebook runs a **small, transparent pilot comparison**. It asks a Gemini model to appraise the end state of the same measured persona under the eight A/B/C conditions, then compares the resulting ratings with the final rule-based ABM outputs. **What this is** - A single-shot LLM appraisal proxy per persona and condition. - A descriptive comparison of levels, G0-to-G1 contrasts, and the rank",
+   "cells": 20,
+   "code_cells": 9,
+   "badges": [
+    "Gemini"
+   ],
+   "results": [
+    "Gemini +2.650 [2.342, 2.967] vs rule-based +0.827; competence +31.15 vs +11.30",
+    "Engagement reversed +0.163 vs -0.183; MAE 0.655, RMSE 0.842, r = .269 (Section 6.13)"
+   ]
+  },
+  {
+   "file": "LOKLOK_Qual_Colab_T4_ready.ipynb",
+   "title": "LOKLOK qualitative analysis with a local LLM (Colab T4)",
+   "purpose": "**What this notebook does** 1. Cleans the two transcripts (FGD, self-report) and flags noise, repeated fragments and moderator speech. 2. Codes every usable segment with a 25-code codebook using a **local** open model (no text leaves Colab). 3. Verifies every evidence quote against the source text (drops fabricated quotes and counts them). 4. Compares the local model with Claude's first-pass label",
+   "cells": 14,
+   "code_cells": 12,
+   "badges": [
+    "T4 GPU",
+    "BGE-M3",
+    "Qwen 7B",
+    "AWQ"
+   ],
+   "results": [
+    "Qwen 7B zero-shot micro-F1 .193; 32.0% of evidence quotes not exact substrings (Section 6.12.15)"
+   ]
+  },
+  {
+   "file": "LOKLOK_Qual_HumanGold_T4.ipynb",
+   "title": "LOKLOK qualitative analysis with human gold (Colab T4)",
+   "purpose": "This notebook uses the majority labels from three human coders and reruns a local LLM against that reference. It needs no upload and no API key. **Conditions** 1. `zero_shot`: Qwen codes all 193 human-coded segments without seeing any human labels. 2. `gold_few_shot`: 5-fold out-of-fold prompting. For each fold, examples come only from the other four folds; every human-coded segment is predicted e",
+   "cells": 13,
+   "code_cells": 11,
+   "badges": [
+    "T4 GPU",
+    "BGE-M3",
+    "Qwen 7B",
+    "AWQ"
+   ],
+   "results": [
+    "Gold 5-fold micro-F1 .320; fabrication 16.1%; no mechanism code met the gate",
+    "C05 kappa .323 with gold exemplars (dropped); the honest null (Section 6.12.15)"
+   ]
+  },
+  {
+   "file": "LOKLOK_Qual_RAG_Colab.ipynb",
+   "title": "LOKLOK Qualitative RAG Pipeline (Colab, T4)",
+   "purpose": "This notebook implements the **frozen, local, RAG-grounded qualitative coding and validation plan** for the LOKLOK thesis. It is a scaffold for the final thesis: it does **not** modify the thesis and it does **not** run automatically. **Non-negotiable rules** 1. No outside text is sent to an API; models run locally. 2. Every code must carry a verbatim quote from the target segment. Failed quotes a",
+   "cells": 16,
+   "code_cells": 7,
+   "badges": [
+    "T4 GPU",
+    "Qwen 7B"
+   ],
+   "results": [
+    "RAG-conditioned coding pass reported as a pipeline variant; not a validated comparator"
+   ]
+  },
+  {
+   "file": "LOKLOK_Quick_Validate_CPU.ipynb",
+   "title": "LOKLOK Thesis - Quick CPU Validation",
+   "purpose": "A fast smoke test of the final pipeline: 100 personas, 8 sessions, no Sobol sweep. Use this to confirm the archive runs before launching the full T4 notebook.",
+   "cells": 6,
+   "code_cells": 5,
+   "badges": [
+    "T4 GPU"
+   ],
+   "results": [
+    "CPU smoke test of the pipeline and validation checks; 43/43 package checks pass"
+   ]
+  },
+  {
+   "file": "LOKLOK_Thesis_Full_Run_T4.ipynb",
+   "title": "LOKLOK Thesis Final Upgrade - Full Run (T4 GPU)",
+   "purpose": "This notebook runs the final calibrated in-silico experiment, regenerates the figures, and packages the outputs. It is deterministic given the seed. **Runtime:** Google Colab, T4 GPU (or CPU fallback). **Expected time:** 1 - 3 minutes for the full 500-persona, 18-session run. **Outputs:** `03_data/model_outputs/`, `04_figures/`, and `loklok_outputs.zip`.",
+   "cells": 18,
+   "code_cells": 8,
+   "badges": [
+    "T4 GPU"
+   ],
+   "results": [
+    "Headline: +0.827 [0.779, 0.875]; +11.30 [10.64, 11.95]; engagement -0.183",
+    "NMLS alpha .948, omega .953, ICC .953; sweep 96.5% positive (Chapter 6)"
+   ]
+  },
+  {
+   "file": "LOKLOK_Thesis_v8_Colab_GPU.ipynb",
+   "title": "LOKLOK v8 - Original Data + LLM Embeddings + T4 GPU",
+   "purpose": "This notebook rebuilds the final results from the raw data. It does **not** reuse any previous result file. 1. Download the private v8 bundle from the temporary tunnel. 2. Transcribe the researcher self-report with Whisper `large-v3` on the T4. 3. Embed PO, FGD, self-report, corpora and stimulus briefs with `BAAI/bge-m3`. 4. Run DML/IPW, spectral manifold, 2^3 tensor ABM, GRM-IRT, Bayesian, advers",
+   "cells": 12,
+   "code_cells": 11,
+   "badges": [
+    "T4 GPU",
+    "BGE-M3"
+   ],
+   "results": [
+    "Original data plus LLM embeddings; the four-stream ingestion and semantic block"
+   ]
+  },
+  {
+   "file": "LOKLOK_Untested_Claims_Tests.ipynb",
+   "title": "LOKLOK - Tests for previously untested claims",
+   "purpose": "Three model-internal tests: 1. **Filter ablation** - leave-one-filter-out for Laplace, Lyapunov, DeGroot, Lagrange, Hilbert, Percolation, Entropy. (Hamiltonian is a diagnostic and does not enter the outcome.) 2. **Source/feature ablation** - full vs quant-only vs no-corpora vs no-FGD vs no-self-report vs no-PO vs shuffled-text. 3. **Anchor bootstrap** - 50 resamples of the 52 measured anchors, ref",
+   "cells": 9,
+   "code_cells": 8,
+   "badges": [
+    "T4 GPU"
+   ],
+   "results": [
+    "Tests for previously untested claims; results integrated into the audit appendices"
+   ]
+  },
+  {
+   "file": "LOKLOK_Zewail_Ablation_Colab.ipynb",
+   "title": "LOKLOK - Zewail Pump-Probe Gate Ablation",
+   "purpose": "Tests whether the Zewail-inspired attention gate changes the simulated results. Modes: full Zewail gate, gate off, simple exponential decay, half dephasing time, double dephasing time. Same personas and seed across modes; paired within persona. This is a model-internal ablation, not a human attention experiment. Output: `loklok_v8_zewail_ablation_results.zip`",
+   "cells": 7,
+   "code_cells": 6,
+   "badges": [
+    "T4 GPU"
+   ],
+   "results": [
+    "Gate off +0.194 [0.127, 0.260]; simple decay +0.110; half tau -0.018 (Section 6.11)"
+   ]
+  },
+  {
+   "file": "LOKLOK_v8_Joint_Sweep_Colab_GPU.ipynb",
+   "title": "LOKLOK v8 - Joint-Sweep Run (unique output)",
+   "purpose": "Downloads the latest bundle, uses the cached BGE-M3 embeddings and the 185-segment self-report transcript, runs the calibrated in-silico experiment with the 256-point joint mechanism + state-weight sweep, and downloads a uniquely named zip: **loklok_v8_joint_sweep_results.zip**.",
+   "cells": 9,
+   "code_cells": 8,
+   "badges": [
+    "T4 GPU",
+    "BGE-M3"
+   ],
+   "results": [
+    "256 draws: median +0.567, range -0.244 to +1.810, 96.5% positive",
+    "Top PRCC: cred_dbi +0.77, cred_brs +0.31, cred_echo -0.27 (Section 6.10)"
+   ]
+  },
+  {
+   "file": "LOKLOK_v8_State_Colab_GPU.ipynb",
+   "title": "LOKLOK v8 - State-Mediated ABM Rerun on T4",
+   "purpose": "This notebook reruns the v8 pipeline using the **cached BGE-M3 embeddings** and the **existing 185-segment self-report transcript**. It does **not** re-run Whisper and does **not** need `sentence-transformers`, so the previous CUDA/PyAV/OOM errors cannot occur. Upload `colab_bundle_v8.zip` from the package root when prompted.",
+   "cells": 10,
+   "code_cells": 9,
+   "badges": [
+    "T4 GPU",
+    "BGE-M3"
+   ],
+   "results": [
+    "State-mediated ABM rerun on T4; the v8.0 calibrated experiment (Chapter 6)"
+   ]
+  },
+  {
+   "file": "LOKLOK_v8_State_Tunnel_Colab_GPU.ipynb",
+   "title": "LOKLOK v8 - State-Mediated ABM Rerun (Tunnel Bundle)",
+   "purpose": "Downloads the prepared bundle from the temporary tunnel, uses the cached BGE-M3 embeddings and the 185-segment self-report transcript, then runs the state-mediated ABM on the T4. No Whisper, no `sentence-transformers`.",
+   "cells": 9,
+   "code_cells": 8,
+   "badges": [
+    "T4 GPU",
+    "BGE-M3"
+   ],
+   "results": [
+    "State-mediated ABM rerun; produces the same saved outputs as the v8 pipeline"
+   ]
+  }
+ ]
+}
