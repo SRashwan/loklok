@@ -3,23 +3,61 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A live LOKLOK home feed: rank real items with the declared scoring under the engagement-first and epistemic-first regimes.">
+<meta name="description" content="A realistic LOKLOK social media radio home feed ranked by the declared algorithms.">
 <title>Applet VI: The LOKLOK Home Feed | LOKLOK Thesis</title>
 <link rel="stylesheet" href="../css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
 <style>
-.feedrow{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;}
-.item{background:#fff;border:1px solid var(--line);padding:12px 14px;margin-bottom:10px;border-left:4px solid var(--crimson);}
-.item.g0{border-left-color:#8A6A1F;}
-.item h4{margin:0 0 6px;font-size:15.5px;font-family:var(--serif);}
-.item .mini{display:flex;gap:14px;font-size:12px;color:var(--slate);flex-wrap:wrap;}
-.item .axis{position:relative;height:10px;background:var(--paper-2);border:1px solid var(--line);margin:4px 0 8px;}
-.item .dot{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--crimson-dark);border:2px solid #fff;box-shadow:0 0 0 1px var(--crimson-dark);}
-.item .warn{font-size:11.5px;background:#F6E6E6;color:#8C2B2B;border:1px solid #E4C1C1;padding:2px 8px;display:inline-block;margin-top:4px;}
-.barwrap{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--slate);}
-.barwrap .bar{flex:1;height:8px;background:var(--paper-2);border:1px solid var(--line);}
-.barwrap .bar i{display:block;height:100%;background:var(--crimson);}
-.barwrap .bar i.blue{background:#16325C;}
-.legend{font-size:12px;color:var(--muted);margin-top:8px;}
+.radio{background:#141B26;border:1px solid #0E1420;border-radius:6px;overflow:hidden;color:#E8EDF4;}
+.radio .top{background:linear-gradient(180deg,#1D2A3D,#141B26);padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #2A3A52;}
+.radio .top .brand{font-family:var(--serif);font-weight:700;font-size:17px;color:#fff;}
+.radio .top .brand small{display:block;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8FB0C9;}
+.onair{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#FF8A7A;margin-left:auto;}
+.onair .dot{width:9px;height:9px;border-radius:50%;background:#E5484D;animation:pulse 1.4s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(229,72,77,.55);}70%{box-shadow:0 0 0 9px rgba(229,72,77,0);}100%{box-shadow:0 0 0 0 rgba(229,72,77,0);}}
+.stations{display:flex;gap:10px;padding:10px 16px;overflow-x:auto;background:#182234;border-bottom:1px solid #2A3A52;}
+.station{min-width:64px;text-align:center;cursor:pointer;opacity:.85;}
+.station:hover{opacity:1;}
+.station .av{width:46px;height:46px;border-radius:50%;background:#233A55;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;border:2px solid transparent;}
+.station.live .av{border-color:#E5484D;}
+.station .nm{font-size:10px;color:#A8BCD0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px;}
+.feedlist{padding:12px 16px 18px;background:#101824;}
+.card{background:#1A2436;border:1px solid #26364E;border-radius:6px;padding:14px 16px;margin-bottom:12px;transition:border-color .2s;}
+.card:hover{border-color:#4A6C94;}
+.card .head{display:flex;align-items:center;gap:10px;}
+.card .av{width:42px;height:42px;border-radius:50%;background:#2C4466;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px;flex:none;}
+.card .who{flex:1;min-width:0;}
+.card .who .nm{font-weight:700;font-size:14.5px;color:#fff;}
+.card .who .nm .vfy{color:#4FA3E3;font-size:12px;}
+.card .who .sub{font-size:11.5px;color:#8FA6BE;}
+.livebadge{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#FF8A7A;border:1px solid rgba(229,72,77,.5);border-radius:3px;padding:2px 7px;flex:none;display:flex;align-items:center;gap:5px;}
+.livebadge .dot{width:6px;height:6px;border-radius:50%;background:#E5484D;animation:pulse 1.4s infinite;}
+.brschip{font-size:10.5px;font-weight:700;background:#0E2A1F;color:#6FD39A;border:1px solid #1E5C40;border-radius:3px;padding:2px 7px;flex:none;}
+.wave{display:flex;align-items:flex-end;gap:2.5px;height:22px;margin:12px 0 4px;}
+.wave i{flex:1;background:linear-gradient(180deg,#4FA3E3,#7A5CE3);border-radius:1px;animation:wave 1.1s ease-in-out infinite;}
+@keyframes wave{0%,100%{height:22%;}50%{height:100%;}}
+.card .text{font-size:14px;line-height:1.5;color:#D6E1EE;}
+.card .reason{font-size:11.5px;color:#8FA6BE;margin-top:8px;border-left:2px solid #4A6C94;padding-left:9px;}
+.card .bars{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;}
+.barwrap{display:flex;align-items:center;gap:8px;font-size:10.5px;color:#8FA6BE;}
+.barwrap .bar{flex:1;height:7px;background:#24324A;border-radius:3px;overflow:hidden;}
+.barwrap .bar i{display:block;height:100%;background:#4FA3E3;}
+.barwrap .bar i.crim{background:#E5484D;}
+.card .actions{display:flex;gap:8px;margin-top:12px;}
+.actbtn{flex:1;text-align:center;font-size:12px;color:#A8BCD0;background:#22304A;border:1px solid #2E4266;border-radius:4px;padding:7px 0;cursor:pointer;}
+.actbtn:hover{background:#2A3D5C;color:#fff;}
+.actbtn.play{background:#E5484D;border-color:#E5484D;color:#fff;}
+.actbtn.play:hover{background:#C93D42;}
+.eric{font-size:12px;background:#3A2620;color:#F5C6A8;border:1px solid #6B4632;border-radius:4px;padding:8px 11px;margin-top:10px;display:flex;gap:8px;align-items:center;}
+.eric b{color:#FFD9B8;}
+.sidepanel{background:#fff;border:1px solid var(--line);padding:16px;position:sticky;top:14px;}
+.sidepanel h3{font-family:var(--serif);font-size:16px;margin:0 0 10px;}
+.you{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.you .av{width:40px;height:40px;border-radius:50%;background:var(--crimson-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;}
+@media (prefers-reduced-motion: reduce){.wave i,.onair .dot,.livebadge .dot{animation:none;height:45%;}}
 </style>
 </head>
 <body>
@@ -29,6 +67,7 @@
       <small>Master's Thesis &middot; Ahram Canadian University</small></a>
     <nav class="topnav" aria-label="Primary">
       <a href="../index.html">Overview</a>
+      <a href="../algorithms.html">Algorithms</a>
       <a href="../results.html">Results</a>
       <a href="index.html">Interactive</a>
       <a href="../read/">Read Online</a>
@@ -40,46 +79,52 @@
 
 <div class="wrap">
   <p class="kicker">Applet VI</p>
-  <h1>A real home feed, ranked twice</h1>
-  <p class="lede">Twelve radio items, one listener. The same catalog is ranked once by the
-  engagement-first rule and once by the LOKLOK epistemic-first rule (BRS anchor + MORE diversity +
-  ERIC moderation + echo cooling), using the declared state-outcome mappings from the pipeline.</p>
+  <h1>A real social media radio feed, ranked twice</h1>
+  <p class="lede">Twelve stations, one listener. The feed below is ranked live by the declared
+  MORE objective; flip the regime to see what an engagement-first platform would surface instead.</p>
 
-  <div class="applet rv">
-    <div class="controls">
-      <div class="control"><label for="vp">Listener viewpoint</label>
-        <input id="vp" type="range" min="0" max="1" step="0.05" value="0.5">
-        <div class="val" id="vpv">0.50</div></div>
-      <div class="control"><label for="es">Echo susceptibility</label>
-        <input id="es" type="range" min="0" max="1" step="0.05" value="0.4">
-        <div class="val" id="esv">0.40</div></div>
-      <div class="control"><label for="cs">Critical scrutiny</label>
-        <input id="cs" type="range" min="0" max="1" step="0.05" value="0.5">
-        <div class="val" id="csv">0.50</div></div>
-    </div>
-    <div class="controls">
-      <div class="control"><label>Ranking regime</label>
-        <span class="chip on" id="mG1">Epistemic-first (G1)</span>
-        <span class="chip" id="mG0">Engagement-first (G0)</span></div>
-      <div class="control"><label>ERIC moderation</label>
-        <span class="chip on" id="mod" role="switch" aria-checked="true" tabindex="0">on</span></div>
-      <div class="control"><label>Echo cooling</label>
-        <span class="chip on" id="cool" role="switch" aria-checked="true" tabindex="0">on</span></div>
-    </div>
-    <div class="feedrow">
-      <div>
-        <h3 id="feedtitle" style="margin-top:0;">Epistemic-first feed</h3>
+  <div class="feedrow">
+    <div class="radio rv">
+      <div class="top">
+        <div class="brand">LOKLOK RADIO<small>Social media radio &middot; live ranking</small></div>
+        <div class="onair"><span class="dot"></span>On air &middot; 6th of October City</div>
+      </div>
+      <div class="stations" id="stations"></div>
+      <div class="feedlist">
+        <div id="feedtitle" style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:#8FA6BE;margin:4px 0 10px;">Epistemic-first feed</div>
         <div id="feed"></div>
       </div>
-      <div>
-        <h3 style="margin-top:0;">What the two feeds do to the listener</h3>
-        <canvas id="cmp" width="460" height="330" role="img" aria-label="Comparison of the two regimes"></canvas>
+    </div>
+
+    <div>
+      <div class="sidepanel rv d1">
+        <h3>Your listener profile</h3>
+        <div class="you"><div class="av">You</div>
+          <div style="font-size:12.5px;color:var(--slate);">Adjust yourself, then watch the feed re-rank.</div></div>
+        <div class="control"><label for="vp">Viewpoint</label>
+          <input id="vp" type="range" min="0" max="1" step="0.05" value="0.5">
+          <div class="val" id="vpv">0.50</div></div>
+        <div class="control"><label for="es">Echo susceptibility</label>
+          <input id="es" type="range" min="0" max="1" step="0.05" value="0.4">
+          <div class="val" id="esv">0.40</div></div>
+        <div class="control"><label for="cs">Critical scrutiny</label>
+          <input id="cs" type="range" min="0" max="1" step="0.05" value="0.5">
+          <div class="val" id="csv">0.50</div></div>
+        <div class="control" style="margin-top:10px;"><label>Ranking regime</label>
+          <span class="chip on" id="mG1">Epistemic-first (G1)</span>
+          <span class="chip" id="mG0">Engagement-first (G0)</span></div>
+        <div class="control" style="margin-top:8px;"><label>Platform switches</label>
+          <span class="chip on" id="mod" role="switch" aria-checked="true" tabindex="0">ERIC on</span>
+          <span class="chip on" id="cool" role="switch" aria-checked="true" tabindex="0">Cooling on</span></div>
+        <div class="eq" style="margin-top:12px;padding:10px;font-size:13px;">
+          $$L_i = w_1\,\mathrm{uvs}_i + w_2\,\mathrm{dbi}_i - \mu\,\mathrm{sai}_i^{+}$$</div>
+      </div>
+      <div class="sidepanel rv d2">
+        <h3>What the two feeds do</h3>
+        <canvas id="cmp" width="420" height="320" role="img" aria-label="Comparison of the two regimes"></canvas>
         <p id="cmpnote" class="note"></p>
       </div>
     </div>
-    <p class="legend">Simplified declared scoring: engagement = 0.74 + 0.35(echo - .30) - 0.10(chosen_dbi - 1) + 0.08(quality - .5);
-    credibility = -.25 + 1.2(BRS - .5) + .55 x diversity + .45(quality - .5) + .80(scrutiny - .5), minus a moderation penalty for
-    misinformation items when ERIC is on. Exact numbers come from the 18-session simulation.</p>
   </div>
 
   <div class="callout">The point of the experiment: the engagement-first feed maximizes what people
@@ -99,18 +144,18 @@
 (function () {
   'use strict';
   var ITEMS = [
-    { name: 'Studio El-Nil Morning Show', brs: 0.78, angle: 0.5, quality: 0.8, prop: 0, eng: 0.95 },
-    { name: 'Campus Voice Bulletin', brs: 0.72, angle: 0.55, quality: 0.85, prop: 0, eng: 0.88 },
-    { name: 'Tech Five Minutes', brs: 0.55, angle: 0.7, quality: 0.7, prop: 0, eng: 0.72 },
-    { name: 'Opinion Rush (live calls)', brs: 0.38, angle: 0.2, quality: 0.4, prop: 0, eng: 0.92 },
-    { name: 'Viral News Dump', brs: 0.22, angle: 0.15, quality: 0.3, prop: 1, eng: 0.97 },
-    { name: 'Study Soundtrack Hour', brs: 0.6, angle: 0.6, quality: 0.65, prop: 0, eng: 0.8 },
-    { name: 'Heritage Talk', brs: 0.81, angle: 0.45, quality: 0.9, prop: 0, eng: 0.62 },
-    { name: 'Rumor Roundup', brs: 0.18, angle: 0.8, quality: 0.2, prop: 1, eng: 0.9 },
-    { name: 'Freshman Hour', brs: 0.5, angle: 0.35, quality: 0.55, prop: 0, eng: 0.74 },
-    { name: 'Exam Prep Live', brs: 0.68, angle: 0.65, quality: 0.75, prop: 0, eng: 0.7 },
-    { name: 'Late Debate', brs: 0.45, angle: 0.1, quality: 0.5, prop: 0, eng: 0.85 },
-    { name: 'Counterpoint Podcast', brs: 0.75, angle: 0.9, quality: 0.72, prop: 0, eng: 0.6 },
+    { name: 'Studio El-Nil Morning', host: 'Laila Hassan', brs: 0.78, angle: 0.5, quality: 0.8, prop: 0, eng: 0.95, listeners: 12400, time: '2 min ago', dur: '48:12', init: 'LN', txt: 'Morning round-up: campus news, traffic on the ring road, and today\u2019s exam schedule, live from Downtown Cairo.' },
+    { name: 'Campus Voice Bulletin', host: 'Omar Adel', brs: 0.72, angle: 0.55, quality: 0.85, prop: 0, eng: 0.88, listeners: 9800, time: '7 min ago', dur: '22:40', init: 'CV', txt: 'Student reporters cover library hours, club elections, and a warning about fake exam pages circulating on WhatsApp.' },
+    { name: 'Tech Five Minutes', host: 'Nour Samy', brs: 0.55, angle: 0.7, quality: 0.7, prop: 0, eng: 0.72, listeners: 5100, time: '12 min ago', dur: '05:00', init: 'T5', txt: 'Five minutes on the new AI tools students are actually using, with a quick privacy checklist.' },
+    { name: 'Opinion Rush (live calls)', host: 'Mahmoud Farag', brs: 0.38, angle: 0.2, quality: 0.4, prop: 0, eng: 0.92, listeners: 15200, time: 'live', dur: 'LIVE', init: 'OR', txt: 'Callers clash over the new grading policy. Fast, loud, and everyone has a microphone.' },
+    { name: 'Viral News Dump', host: 'AnonFeed', brs: 0.22, angle: 0.15, quality: 0.3, prop: 1, eng: 0.97, listeners: 21000, time: '4 min ago', dur: '09:33', init: 'VN', txt: 'SHOCKING video everyone is sharing: what the university administration does not want you to see.' },
+    { name: 'Study Soundtrack Hour', host: 'DJ Selim', brs: 0.6, angle: 0.6, quality: 0.65, prop: 0, eng: 0.8, listeners: 3400, time: '20 min ago', dur: '60:00', init: 'SS', txt: 'Low-fi beats with quiet reminders to drink water and take one break before midnight.' },
+    { name: 'Heritage Talk', host: 'Dr. Salma Youssef', brs: 0.81, angle: 0.45, quality: 0.9, prop: 0, eng: 0.62, listeners: 2900, time: '35 min ago', dur: '41:07', init: 'HT', txt: 'How Egyptian radio evolved from the 1930s to the platform era, told with original recordings.' },
+    { name: 'Rumor Roundup', host: 'The Whispers', brs: 0.18, angle: 0.8, quality: 0.2, prop: 1, eng: 0.9, listeners: 18700, time: '9 min ago', dur: '14:02', init: 'RR', txt: 'Three rumors about the midterms, rated from maybe to absolutely false by the host.' },
+    { name: 'Freshman Hour', host: 'Mariam Tarek', brs: 0.5, angle: 0.35, quality: 0.55, prop: 0, eng: 0.74, listeners: 4400, time: '26 min ago', dur: '55:10', init: 'FH', txt: 'First-years ask seniors anything: dorms, deadlines, and where the good food actually is.' },
+    { name: 'Exam Prep Live', host: 'Prof. Hany Refaat', brs: 0.68, angle: 0.65, quality: 0.75, prop: 0, eng: 0.7, listeners: 6100, time: '41 min ago', dur: '33:25', init: 'EP', txt: 'Solving last year\u2019s statistics paper on air, with callers checking each step.' },
+    { name: 'Late Debate', host: 'Two Chairs', brs: 0.45, angle: 0.1, quality: 0.5, prop: 0, eng: 0.85, listeners: 8300, time: '1 hr ago', dur: '72:00', init: 'LD', txt: 'Should final exams be open-book? The room is split, the calls keep coming.' },
+    { name: 'Counterpoint Podcast', host: 'Rana Khalil', brs: 0.75, angle: 0.9, quality: 0.72, prop: 0, eng: 0.6, listeners: 3700, time: '2 hr ago', dur: '38:44', init: 'CP', txt: 'The best counter-argument to yesterday\u2019s hot take, with sources on screen.' },
   ];
   var clip = function (x, lo, hi) { return Math.max(lo, Math.min(hi, x)); };
 
@@ -123,8 +168,10 @@
     var eng = clip(0.74 + 0.35 * (echo - 0.3) - 0.10 * (chosen_dbi - 1.0) + 0.08 * (item.quality - 0.5) + 0.08 * 0.5, 0, 1);
     var cred = -0.25 + 1.2 * (item.brs - 0.5) + 0.55 * dbi + 0.45 * (item.quality - 0.5) + 0.8 * (cs - 0.5) - (mod && item.prop ? 0.35 : 0);
     var uvs = item.brs * (1 - 0.2 * sim);
-    var lag = 1.0 * uvs + 0.9 * dbi + 0.4 * item.quality - (mod ? 0.9 * item.prop : 0);
-    return { sim: sim, dbi: dbi, echo: echo, eng: eng, cred: cred, lag: lag, g0: eng };
+    var saiPen = (mod && item.prop) ? 0.9 : 0;
+    var lag = 1.0 * uvs + 0.9 * dbi + 0.4 * item.quality - saiPen;
+    return { sim: sim, dbi: dbi, echo: echo, eng: eng, cred: cred, lag: lag, g0: eng,
+      parts: { brs: item.brs, div: dbi, qual: item.quality, pen: saiPen } };
   }
 
   function rank(which, vp, es, cs, mod, cool) {
@@ -132,36 +179,62 @@
       .sort(function (a, b) { return which === 'G1' ? b.s.lag - a.s.lag : b.s.g0 - a.s.g0; });
   }
 
-  function renderFeed(list, which) {
+  function fmtK(n) { return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n); }
+
+  function renderStations(list) {
+    var box = document.getElementById('stations');
+    box.innerHTML = '';
+    ITEMS.slice(0, 8).forEach(function (it) {
+      var st = document.createElement('div');
+      st.className = 'station' + (it.time === 'live' ? ' live' : '');
+      st.innerHTML = '<div class="av">' + it.init + '</div><div class="nm">' + it.name + '</div>';
+      st.title = it.name + ' (' + fmtK(it.listeners) + ' listeners)';
+      box.appendChild(st);
+    });
+  }
+
+  function renderFeed(list, which, mod) {
     var box = document.getElementById('feed');
     box.innerHTML = '';
-    document.getElementById('feedtitle').textContent = which === 'G1' ? 'Epistemic-first feed (MORE + BRS + ERIC)' : 'Engagement-first feed';
-    list.slice(0, 5).forEach(function (r) {
+    document.getElementById('feedtitle').textContent = which === 'G1' ? 'Epistemic-first feed: MORE ranks by L = w1 uvs + w2 dbi - mu sai' : 'Engagement-first feed: ranked by expected engagement';
+    list.slice(0, 5).forEach(function (r, idx) {
       var card = document.createElement('div');
-      card.className = 'item' + (which === 'G0' ? ' g0' : '');
-      var dots = '';
-      var left = clip(r.item.angle * 100, 2, 84);
+      card.className = 'card';
       var credPct = clip((r.s.cred + 0.5) * 100, 0, 100);
       var engPct = clip(r.s.eng * 100, 0, 100);
-      var brsPct = clip(r.item.brs * 100, 0, 100);
+      var waves = [];
+      for (var w = 0; w < 40; w++) waves.push('<i style="animation-delay:' + ((w * 0.11 + idx * 0.23) % 1.3) + 's;"></i>');
+      var reason = which === 'G1'
+        ? 'ranked: BRS ' + r.s.parts.brs.toFixed(2) + ' &middot; diversity +' + r.s.parts.div.toFixed(2) +
+          ' &middot; quality ' + r.s.parts.qual.toFixed(2) + (r.s.parts.pen ? ' &middot; ERIC penalty -0.90' : ' &middot; no moderation penalty')
+        : 'ranked: expected engagement ' + r.s.eng.toFixed(2) + ' &middot; similarity ' + r.s.sim.toFixed(2);
       card.innerHTML =
-        '<h4>' + r.item.name + '</h4>' +
-        '<div class="mini"><span>BRS <b>' + r.item.brs.toFixed(2) + '</b></span>' +
-        '<span>quality <b>' + r.item.quality.toFixed(2) + '</b></span>' +
-        '<span>credibility <b>' + r.s.cred.toFixed(2) + '</b></span>' +
-        '<span>engagement <b>' + r.s.eng.toFixed(2) + '</b></span></div>' +
-        '<div class="axis"><div class="dot" style="left:' + left + '%;"></div></div>' +
-        '<div class="barwrap"><span>BRS</span><div class="bar"><i class="blue" style="width:' + brsPct + '%;"></i></div></div>' +
-        '<div class="barwrap"><span>Cred</span><div class="bar"><i style="width:' + credPct + '%;"></i></div></div>' +
-        '<div class="barwrap"><span>Eng</span><div class="bar"><i class="blue" style="width:' + engPct + '%;"></i></div></div>' +
-        (r.item.prop ? '<span class="warn">flagged as misinformation' + (document.getElementById('mod').classList.contains('on') ? ', penalized by ERIC' : ', ERIC off, no penalty') + '</span>' : '');
+        '<div class="head">' +
+        '<div class="av">' + r.item.init + '</div>' +
+        '<div class="who"><div class="nm">' + r.item.host + ' <span class="vfy">&#10003;</span></div>' +
+        '<div class="sub">' + r.item.name + ' &middot; ' + r.item.time + ' &middot; ' + r.item.dur + ' &middot; ' + fmtK(r.item.listeners) + ' listeners</div></div>' +
+        '<span class="livebadge"><span class="dot"></span>' + (r.item.time === 'live' ? 'live' : 'replay') + '</span>' +
+        '<span class="brschip">BRS ' + r.item.brs.toFixed(2) + '</span>' +
+        '</div>' +
+        '<div class="wave">' + waves.join('') + '</div>' +
+        '<div class="text">' + r.item.txt + '</div>' +
+        '<div class="reason">' + reason + '</div>' +
+        '<div class="bars">' +
+        '<div class="barwrap"><span>credibility</span><div class="bar"><i class="crim" style="width:' + credPct + '%;"></i></div><span>' + r.s.cred.toFixed(2) + '</span></div>' +
+        '<div class="barwrap"><span>engagement</span><div class="bar"><i style="width:' + engPct + '%;"></i></div><span>' + r.s.eng.toFixed(2) + '</span></div>' +
+        '</div>' +
+        (r.item.prop ? '<div class="eric"><b>ERIC</b> this item is flagged as misinformation' +
+          (mod ? '; it stays visible but is ranked down, and you get this reflection prompt instead of an autoplay.' : '; ERIC is off, so nothing demotes it.') + '</div>' : '') +
+        '<div class="actions">' +
+        '<span class="actbtn play">&#9654; Listen</span><span class="actbtn">&#9825;</span><span class="actbtn">&#8599; Share</span><span class="actbtn">&#9873;</span>' +
+        '</div>';
       box.appendChild(card);
     });
   }
 
   var cmp = document.getElementById('cmp');
   var cctx = cmp.getContext('2d');
-  function renderCmp(listG1, listG0, vp, es) {
+  function renderCmp(listG1, listG0) {
     cctx.clearRect(0, 0, cmp.width, cmp.height);
     cctx.fillStyle = '#FDFCFA'; cctx.fillRect(0, 0, cmp.width, cmp.height);
     function stat(list, key) {
@@ -175,23 +248,23 @@
       { label: 'mean credibility', g1: stat(listG1, 'cred'), g0: stat(listG0, 'cred') },
       { label: 'mean engagement', g1: stat(listG1, 'eng'), g0: stat(listG0, 'eng') },
     ];
-    var P = { x0: 118, y0: 26, x1: cmp.width - 14, y1: cmp.height - 40 };
+    var P = { x0: 112, y0: 24, x1: cmp.width - 12, y1: cmp.height - 36 };
     metrics.forEach(function (m, i) {
       var y = P.y0 + i * (P.y1 - P.y0) / metrics.length;
-      cctx.fillStyle = '#46536B'; cctx.font = 'bold 12px Helvetica'; cctx.textAlign = 'right';
+      cctx.fillStyle = '#46536B'; cctx.font = 'bold 11.5px Helvetica'; cctx.textAlign = 'right';
       cctx.fillText(m.label, P.x0 - 8, y + 4);
       var maxv = Math.max(Math.abs(m.g1), Math.abs(m.g0), 0.0001);
       var w = P.x1 - P.x0;
-      cctx.fillStyle = '#C7A252'; cctx.fillRect(P.x0, y - 8, clip(m.g0 / maxv, -1, 1) * w, 15);
-      cctx.fillStyle = '#B31B1B'; cctx.fillRect(P.x0, y + 9, clip(m.g1 / maxv, -1, 1) * w, 15);
+      cctx.fillStyle = '#C7A252'; cctx.fillRect(P.x0, y - 8, clip(m.g0 / maxv, -1, 1) * w, 14);
+      cctx.fillStyle = '#B31B1B'; cctx.fillRect(P.x0, y + 8, clip(m.g1 / maxv, -1, 1) * w, 14);
       cctx.fillStyle = '#46536B'; cctx.textAlign = 'left';
       cctx.fillText('G0 ' + m.g0.toFixed(2), P.x0 + clip(m.g0 / maxv, -1, 1) * w + 6, y - 1);
       cctx.fillText('G1 ' + m.g1.toFixed(2), P.x0 + clip(m.g1 / maxv, -1, 1) * w + 6, y + 20);
     });
-    cctx.fillStyle = '#C7A252'; cctx.fillRect(cmp.width - 190, 8, 10, 10);
-    cctx.fillStyle = '#46536B'; cctx.font = '11px Helvetica'; cctx.fillText('G0 engagement-first', cmp.width - 174, 17);
-    cctx.fillStyle = '#B31B1B'; cctx.fillRect(cmp.width - 190, 24, 10, 10);
-    cctx.fillStyle = '#46536B'; cctx.fillText('G1 epistemic-first', cmp.width - 174, 33);
+    cctx.fillStyle = '#C7A252'; cctx.fillRect(cmp.width - 176, 8, 10, 10);
+    cctx.fillStyle = '#46536B'; cctx.font = '11px Helvetica'; cctx.fillText('G0 engagement-first', cmp.width - 160, 17);
+    cctx.fillStyle = '#B31B1B'; cctx.fillRect(cmp.width - 176, 24, 10, 10);
+    cctx.fillStyle = '#46536B'; cctx.fillText('G1 epistemic-first', cmp.width - 160, 33);
     cctx.textAlign = 'left';
     document.getElementById('cmpnote').textContent =
       'The epistemic-first feed spreads viewpoints and lifts credibility while paying a small engagement price; the engagement-first feed concentrates on what keeps people listening. This is the same trade-off measured in the full simulation.';
@@ -209,8 +282,8 @@
     document.getElementById('csv').textContent = cs.toFixed(2);
     var g1 = rank('G1', vp, es, cs, mod, cool);
     var g0 = rank('G0', vp, es, cs, mod, cool);
-    renderFeed(which === 'G1' ? g1 : g0, which);
-    renderCmp(g1, g0, vp, es);
+    renderFeed(which === 'G1' ? g1 : g0, which, mod);
+    renderCmp(g1, g0);
   }
   ['vp', 'es', 'cs'].forEach(function (id) { document.getElementById(id).addEventListener('input', refresh); });
   ['mG1', 'mG0'].forEach(function (id) {
@@ -229,6 +302,7 @@
       if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); }
     });
   });
+  renderStations();
   refresh();
 })();
 </script>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The LOKLOK algorithms: equations, term-by-term breakdowns, physical meanings, social meanings, and context.">
+<title>Algorithms | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+.eq{background:#fff;border:1px solid var(--line);padding:16px 18px;margin:14px 0;overflow-x:auto;}
+.break{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:12px 0;}
+.break .cell{background:#fff;border:1px solid var(--line);padding:12px 14px;font-size:13.5px;}
+.break .cell b{color:var(--crimson-dark);font-variant-numeric:tabular-nums;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="abstract.html">Abstract</a>
+      <a href="guide.html">Reading Guide</a>
+      <a href="algorithms.html">Algorithms</a>
+      <a href="results.html">Results</a>
+      <a href="interactive/">Interactive</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Algorithms</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Algorithm sections">
+      <h3>Algorithms</h3>
+      <a class="cur" href="algorithms.html">Contents</a>
+      <a href="#brs">BRS reputation</a>
+      <a href="#more">MORE ranking</a>
+      <a href="#eric">ERIC moderation</a>
+      <a href="#echo">Echo Meter + cooling</a>
+      <a href="#zewail">Zewail gate</a>
+      <a href="#grm">GRM-IRT scoring</a>
+      <a href="#debiasing">DML and IPW</a>
+      <a href="#filters">The eight filters</a>
+      <a href="#sweep">PRCC sensitivity</a>
+      <a href="#designs">Assignment designs</a>
+    </nav>
+    <article>
+      <p class="kicker">Supplementary material &middot; companion to Chapters 3-6</p>
+      <h1>The algorithms, equation by equation</h1>
+      <div class="double-rule"></div>
+      <p class="lede">Every mechanism in the thesis is a declared equation, not a black box. This page
+      states each one, breaks it down term by term, and gives its physical meaning (the borrowed
+      formal metaphor), its social meaning (what it does to a listener), and its context (the
+      parameter values used in the calibrated experiment). The interactive versions live in the
+      <a href="interactive/">laboratory</a>.</p>
+
+      <h2 id="brs">1. The Broadcaster Reputation Score (BRS)</h2>
+      <div class="eq">$$b_i^{(t+1)} \;=\; (1-\lambda)\,\sum_{j} \tilde{A}_{ij}\, b_j^{(t)} \;+\; \lambda\, a_i,
+      \qquad a_i \;=\; 0.55\, c_i + 0.25\, g + 0.20\, \bar q + 0.20$$</div>
+      <div class="break">
+        <div class="cell"><b>b_i</b> reputation of agent i at session t; updated once per session.</div>
+        <div class="cell"><b>Σ Ã_ij b_j</b> DeGroot averaging over the attention network: listeners adopt what their network believes.</div>
+        <div class="cell"><b>λ</b> anchoring weight: 0.35 when the BRS path (A) is on, 0.15 when it is off.</div>
+        <div class="cell"><b>a_i</b> personal anchor: 0.55 from critical scrutiny c_i, 0.25 from the gate g, 0.20 from quality expectation q̄, plus 0.20 base.</div>
+      </div>
+      <p><b>Physical meaning.</b> A consensus protocol with a drift term: the network term diffuses
+      belief, the anchor term pins it to evidence.</p>
+      <p><b>Social meaning.</b> A broadcaster's reputation is what other listeners believe about them,
+      tempered by what each listener can check for themselves.</p>
+      <p><b>Context.</b> The BRS is the architecture component A. The triangulation showed its effect
+      is interference-sensitive: +0.190 within personas, +0.038 between agents.</p>
+
+      <h2 id="more">2. MORE: the diversity-constrained recommendation</h2>
+      <div class="eq">$$L_i \;=\; w_1\,\mathrm{uvs}_i \;+\; w_2\,\mathrm{dbi}_i \;-\; \mu\,\mathrm{sai}_i^{+},
+      \qquad \mathrm{sai}_i^{+}=\max\big(0,\;|\mathrm{sai}_i|-0.22\big)$$</div>
+      <div class="eq">$$\mathrm{uvs}_i \;=\; \bar b \;\big(1 - p_i^{\mathrm{prop}}\,\kappa\big)\;\big(1 - m_i\big),
+      \qquad \mathrm{dbi}_i \;=\; 1 - h\,\big\langle \hat r_i,\; \hat c \big\rangle$$</div>
+      <div class="break">
+        <div class="cell"><b>L_i</b> the Lagrange score a candidate is ranked by; the platform picks arg max.</div>
+        <div class="cell"><b>uvs_i</b> unit value of a slot: the mean reputation b̄, discounted by the item's propaganda share and by the moderation penalty.</div>
+        <div class="cell"><b>dbi_i</b> diversity benefit: 1 minus the Hilbert overlap between the listener's embedding and the candidate's.</div>
+        <div class="cell"><b>sai_i⁺</b> salience penalty: only salience beyond 0.22 is taxed, with weight μ.</div>
+      </div>
+      <p><b>Physical meaning.</b> A constrained optimization: maximize value subject to a diversity
+      constraint, written as a penalized objective.</p>
+      <p><b>Social meaning.</b> The feed rewards broadcasters people trust, but pays extra for
+      viewpoints outside the listener's current bubble. This is why B carries the contrast.</p>
+      <p><b>Context.</b> In the model B (MORE) is the dominant path: main effect +0.6265, and the
+      diversity-to-credibility weight is the top sensitivity driver (PRCC +0.77).</p>
+
+      <h2 id="eric">3. ERIC: reflect, invite, correct</h2>
+      <div class="eq">$$m_i \;=\; \max\big(0,\; 1.4\,(p_i^{\mathrm{prop}} - \tau_{\mathrm{mod}})\big),
+      \qquad p_i^{\mathrm{prop}}\text{: propaganda propensity},\;\tau_{\mathrm{mod}}\text{: moderation threshold}$$</div>
+      <p><b>Breakdown.</b> If an item's propaganda propensity exceeds the threshold, ERIC applies a
+      penalty proportional to the excess (slope 1.4). The penalty enters the slot value uvs_i and,
+      in the full pipeline, the credibility mapping.</p>
+      <p><b>Physical meaning.</b> A soft gating function: zero below threshold, linear beyond it.</p>
+      <p><b>Social meaning.</b> Moderation as an interaction, not deletion: flagged items stay visible,
+      ranked lower, and carry a reflection prompt back to the user.</p>
+      <p><b>Context.</b> In the ablation, C alone is near zero (-0.0121); it matters through the
+      B x C interaction (+0.3791).</p>
+
+      <h2 id="echo">4. Echo Meter and Algorithmic Cooling</h2>
+      <div class="eq">$$e^{(t+1)} \;=\; 0.75\, e^{(t)} \;+\; 0.25\,(1-\mathrm{dbi}^{(t)}),
+      \qquad e \;\leftarrow\; 0.76\, e \quad\text{if}\quad e \ge \theta_{\mathrm{cool}}$$</div>
+      <p><b>Breakdown.</b> Echo accumulates toward sameness: three quarters of yesterday's echo plus
+      one quarter of today's lack of diversity. Cooling multiplies by 0.76 once echo crosses the
+      threshold, and the moderation factor (C) applies a further 0.85-0.94 damping in the simulator.</p>
+      <p><b>Physical meaning.</b> Relaxation with active cooling: the echo state decays toward
+      diversity, faster when hot.</p>
+      <p><b>Social meaning.</b> The platform notices when you have been inside one bubble for a while,
+      and gently widens the mix instead of telling you what you already agree with.</p>
+      <p><b>Context.</b> Cooling is part of B; the mechanism check confirmed B x C lowers echo
+      by -0.340 (SD .009).</p>
+
+      <h2 id="zewail">5. The Zewail-inspired attention gate</h2>
+      <div class="eq">$$R \;=\; \exp\!\big(-\,\Delta t \,/\, \tau\big),
+      \qquad \mathrm{anchor} \;=\; 0.55\,c_i + 0.25\,g + 0.20\,\bar q + 0.20$$</div>
+      <p><b>Breakdown.</b> R is the fraction of an evidence anchor still retained after a delay Δt,
+      with dephasing time τ. The gate output g then weights the anchor: a listener inattentive for
+      longer than τ retains almost nothing of the correction.</p>
+      <p><b>Physical meaning.</b> Time-resolved coherence: the same idea as a pump-probe experiment,
+      where the signal decays with the system's dephasing time.</p>
+      <p><b>Social meaning.</b> Corrections have a half-life. If the platform does not re-anchor the
+      audience quickly, the correction decays; attention is a resource with a time constant.</p>
+      <p><b>Context.</b> The gate is open about 15% of the time in the baseline; the dephasing time is
+      an assumption, not an empirical estimate, and the thesis says so.</p>
+
+      <h2 id="grm">6. GRM-IRT scoring</h2>
+      <div class="eq">$$P(x \ge k \mid \theta) \;=\; \frac{1}{1 + \exp\!\big[-a\,(\theta - b_k)\big]}$$</div>
+      <p><b>Breakdown.</b> θ is the latent trait (media literacy), b_k the difficulty of endorsing
+      level k or above, a the item discrimination. Responses are simulated from this model to build
+      the 35-item NMLS and 8-item MCS+PB batteries.</p>
+      <p><b>Physical meaning.</b> A soft threshold crossing: the probability of endorsing a level
+      rises sigmoidally as ability passes the difficulty.</p>
+      <p><b>Social meaning.</b> Ratings are scored against item difficulties, not raw sums, so a
+      "competence rating" means a position on a latent scale rather than a count of clicks.</p>
+      <p><b>Context.</b> Reliability of the synthetic batteries: NMLS alpha .948, MCS alpha .738,
+      test-retest ICC .953. These are properties of the generating model, not human validation.</p>
+
+      <h2 id="debiasing">7. DML and IPW debiasing</h2>
+      <div class="eq">$$\hat\theta_{\mathrm{DML}} \;=\; \frac{\sum_i \big(Y_i - \hat m(X_i)\big)\big(Z_i - \hat e(X_i)\big)}{\sum_i \big(Z_i - \hat e(X_i)\big)^2},
+      \qquad w_i \;=\; \frac{Z_i}{\hat e(X_i)} + \frac{1-Z_i}{1-\hat e(X_i)}$$</div>
+      <p><b>Breakdown.</b> DML partials out the nuisance functions m̂ (outcome model) and ê
+      (propensity) before comparing treatment and control; IPW reweights every row by the inverse of
+      its treatment probability.</p>
+      <p><b>Physical meaning.</b> Orthogonalization: remove the predictable part, then measure what is
+      left.</p>
+      <p><b>Social meaning.</b> The 52 measured students were not randomly assigned; these procedures
+      make the comparison as close to balanced as the observed covariates allow, and the residual
+      imbalance (0.127 after IPW) is reported rather than hidden.</p>
+      <p><b>Context.</b> The debiased rows define the manifold from which the 500 personas are drawn
+      (condition number 4.82).</p>
+
+      <h2 id="filters">8. The eight filters of the session loop</h2>
+      <div class="eq">$$\text{Laplace: } x \leftarrow x - c\,\mathcal{L}\,x \qquad
+      \text{DeGroot: } x \leftarrow W x \qquad
+      \text{Lyapunov: } x \leftarrow (I + A)\,x$$</div>
+      <div class="eq">$$\text{Hamiltonian: } H = -\sum_{i<j} J_{ij} s_i s_j - \sum_i h_i s_i \qquad
+      \text{Hilbert: } \mathrm{dbi} = 1 - h\,\langle \hat r_i, \hat c\rangle \qquad
+      \text{Percolation: } P_{\mathrm{spread}} \propto p^{\mathrm{prop}}(1-m)$$</div>
+      <div class="eq">$$\text{Lagrange: } L_i = w_1 \mathrm{uvs}_i + w_2 \mathrm{dbi}_i - \mu\,\mathrm{sai}_i^{+} \qquad
+      \text{Entropy: } e \leftarrow 0.76\,e \text{ if } e \ge \theta_c$$</div>
+      <p><b>Breakdown.</b> Each session passes the state tensor through all eight; the ablation
+      showed only three are outcome-active in this wiring: DeGroot (-0.233), Lagrange (-0.750),
+      Hilbert (-0.453) when switched off. Laplace, Percolation, and Entropy leave the contrast
+      unchanged, and Lyapunov is negligible; the Hamiltonian is a diagnostic and never enters the
+      outcome.</p>
+      <p><b>Physical meaning.</b> The loop is a concatenation of canonical dynamics: diffusion,
+      consensus, contraction, spin-glass energy, embedding geometry, percolation, constrained
+      choice, and cooling.</p>
+      <p><b>Social meaning.</b> Each filter is one named social process: ideas spread, opinion
+      conforms, attention contracts, energy concentrates, similarity attracts, rumor percolates,
+      choice is constrained, and bubbles cool.</p>
+
+      <h2 id="sweep">9. The joint sweep and PRCC sensitivity</h2>
+      <div class="eq">$$r_{x_j} \;=\; \frac{\mathrm{Cov}\big(x_j,\, y \;\big|\; x_{-j}\big)}
+      {\sqrt{\mathrm{Var}\big(x_j \mid x_{-j}\big)\;\mathrm{Var}\big(y \mid x_{-j}\big)}}$$</div>
+      <p><b>Breakdown.</b> The 256-point sweep varies six mechanism parameters and five
+      state-outcome weights including zero; the partial rank correlation of each input with the
+      contrast, given the others, is reported. Top values: diversity-to-credibility +0.77,
+      BRS-to-credibility +0.31, echo-to-credibility -0.27 (the sign is the weight's own sign).</p>
+      <p><b>Physical meaning.</b> Local sensitivity: which dial, held fixed at its median, moves the
+      answer most.</p>
+      <p><b>Social meaning.</b> One declared assumption, the link between exposure diversity and
+      perceived credibility, carries most of the result. The thesis names it; it does not hide it.</p>
+
+      <h2 id="designs">10. The four assignment designs</h2>
+      <div class="eq">$$\widehat{ATE} \;=\; \frac{1}{n_1}\sum_{i: Z_i=1} Y_i \;-\; \frac{1}{n_0}\sum_{i: Z_i=0} Y_i$$</div>
+      <p><b>Breakdown.</b> The same estimator is evaluated under four assignment rules: Z fixed
+      within personas (all eight cells per persona), Z random per agent across 40 worlds, Z drawn
+      from the potential-outcome matrix 400 times, and Z assigned per network cluster across 20
+      worlds. The design-based draw contains no interference, so comparing it with the
+      agent-randomized design isolates interference.</p>
+      <p><b>Physical meaning.</b> The same observable measured in four gauges.</p>
+      <p><b>Social meaning.</b> A treatment effect that survives every assignment rule is a property
+      of the design; one that moves with assignment is a property of the network. B survives; A
+      does not.</p>
+
+      <div class="callout">Every equation on this page is implemented in the
+      <a href="../thesis/code/pipeline/loklok_pipeline.py">pipeline code</a> and exercised in the
+      <a href="interactive/">interactive laboratory</a>. The parameters are declared design inputs,
+      not estimates, unless the text says otherwise.</div>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="results.html">Results</a></li><li><a href="interactive/">Interactive laboratory</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif M. A. E. Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+<script src="js/site.js"></script>
+</body>
+</html>

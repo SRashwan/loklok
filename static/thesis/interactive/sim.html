@@ -6,6 +6,10 @@
 <meta name="description" content="Run the LOKLOK rule-based ABM pipeline in the browser: session by session, G0 against G1.">
 <title>Applet VII: The Pipeline Simulator | LOKLOK Thesis</title>
 <link rel="stylesheet" href="../css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
 <style>
 .panels{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .panels canvas{width:100%;height:auto;background:#FDFCFA;border:1px solid var(--line);}
@@ -36,6 +40,12 @@
   <p class="lede">The same update rules the pipeline uses (DeGroot reputation diffusion, MORE-style
   diversity choice, echo accumulation, cooling, moderation) run here live: the engagement-first G0
   against the epistemic-first G1, session by session.</p>
+  <div class="applet rv" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;">
+    <div class="eq" style="margin:0;">$$b_i^{(t+1)} = (1-\lambda)\sum_j \tilde A_{ij} b_j^{(t)} + \lambda\, a_i$$</div>
+    <div class="eq" style="margin:0;">$$e^{(t+1)} = 0.75\, e^{(t)} + 0.25\,(1-\mathrm{dbi}^{(t)}),\quad e \leftarrow 0.76\,e \text{ if } e \ge \theta_c$$</div>
+    <div class="eq" style="margin:0;">$$\mathrm{eng} = 0.74 + 0.35(e-.30) - 0.10(\mathrm{dbi}-1) + 0.08(\bar q - .5)$$</div>
+  </div>
+  <p><small class="meta">Full equation breakdowns: <a href="../algorithms.html">the Algorithms page</a>.</small></p>
 
   <div class="applet rv">
     <div class="controls">
