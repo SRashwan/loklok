@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Watch frequentist and Bayesian inference over the LOKLOK paired differences, draw by draw.">
+<title>Applet VIII: Bayesian vs Frequentist | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+<style>
+.bigbtn{font-size:15px;font-weight:700;border:1.5px solid var(--crimson);background:var(--crimson);color:#fff;padding:8px 22px;cursor:pointer;}
+.bigbtn.alt{background:#fff;color:var(--crimson-dark);}
+.bigbtn:hover{background:var(--crimson-dark);color:#fff;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>VIII. Bayesian vs frequentist</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet VIII</p>
+  <h1>Watch the inference happen</h1>
+  <p class="lede">The thesis headline is a paired difference over 500 generated personas:
+  mean +0.827, interval [0.779, 0.875]. This simulator draws those personas one by one and shows,
+  live, what the frequentist confidence interval and the Bayesian posterior each claim as n grows,
+  and why the thesis warns that this interval is persona variation, not human sampling error.</p>
+
+  <div class="applet rv">
+    <div class="controls">
+      <div class="control"><label>Personas so far (n)</label>
+        <input id="ncap" type="range" min="10" max="500" step="10" value="100">
+        <div class="val" id="ncapv">100</div></div>
+      <div class="control"><label>Prior belief about the effect</label>
+        <span class="chip on" id="pSkep">Skeptical N(0,1)</span>
+        <span class="chip" id="pWeak">Weak N(0,5)</span>
+        <span class="chip" id="pFlat">Flat N(0,100)</span></div>
+      <div class="control"><label for="spd">Draws per tick</label>
+        <input id="spd" type="range" min="1" max="50" step="1" value="10">
+        <div class="val" id="spdv">10</div></div>
+    </div>
+    <div class="controls">
+      <button class="bigbtn" id="play">Play</button>
+      <button class="bigbtn alt" id="reset">Reset</button>
+      <span id="info" style="font-size:13.5px;color:var(--slate);"></span>
+    </div>
+    <canvas id="plot" width="920" height="480" role="img" aria-label="Frequentist and Bayesian inference animation"></canvas>
+    <p id="explain" class="note"></p>
+  </div>
+
+  <div class="callout">The numbers are the thesis's own: each persona contributes a difference of
+  about +0.827 with SD 0.0245. The frequentist 95% interval and the Bayesian 95% credible interval
+  nearly coincide here because both summarize the same simulated differences; neither one is
+  independent evidence about humans.</div>
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Inference simulator over generated personas; not human data. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var MU = 0.827, SD = 0.0245;
+  var cap = 100, n = 0, playing = false, timer = null, prior = 'skep';
+  var data = [];
+  var seed = 991;
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  function gauss() {
+    var u = 0, v = 0;
+    while (u === 0) u = rnd();
+    while (v === 0) v = rnd();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+  function normPdf(x, m, s) { return Math.exp(-0.5 * Math.pow((x - m) / s, 2)) / (s * Math.sqrt(2 * Math.PI)); }
+  var priors = { skep: [0, 1], weak: [0, 5], flat: [0, 100] };
+
+  function tick() {
+    if (n >= cap) { pause(); return; }
+    for (var k = 0; k < +document.getElementById('spd').value && n < cap; k++) { data.push(MU + SD * gauss()); n++; }
+    draw();
+  }
+
+  var cv = document.getElementById('plot');
+  var ctx = cv.getContext('2d');
+
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, cv.width, cv.height);
+    var cols = [
+      { x: 8, w: 296 }, { x: 312, w: 296 }, { x: 616, w: 296 },
+    ];
+    var P = { y0: 26, y1: cv.height - 40 };
+    var xlo = 0.70, xhi = 0.96;
+    function px(p, v) { return p.x + 36 + (v - xlo) / (xhi - xlo) * (p.w - 72); }
+    var mean = 0, sd2 = 0;
+    if (n > 0) {
+      mean = data.reduce(function (a, b) { return a + b; }, 0) / n;
+      sd2 = data.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / n;
+    }
+
+    /* panel 1: histogram */
+    var p = cols[0];
+    ctx.fillStyle = '#46536B'; ctx.font = 'bold 13px Helvetica';
+    ctx.fillText('Observed differences (' + n + ' personas)', p.x + 8, 14);
+    var nbins = 24, bins = new Array(nbins).fill(0);
+    data.forEach(function (d) {
+      var b = Math.floor((d - xlo) / (xhi - xlo) * nbins);
+      if (b >= 0 && b < nbins) bins[b]++;
+    });
+    var maxb = Math.max.apply(null, bins.concat([1]));
+    for (var b = 0; b < nbins; b++) {
+      var x = px(p, xlo + (b + 0.5) / nbins * (xhi - xlo));
+      var bw = (p.w - 72) / nbins;
+      var h = bins[b] / maxb * (P.y1 - P.y0 - 40);
+      ctx.fillStyle = b === Math.floor((mean - xlo) / (xhi - xlo) * nbins) && n > 0 ? '#B31B1B' : '#16325C';
+      ctx.fillRect(x - bw / 2 + 1, P.y1 - h - 8, bw - 2, h);
+    }
+    ctx.strokeStyle = '#C7A252'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(px(p, MU), P.y0); ctx.lineTo(px(p, MU), P.y1 - 8); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#46536B'; ctx.font = '11px Helvetica';
+    ctx.fillText('true model mean +0.827', px(p, MU) + 4, P.y0 + 12);
+    if (n > 0) ctx.fillText('sample mean ' + mean.toFixed(3), px(p, mean) + 4, P.y0 + 26);
+
+    /* panel 2: frequentist CI */
+    p = cols[1];
+    ctx.fillStyle = '#46536B'; ctx.font = 'bold 13px Helvetica';
+    ctx.fillText('Frequentist 95% confidence interval', p.x + 8, 14);
+    if (n >= 2) {
+      var se = Math.sqrt(sd2 / n);
+      var lo = mean - 1.96 * se, hi = mean + 1.96 * se;
+      var y = P.y0 + 60;
+      ctx.strokeStyle = '#16325C'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(px(p, Math.max(xlo, lo)), y); ctx.lineTo(px(p, Math.min(xhi, hi)), y); ctx.stroke();
+      ctx.strokeStyle = '#16325C'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(px(p, Math.max(xlo, lo)), y - 6); ctx.lineTo(px(p, Math.max(xlo, lo)), y + 6); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px(p, Math.min(xhi, hi)), y - 6); ctx.lineTo(px(p, Math.min(xhi, hi)), y + 6); ctx.stroke();
+      ctx.fillStyle = '#B31B1B'; ctx.beginPath(); ctx.arc(px(p, mean), y, 5, 0, 7); ctx.fill();
+      var tstat = mean / se;
+      ctx.fillStyle = '#46536B'; ctx.font = '11.5px Helvetica';
+      ctx.fillText('CI [' + lo.toFixed(3) + ', ' + hi.toFixed(3) + ']', p.x + 12, y + 22);
+      ctx.fillText('t = ' + tstat.toFixed(2) + ', p < 0.001', p.x + 12, y + 38);
+      ctx.fillText('width shrinks as 1/sqrt(n)', p.x + 12, y + 54);
+    } else {
+      ctx.fillStyle = '#6E7787'; ctx.font = '12px Helvetica';
+      ctx.fillText('need at least 2 draws for an interval', p.x + 12, P.y0 + 60);
+    }
+
+    /* panel 3: bayesian posterior */
+    p = cols[2];
+    ctx.fillStyle = '#46536B'; ctx.font = 'bold 13px Helvetica';
+    ctx.fillText('Bayesian posterior (95% credible band)', p.x + 8, 14);
+    var pm = priors[prior][0], ps = priors[prior][1];
+    var pmn, psn;
+    if (n > 0) {
+      var prec = n / Math.max(sd2, 1e-9);
+      var prec0 = 1 / (ps * ps);
+      pmn = (prec0 * pm + prec * mean) / (prec0 + prec);
+      psn = Math.sqrt(1 / (prec0 + prec));
+      var maxd = 0;
+      for (var g = 0; g <= 200; g++) {
+        var v = xlo + g / 200 * (xhi - xlo);
+        var d = normPdf(v, pmn, psn);
+        if (d > maxd) maxd = d;
+      }
+      var priord = Math.max(normPdf(pm, pm, ps), 0.0001);
+      function curve(m, s, color, maxref, alpha) {
+        ctx.strokeStyle = color; ctx.globalAlpha = alpha; ctx.lineWidth = 2; ctx.beginPath();
+        for (var g2 = 0; g2 <= 200; g2++) {
+          var v2 = xlo + g2 / 200 * (xhi - xlo);
+          var d2 = normPdf(v2, m, s);
+          var y2 = P.y1 - 8 - d2 / maxref * (P.y1 - P.y0 - 50);
+          if (g2 === 0) ctx.moveTo(px(p, v2), y2); else ctx.lineTo(px(p, v2), y2);
+        }
+        ctx.stroke(); ctx.globalAlpha = 1;
+      }
+      curve(pm, ps, '#C9BCA7', maxd, 0.9);
+      curve(pmn, psn, '#B31B1B', maxd, 1);
+      var hlo = pmn - 1.96 * psn, hhi = pmn + 1.96 * psn;
+      ctx.fillStyle = 'rgba(179,27,27,.10)';
+      ctx.fillRect(px(p, hlo), P.y0, px(p, hhi) - px(p, hlo), P.y1 - P.y0 - 8);
+      function cdfz(z) {
+        var t = 1 / (1 + 0.2316419 * Math.abs(z));
+        var d = 0.3989423 * Math.exp(-z * z / 2);
+        var prob = 1 - d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+        return z >= 0 ? prob : 1 - prob;
+      }
+      var pgt0 = cdfz(pmn / psn);
+      ctx.fillStyle = '#46536B'; ctx.font = '11.5px Helvetica';
+      ctx.fillText('posterior mean ' + pmn.toFixed(3) + ' (SD ' + psn.toFixed(3) + ')', p.x + 12, P.y0 + 18);
+      ctx.fillText('95% credible [' + hlo.toFixed(3) + ', ' + hhi.toFixed(3) + ']', p.x + 12, P.y0 + 34);
+      ctx.fillText('P(effect > 0) = ' + (pgt0 * 100).toFixed(1) + '%', p.x + 12, P.y0 + 50);
+      ctx.fillText('gold: prior, red: posterior', p.x + 12, P.y0 + 66);
+    } else {
+      ctx.fillStyle = '#6E7787'; ctx.font = '12px Helvetica';
+      ctx.fillText('press Play to accumulate evidence', p.x + 12, P.y0 + 60);
+    }
+
+    document.getElementById('explain').textContent =
+      'n = ' + n + '. The frequentist interval says: with this procedure, 95% of repeated experiments would cover the true value. The Bayesian band says: given this prior and these draws, 95% of posterior mass lies here. With 500 simulated personas both nearly coincide at [0.779, 0.875], because both summarize the same generated differences, and that is exactly why the thesis calls them persona variation, not human sampling error.';
+  }
+
+  function play() { if (playing) return; playing = true; document.getElementById('play').textContent = 'Pause'; timer = setInterval(tick, 60); }
+  function pause() { playing = false; document.getElementById('play').textContent = 'Play'; if (timer) { clearInterval(timer); timer = null; } }
+  document.getElementById('play').addEventListener('click', function () { playing ? pause() : play(); });
+  document.getElementById('reset').addEventListener('click', function () { pause(); data = []; n = 0; draw(); });
+  document.getElementById('ncap').addEventListener('input', function () {
+    cap = +this.value; document.getElementById('ncapv').textContent = cap;
+    while (data.length > cap) data.pop();
+    n = data.length; pause(); draw();
+  });
+  ['pSkep', 'pWeak', 'pFlat'].forEach(function (id, i) {
+    document.getElementById(id).addEventListener('click', function () {
+      ['pSkep', 'pWeak', 'pFlat'].forEach(function (x) { document.getElementById(x).classList.remove('on'); });
+      this.classList.add('on');
+      prior = ['skep', 'weak', 'flat'][i];
+      draw();
+    });
+  });
+  document.getElementById('spd').addEventListener('input', function () { document.getElementById('spdv').textContent = this.value; });
+  draw();
+})();
+</script>
+</body>
+</html>

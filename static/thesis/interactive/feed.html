@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A live LOKLOK home feed: rank real items with the declared scoring under the engagement-first and epistemic-first regimes.">
+<title>Applet VI: The LOKLOK Home Feed | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+<style>
+.feedrow{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;}
+.item{background:#fff;border:1px solid var(--line);padding:12px 14px;margin-bottom:10px;border-left:4px solid var(--crimson);}
+.item.g0{border-left-color:#8A6A1F;}
+.item h4{margin:0 0 6px;font-size:15.5px;font-family:var(--serif);}
+.item .mini{display:flex;gap:14px;font-size:12px;color:var(--slate);flex-wrap:wrap;}
+.item .axis{position:relative;height:10px;background:var(--paper-2);border:1px solid var(--line);margin:4px 0 8px;}
+.item .dot{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--crimson-dark);border:2px solid #fff;box-shadow:0 0 0 1px var(--crimson-dark);}
+.item .warn{font-size:11.5px;background:#F6E6E6;color:#8C2B2B;border:1px solid #E4C1C1;padding:2px 8px;display:inline-block;margin-top:4px;}
+.barwrap{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--slate);}
+.barwrap .bar{flex:1;height:8px;background:var(--paper-2);border:1px solid var(--line);}
+.barwrap .bar i{display:block;height:100%;background:var(--crimson);}
+.barwrap .bar i.blue{background:#16325C;}
+.legend{font-size:12px;color:var(--muted);margin-top:8px;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>VI. The LOKLOK home feed</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet VI</p>
+  <h1>A real home feed, ranked twice</h1>
+  <p class="lede">Twelve radio items, one listener. The same catalog is ranked once by the
+  engagement-first rule and once by the LOKLOK epistemic-first rule (BRS anchor + MORE diversity +
+  ERIC moderation + echo cooling), using the declared state-outcome mappings from the pipeline.</p>
+
+  <div class="applet rv">
+    <div class="controls">
+      <div class="control"><label for="vp">Listener viewpoint</label>
+        <input id="vp" type="range" min="0" max="1" step="0.05" value="0.5">
+        <div class="val" id="vpv">0.50</div></div>
+      <div class="control"><label for="es">Echo susceptibility</label>
+        <input id="es" type="range" min="0" max="1" step="0.05" value="0.4">
+        <div class="val" id="esv">0.40</div></div>
+      <div class="control"><label for="cs">Critical scrutiny</label>
+        <input id="cs" type="range" min="0" max="1" step="0.05" value="0.5">
+        <div class="val" id="csv">0.50</div></div>
+    </div>
+    <div class="controls">
+      <div class="control"><label>Ranking regime</label>
+        <span class="chip on" id="mG1">Epistemic-first (G1)</span>
+        <span class="chip" id="mG0">Engagement-first (G0)</span></div>
+      <div class="control"><label>ERIC moderation</label>
+        <span class="chip on" id="mod" role="switch" aria-checked="true" tabindex="0">on</span></div>
+      <div class="control"><label>Echo cooling</label>
+        <span class="chip on" id="cool" role="switch" aria-checked="true" tabindex="0">on</span></div>
+    </div>
+    <div class="feedrow">
+      <div>
+        <h3 id="feedtitle" style="margin-top:0;">Epistemic-first feed</h3>
+        <div id="feed"></div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">What the two feeds do to the listener</h3>
+        <canvas id="cmp" width="460" height="330" role="img" aria-label="Comparison of the two regimes"></canvas>
+        <p id="cmpnote" class="note"></p>
+      </div>
+    </div>
+    <p class="legend">Simplified declared scoring: engagement = 0.74 + 0.35(echo - .30) - 0.10(chosen_dbi - 1) + 0.08(quality - .5);
+    credibility = -.25 + 1.2(BRS - .5) + .55 x diversity + .45(quality - .5) + .80(scrutiny - .5), minus a moderation penalty for
+    misinformation items when ERIC is on. Exact numbers come from the 18-session simulation.</p>
+  </div>
+
+  <div class="callout">The point of the experiment: the engagement-first feed maximizes what people
+  stay for; the epistemic-first feed trades a little engagement for credibility and viewpoint
+  spread. That is the trade-off the thesis measures at +0.827 versus -0.183.</div>
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Illustrative declared scoring; not a human treatment effect. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var ITEMS = [
+    { name: 'Studio El-Nil Morning Show', brs: 0.78, angle: 0.5, quality: 0.8, prop: 0, eng: 0.95 },
+    { name: 'Campus Voice Bulletin', brs: 0.72, angle: 0.55, quality: 0.85, prop: 0, eng: 0.88 },
+    { name: 'Tech Five Minutes', brs: 0.55, angle: 0.7, quality: 0.7, prop: 0, eng: 0.72 },
+    { name: 'Opinion Rush (live calls)', brs: 0.38, angle: 0.2, quality: 0.4, prop: 0, eng: 0.92 },
+    { name: 'Viral News Dump', brs: 0.22, angle: 0.15, quality: 0.3, prop: 1, eng: 0.97 },
+    { name: 'Study Soundtrack Hour', brs: 0.6, angle: 0.6, quality: 0.65, prop: 0, eng: 0.8 },
+    { name: 'Heritage Talk', brs: 0.81, angle: 0.45, quality: 0.9, prop: 0, eng: 0.62 },
+    { name: 'Rumor Roundup', brs: 0.18, angle: 0.8, quality: 0.2, prop: 1, eng: 0.9 },
+    { name: 'Freshman Hour', brs: 0.5, angle: 0.35, quality: 0.55, prop: 0, eng: 0.74 },
+    { name: 'Exam Prep Live', brs: 0.68, angle: 0.65, quality: 0.75, prop: 0, eng: 0.7 },
+    { name: 'Late Debate', brs: 0.45, angle: 0.1, quality: 0.5, prop: 0, eng: 0.85 },
+    { name: 'Counterpoint Podcast', brs: 0.75, angle: 0.9, quality: 0.72, prop: 0, eng: 0.6 },
+  ];
+  var clip = function (x, lo, hi) { return Math.max(lo, Math.min(hi, x)); };
+
+  function score(item, vp, es, cs, mod, cool) {
+    var sim = 1 - Math.abs(item.angle - vp);
+    var dbi = Math.abs(item.angle - vp);
+    var echo = sim * es;
+    if (cool && echo > 0.3) echo = echo * 0.76;
+    var chosen_dbi = 1 - sim;
+    var eng = clip(0.74 + 0.35 * (echo - 0.3) - 0.10 * (chosen_dbi - 1.0) + 0.08 * (item.quality - 0.5) + 0.08 * 0.5, 0, 1);
+    var cred = -0.25 + 1.2 * (item.brs - 0.5) + 0.55 * dbi + 0.45 * (item.quality - 0.5) + 0.8 * (cs - 0.5) - (mod && item.prop ? 0.35 : 0);
+    var uvs = item.brs * (1 - 0.2 * sim);
+    var lag = 1.0 * uvs + 0.9 * dbi + 0.4 * item.quality - (mod ? 0.9 * item.prop : 0);
+    return { sim: sim, dbi: dbi, echo: echo, eng: eng, cred: cred, lag: lag, g0: eng };
+  }
+
+  function rank(which, vp, es, cs, mod, cool) {
+    return ITEMS.map(function (it) { return { item: it, s: score(it, vp, es, cs, mod, cool) }; })
+      .sort(function (a, b) { return which === 'G1' ? b.s.lag - a.s.lag : b.s.g0 - a.s.g0; });
+  }
+
+  function renderFeed(list, which) {
+    var box = document.getElementById('feed');
+    box.innerHTML = '';
+    document.getElementById('feedtitle').textContent = which === 'G1' ? 'Epistemic-first feed (MORE + BRS + ERIC)' : 'Engagement-first feed';
+    list.slice(0, 5).forEach(function (r) {
+      var card = document.createElement('div');
+      card.className = 'item' + (which === 'G0' ? ' g0' : '');
+      var dots = '';
+      var left = clip(r.item.angle * 100, 2, 84);
+      var credPct = clip((r.s.cred + 0.5) * 100, 0, 100);
+      var engPct = clip(r.s.eng * 100, 0, 100);
+      var brsPct = clip(r.item.brs * 100, 0, 100);
+      card.innerHTML =
+        '<h4>' + r.item.name + '</h4>' +
+        '<div class="mini"><span>BRS <b>' + r.item.brs.toFixed(2) + '</b></span>' +
+        '<span>quality <b>' + r.item.quality.toFixed(2) + '</b></span>' +
+        '<span>credibility <b>' + r.s.cred.toFixed(2) + '</b></span>' +
+        '<span>engagement <b>' + r.s.eng.toFixed(2) + '</b></span></div>' +
+        '<div class="axis"><div class="dot" style="left:' + left + '%;"></div></div>' +
+        '<div class="barwrap"><span>BRS</span><div class="bar"><i class="blue" style="width:' + brsPct + '%;"></i></div></div>' +
+        '<div class="barwrap"><span>Cred</span><div class="bar"><i style="width:' + credPct + '%;"></i></div></div>' +
+        '<div class="barwrap"><span>Eng</span><div class="bar"><i class="blue" style="width:' + engPct + '%;"></i></div></div>' +
+        (r.item.prop ? '<span class="warn">flagged as misinformation' + (document.getElementById('mod').classList.contains('on') ? ', penalized by ERIC' : ', ERIC off, no penalty') + '</span>' : '');
+      box.appendChild(card);
+    });
+  }
+
+  var cmp = document.getElementById('cmp');
+  var cctx = cmp.getContext('2d');
+  function renderCmp(listG1, listG0, vp, es) {
+    cctx.clearRect(0, 0, cmp.width, cmp.height);
+    cctx.fillStyle = '#FDFCFA'; cctx.fillRect(0, 0, cmp.width, cmp.height);
+    function stat(list, key) {
+      var top = list.slice(0, 5);
+      var vals = top.map(function (r) { return key === 'dbi' ? r.s.dbi : key === 'echo' ? r.s.echo : key === 'eng' ? r.s.eng : r.s.cred; });
+      return vals.reduce(function (a, b) { return a + b; }, 0) / vals.length;
+    }
+    var metrics = [
+      { label: 'viewpoint spread (diversity)', g1: stat(listG1, 'dbi'), g0: stat(listG0, 'dbi') },
+      { label: 'echo index', g1: stat(listG1, 'echo'), g0: stat(listG0, 'echo') },
+      { label: 'mean credibility', g1: stat(listG1, 'cred'), g0: stat(listG0, 'cred') },
+      { label: 'mean engagement', g1: stat(listG1, 'eng'), g0: stat(listG0, 'eng') },
+    ];
+    var P = { x0: 118, y0: 26, x1: cmp.width - 14, y1: cmp.height - 40 };
+    metrics.forEach(function (m, i) {
+      var y = P.y0 + i * (P.y1 - P.y0) / metrics.length;
+      cctx.fillStyle = '#46536B'; cctx.font = 'bold 12px Helvetica'; cctx.textAlign = 'right';
+      cctx.fillText(m.label, P.x0 - 8, y + 4);
+      var maxv = Math.max(Math.abs(m.g1), Math.abs(m.g0), 0.0001);
+      var w = P.x1 - P.x0;
+      cctx.fillStyle = '#C7A252'; cctx.fillRect(P.x0, y - 8, clip(m.g0 / maxv, -1, 1) * w, 15);
+      cctx.fillStyle = '#B31B1B'; cctx.fillRect(P.x0, y + 9, clip(m.g1 / maxv, -1, 1) * w, 15);
+      cctx.fillStyle = '#46536B'; cctx.textAlign = 'left';
+      cctx.fillText('G0 ' + m.g0.toFixed(2), P.x0 + clip(m.g0 / maxv, -1, 1) * w + 6, y - 1);
+      cctx.fillText('G1 ' + m.g1.toFixed(2), P.x0 + clip(m.g1 / maxv, -1, 1) * w + 6, y + 20);
+    });
+    cctx.fillStyle = '#C7A252'; cctx.fillRect(cmp.width - 190, 8, 10, 10);
+    cctx.fillStyle = '#46536B'; cctx.font = '11px Helvetica'; cctx.fillText('G0 engagement-first', cmp.width - 174, 17);
+    cctx.fillStyle = '#B31B1B'; cctx.fillRect(cmp.width - 190, 24, 10, 10);
+    cctx.fillStyle = '#46536B'; cctx.fillText('G1 epistemic-first', cmp.width - 174, 33);
+    cctx.textAlign = 'left';
+    document.getElementById('cmpnote').textContent =
+      'The epistemic-first feed spreads viewpoints and lifts credibility while paying a small engagement price; the engagement-first feed concentrates on what keeps people listening. This is the same trade-off measured in the full simulation.';
+  }
+
+  function refresh() {
+    var vp = +document.getElementById('vp').value;
+    var es = +document.getElementById('es').value;
+    var cs = +document.getElementById('cs').value;
+    var mod = document.getElementById('mod').classList.contains('on');
+    var cool = document.getElementById('cool').classList.contains('on');
+    var which = document.getElementById('mG1').classList.contains('on') ? 'G1' : 'G0';
+    document.getElementById('vpv').textContent = vp.toFixed(2);
+    document.getElementById('esv').textContent = es.toFixed(2);
+    document.getElementById('csv').textContent = cs.toFixed(2);
+    var g1 = rank('G1', vp, es, cs, mod, cool);
+    var g0 = rank('G0', vp, es, cs, mod, cool);
+    renderFeed(which === 'G1' ? g1 : g0, which);
+    renderCmp(g1, g0, vp, es);
+  }
+  ['vp', 'es', 'cs'].forEach(function (id) { document.getElementById(id).addEventListener('input', refresh); });
+  ['mG1', 'mG0'].forEach(function (id) {
+    document.getElementById(id).addEventListener('click', function () {
+      document.getElementById('mG1').classList.toggle('on', id === 'mG1');
+      document.getElementById('mG0').classList.toggle('on', id === 'mG0');
+      refresh();
+    });
+  });
+  ['mod', 'cool'].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('click', function () {
+      el.classList.toggle('on'); el.setAttribute('aria-checked', el.classList.contains('on')); refresh();
+    });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); }
+    });
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>

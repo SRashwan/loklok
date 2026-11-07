@@ -320,12 +320,17 @@ Pages: Overview, Abstract, Reading Guide (with a one-hour short path), Results
 with a searchable table of contents, chapter jumps, keyboard navigation, and a
 progress bar.
 
-The interactive laboratory contains five dependency-free applets: the trade-off
+The interactive laboratory contains nine dependency-free applets: the trade-off
 explorer (Pareto frontier with the sweep band), the BRS diffusion simulator (a live
-seven-agent reputation network), the eight cells (factorial explorer), the Feynman
-diagram viewer (all ten processes, click-to-explain), and the codebook examiner
-(per-code agreement against the gate). Every applet labels its inputs as declared
-assumptions and its outputs as illustrative.
+seven-agent reputation network), the eight cells (hoverable factorial explorer), the
+Feynman diagram viewer (all ten processes, click-to-explain), the codebook examiner
+(per-code agreement against the gate), a real LOKLOK home feed (twelve items ranked
+twice under the declared scoring), the pipeline simulator (the rule-based ABM runs
+session by session, animated G0 against G1 with component toggles), a Bayesian versus
+frequentist inference animation (the +0.827 headline accumulating persona by persona
+with three priors), and interactive figures (sweep histogram with a draggable
+threshold, Pareto scatter, triangulation forest, rating distributions). Every applet
+labels its inputs as declared assumptions and its outputs as illustrative.
 
 ## 11. Repository structure
 

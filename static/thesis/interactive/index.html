@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Interactive laboratory for the LOKLOK thesis: applets reproducing the model arithmetic.">
+<meta name="description" content="Interactive laboratory for the LOKLOK thesis: a live home feed, a pipeline simulator, inference animations, and explorable charts.">
 <title>Interactive Laboratory | The LOKLOK Thesis</title>
 <link rel="stylesheet" href="../css/thesis.css">
 </head>
@@ -27,38 +27,38 @@
 <div class="crumbs">Overview &rarr; <span>Interactive Laboratory</span></div>
 
 <div class="wrap">
-  <p class="kicker">Five instruments &middot; no plugins &middot; works offline</p>
+  <p class="kicker">Nine instruments &middot; no plugins &middot; works offline</p>
   <h1>The interactive laboratory</h1>
-  <p class="lede rv">Each instrument reproduces a piece of the thesis's arithmetic in the browser.
-  They are simplified linearisations of the declared model, stated as such on every page; the exact
+  <p class="lede rv">Live implementations of the thesis's algorithms and statistics: rank a real
+  feed, run the rule-based simulation, watch the inference happen, and explore every figure. Each
+  instrument labels its inputs as declared assumptions and its outputs as illustrative; the exact
   numbers always come from the 18-session simulation reported in the thesis.</p>
 
   <section class="rv d1">
     <h2><span class="rule-tag">I</span>The trade-off explorer</h2>
     <p>Move the declared state-outcome weights and watch the epistemic gain and the engagement cost
-    move together across a sampled Pareto frontier, with the 256-draw sweep band drawn for reference.</p>
+    move together across a sampled Pareto frontier, with the 256-draw sweep band for reference.</p>
     <a class="btn solid" href="tradeoff.html">Open applet</a>
   </section>
 
   <section class="rv d2">
     <h2><span class="rule-tag">II</span>The BRS diffusion simulator</h2>
-    <p>A seven-agent network runs the reputation update live. Switch the BRS path on and off, and
-    switch between within-persona and between-agent assignment to see why the effect is
-    interference-sensitive (+0.190 versus +0.038).</p>
+    <p>A seven-agent network runs the reputation update live. Switch the BRS path and the assignment
+    design to see why the effect is interference-sensitive (+0.190 versus +0.038).</p>
     <a class="btn solid" href="brs.html">Open applet</a>
   </section>
 
   <section class="rv d3">
-    <h2><span class="rule-tag">III</span>The eight cells</h2>
-    <p>The full 2^3 factorial as an explorable chart: cell means, main effects, interactions, and the
-    contrast under four assignment designs.</p>
+    <h2><span class="rule-tag">III</span>The eight cells, explored</h2>
+    <p>Hover every cell for its exact value, click to pin its composition, and switch to the
+    assignment-designs view with hoverable whiskers.</p>
     <a class="btn solid" href="cells.html">Open applet</a>
   </section>
 
   <section class="rv d4">
     <h2><span class="rule-tag">IV</span>Feynman diagrams</h2>
-    <p>The ten experimental processes in particle-physics notation. Click any line or vertex to read
-    exactly what it stands for.</p>
+    <p>The ten experimental processes in particle-physics notation, collision-free, with every line
+    and vertex explained on click.</p>
     <a class="btn solid" href="feynman.html">Open applet</a>
   </section>
 
@@ -67,6 +67,36 @@
     <p>All 25 qualitative codes with human agreement and machine performance, checked against the
     pre-set usability gate. Sort, filter, and read the honest conclusion.</p>
     <a class="btn solid" href="codebook.html">Open applet</a>
+  </section>
+
+  <section class="rv d6">
+    <h2><span class="rule-tag">VI</span>A real LOKLOK home feed</h2>
+    <p>Twelve radio items, ranked twice: engagement-first and epistemic-first (BRS + MORE diversity +
+    ERIC moderation + echo cooling). Move the listener and watch both feeds change, with a live
+    comparison of diversity, echo, credibility, and engagement.</p>
+    <a class="btn solid" href="feed.html">Open applet</a>
+  </section>
+
+  <section class="rv d7">
+    <h2><span class="rule-tag">VII</span>The pipeline simulator</h2>
+    <p>Run the rule-based ABM yourself: personas, sessions, DeGroot reputation diffusion,
+    diversity choice, cooling, moderation. Animate G0 against G1 session by session and reproduce
+    the ablation pattern (B carries the contrast).</p>
+    <a class="btn solid" href="sim.html">Open applet</a>
+  </section>
+
+  <section class="rv d8">
+    <h2><span class="rule-tag">VIII</span>Bayesian vs frequentist</h2>
+    <p>Watch the thesis headline +0.827 [0.779, 0.875] accumulate persona by persona: the shrinking
+    confidence interval, the updating posterior, and P(effect > 0), with three priors to try.</p>
+    <a class="btn solid" href="stats.html">Open applet</a>
+  </section>
+
+  <section class="rv d9">
+    <h2><span class="rule-tag">IX</span>Interactive figures</h2>
+    <p>Live twins of the key figures: the sweep histogram with a draggable threshold, the Pareto
+    scatter with hover, the triangulation forest, and the rating distributions.</p>
+    <a class="btn solid" href="charts.html">Open applet</a>
   </section>
 
   <div class="callout rv">Every applet labels its inputs as declared assumptions and its outputs as

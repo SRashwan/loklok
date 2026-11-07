@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive versions of the key thesis figures: sweep, Pareto, triangulation, and distributions.">
+<title>Applet IX: Interactive Figures | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+<style>
+.figpair{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.figpair .applet{margin:0;}
+@media (max-width:900px){.figpair{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>IX. Interactive figures</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet IX</p>
+  <h1>Every figure, explorable</h1>
+  <p class="lede">Live versions of the thesis's core visualizations. Hover everything; drag the
+  sweep threshold. The static figures remain on the results page; these are their interactive twins.</p>
+
+  <div class="figpair">
+    <div class="applet rv">
+      <h3 style="margin-top:0;">Fig. 6.10: the 256-point sweep</h3>
+      <canvas id="sweep" width="440" height="300" role="img" aria-label="Joint sweep histogram with a draggable threshold"></canvas>
+      <p id="sweepnote" class="note">Drag the vertical threshold.</p>
+    </div>
+    <div class="applet rv">
+      <h3 style="margin-top:0;">Fig. 6.5: the Pareto structure</h3>
+      <canvas id="pareto" width="440" height="300" role="img" aria-label="Pareto scatter of epistemic gain against engagement"></canvas>
+      <p id="paretonote" class="note">Hover a point.</p>
+    </div>
+  </div>
+  <div class="figpair">
+    <div class="applet rv">
+      <h3 style="margin-top:0;">Fig. 6.27: triangulation forest</h3>
+      <canvas id="forest" width="440" height="300" role="img" aria-label="Forest plot of the four assignment designs"></canvas>
+      <p id="forestnote" class="note">Hover a design.</p>
+    </div>
+    <div class="applet rv">
+      <h3 style="margin-top:0;">Fig. 6.1: the rating distributions</h3>
+      <canvas id="dist" width="440" height="300" role="img" aria-label="Distributions of evaluative ratings for G0, G1 and the measured wave"></canvas>
+      <p id="distnote" class="note">Move the cursor across the scale.</p>
+    </div>
+  </div>
+
+  <div class="callout">Sweep samples are reconstructed from the reported quantities
+  (min -0.244, max +1.810, median +0.567, mean +0.593, 96.5% positive). Pareto points are an
+  illustrative frontier sample; the exact cell means come from the pipeline outputs.</div>
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Reconstructions of the reported quantities; exact values are in the thesis. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var seed = 5000;
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  function gamma(alpha) {
+    var d = alpha - 1 / 3, c = 1 / Math.sqrt(9 * d), x, v, u;
+    do {
+      x = 0; v = 1 + c * x;
+      while (v <= 0) { x = 0; u = rnd(); v = 1 + c * (Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rnd())); }
+      v = v * v * v; u = rnd();
+    } while (u > 1 - 0.0331 * x * x * x * x && Math.log(u) > 0.5 * x * x + d * (1 - v + Math.log(v)));
+    return d * v;
+  }
+  function beta(a, b) { var g1 = gamma(a), g2 = gamma(b); return g1 / (g1 + g2); }
+
+  var sweep = [];
+  for (var i = 0; i < 256; i++) sweep.push(-0.244 + 2.054 * beta(3.46, 5.04));
+  var threshold = 0.567;
+
+  var pareto = [];
+  for (var j = 0; j < 220; j++) {
+    var wd = rnd() * 2, wa = rnd() * 2, wen = 0.5 + rnd();
+    var y = 0.827 * (0.6265 * wd + 0.1905 * wa + (rnd() > 0.5 ? 0.3791 - 0.0121 : 0)) / 1.184;
+    var x = -0.183 * wen;
+    pareto.push({ x: x, y: y });
+  }
+
+  var designs = [
+    { name: 'Within-persona', v: 0.827, lo: 0.827, hi: 0.827 },
+    { name: 'Agent-randomized', v: 0.630, lo: 0.384, hi: 0.851 },
+    { name: 'Design-based', v: 0.807, lo: 0.470, hi: 1.109 },
+    { name: 'Cluster-randomized', v: 0.659, lo: 0.338, hi: 0.948 },
+  ];
+
+  function normPdf(x, m, s) { return Math.exp(-0.5 * Math.pow((x - m) / s, 2)) / (s * Math.sqrt(2 * Math.PI)); }
+
+  function clear(cv) {
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, cv.width, cv.height);
+    return ctx;
+  }
+
+  /* 1. sweep */
+  var sw = document.getElementById('sweep');
+  var swNote = document.getElementById('sweepnote');
+  function drawSweep(mx) {
+    var ctx = clear(sw);
+    var P = { x0: 36, y0: 18, x1: sw.width - 10, y1: sw.height - 34 };
+    var lo = -0.4, hi = 1.9;
+    function px(v) { return P.x0 + (v - lo) / (hi - lo) * (P.x1 - P.x0); }
+    var nbins = 40, bins = new Array(nbins).fill(0);
+    sweep.forEach(function (v) {
+      var b = Math.floor((v - lo) / (hi - lo) * nbins);
+      if (b >= 0 && b < nbins) bins[b]++;
+    });
+    var maxb = Math.max.apply(null, bins);
+    for (var b = 0; b < nbins; b++) {
+      var x = px(lo + (b + 0.5) / nbins * (hi - lo));
+      var bw = (P.x1 - P.x0) / nbins;
+      var h = bins[b] / maxb * (P.y1 - P.y0);
+      ctx.fillStyle = '#16325C';
+      ctx.fillRect(x - bw / 2 + 1, P.y1 - h, bw - 2, h);
+    }
+    var tx = px(threshold);
+    if (mx !== undefined && mx !== null) tx = Math.max(P.x0, Math.min(P.x1, mx));
+    ctx.strokeStyle = '#B31B1B'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(tx, P.y0); ctx.lineTo(tx, P.y1); ctx.stroke();
+    var above = sweep.filter(function (v) { return v > threshold; }).length;
+    ctx.fillStyle = '#46536B'; ctx.font = '11.5px Helvetica';
+    ctx.fillText('threshold ' + threshold.toFixed(2) + ': ' + above + ' of 256 draws above (' + (above / 256 * 100).toFixed(1) + '%)', P.x0, 12);
+    ctx.fillText('median +0.567', px(0.567) - 30, P.y0);
+    ctx.fillText('0', px(0) - 4, P.y1 + 14);
+    swNote.textContent = 'Thesis statement: 96.5% of the 256 draws are positive; the contrast depends chiefly on the diversity-to-credibility weight. Drag the threshold to ask: how often would the contrast clear your bar?';
+  }
+  sw.addEventListener('mousemove', function (e) {
+    var rect = sw.getBoundingClientRect();
+    var x = (e.clientX - rect.left) * (sw.width / rect.width);
+    threshold = -0.4 + (x - 36) / (sw.width - 46) * 2.3;
+    threshold = Math.max(-0.4, Math.min(1.9, threshold));
+    drawSweep(x);
+  });
+
+  /* 2. pareto */
+  var pa = document.getElementById('pareto');
+  var paNote = document.getElementById('paretonote');
+  function drawPareto(mx, my) {
+    var ctx = clear(pa);
+    var P = { x0: 42, y0: 20, x1: pa.width - 12, y1: pa.height - 34 };
+    var xLo = -0.30, xHi = 0.0, yLo = -0.3, yHi = 1.9;
+    function px(x) { return P.x0 + (x - xLo) / (xHi - xLo) * (P.x1 - P.x0); }
+    function py(y) { return P.y1 - (y - yLo) / (yHi - yLo) * (P.y1 - P.y0); }
+    ctx.strokeStyle = '#C9BCA7'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(px(0), P.y0); ctx.lineTo(px(0), P.y1); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(P.x0, py(0)); ctx.lineTo(P.x1, py(0)); ctx.stroke();
+    var near = -1, nd = 1e9;
+    pareto.forEach(function (r, i) {
+      ctx.fillStyle = 'rgba(179,27,27,.25)';
+      ctx.beginPath(); ctx.arc(px(r.x), py(r.y), 2.4, 0, 7); ctx.fill();
+      if (mx !== undefined) {
+        var d = Math.pow(px(r.x) - mx, 2) + Math.pow(py(r.y) - my, 2);
+        if (d < nd) { nd = d; near = i; }
+      }
+    });
+    if (near >= 0 && nd < 400) {
+      var r = pareto[near];
+      ctx.fillStyle = '#16325C';
+      ctx.beginPath(); ctx.arc(px(r.x), py(r.y), 5, 0, 7); ctx.fill();
+      ctx.fillStyle = '#16325C';
+      ctx.fillText('eng ' + r.x.toFixed(2) + ', SR ' + r.y.toFixed(2), px(r.x) + 8, py(r.y) - 6);
+    }
+    ctx.fillStyle = '#46536B'; ctx.font = '11.5px Helvetica';
+    ctx.fillText('epistemic gain vs engagement cost (illustrative frontier sample)', P.x0, 12);
+    ctx.fillText('no point is free: the frontier trades one for the other', P.x0 + 60, P.y0 + 16);
+    paNote.textContent = near >= 0 ? 'Hovered point: engagement ' + pareto[near].x.toFixed(2) + ', epistemic gain +' + pareto[near].y.toFixed(2) + '.' : 'Hover a point to read it.';
+  }
+  pa.addEventListener('mousemove', function (e) {
+    var rect = pa.getBoundingClientRect();
+    var x = (e.clientX - rect.left) * (pa.width / rect.width);
+    var y = (e.clientY - rect.top) * (pa.height / rect.height);
+    drawPareto(x, y);
+  });
+
+  /* 3. forest */
+  var fo = document.getElementById('forest');
+  var foNote = document.getElementById('forestnote');
+  function drawForest(mx, my) {
+    var ctx = clear(fo);
+    var P = { x0: 138, y0: 16, x1: fo.width - 14, y1: fo.height - 30 };
+    function px(v) { return P.x0 + (v - 0) / 1.15 * (P.x1 - P.x0); }
+    var hoverIdx = -1;
+    designs.forEach(function (r, i) {
+      var y = P.y0 + 16 + i * (P.y1 - P.y0 - 16) / designs.length;
+      if (mx !== undefined && my !== undefined && Math.abs(my - y) < 12) hoverIdx = i;
+      ctx.fillStyle = '#46536B'; ctx.font = '12px Helvetica'; ctx.textAlign = 'right';
+      ctx.fillText(r.name, P.x0 - 8, y + 4);
+      ctx.strokeStyle = i === 1 ? '#B31B1B' : '#16325C'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(px(Math.max(0, r.lo)), y); ctx.lineTo(px(Math.min(1.15, r.hi)), y); ctx.stroke();
+      ctx.fillStyle = i === 1 ? '#B31B1B' : '#16325C';
+      ctx.beginPath(); ctx.arc(px(r.v), y, 5, 0, 7); ctx.fill();
+      ctx.fillStyle = '#46536B'; ctx.font = '10.5px Helvetica'; ctx.textAlign = 'left';
+      ctx.fillText(r.v.toFixed(3), px(r.v) + 8, y - 6);
+      ctx.textAlign = 'left';
+    });
+    ctx.strokeStyle = '#C7A252'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(px(0.827), P.y0); ctx.lineTo(px(0.827), P.y1); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#8A6A1F'; ctx.font = '10.5px Helvetica';
+    ctx.fillText('within-persona +0.827', px(0.827) + 4, P.y0 + 10);
+    if (hoverIdx >= 0) {
+      var r = designs[hoverIdx];
+      foNote.textContent = r.name + ': +' + r.v.toFixed(3) + ' [' + r.lo.toFixed(3) + ', ' + r.hi.toFixed(3) + ']. ' +
+        (hoverIdx === 1 ? 'The between-agent design dilutes the BRS path through interference.' : '');
+    } else {
+      foNote.textContent = 'Hover a design. The red interval is the between-agent assignment, the interference case.';
+    }
+  }
+  fo.addEventListener('mousemove', function (e) {
+    var rect = fo.getBoundingClientRect();
+    var x = (e.clientX - rect.left) * (fo.width / rect.width);
+    var y = (e.clientY - rect.top) * (fo.height / rect.height);
+    drawForest(x, y);
+  });
+
+  /* 4. distributions */
+  var di = document.getElementById('dist');
+  var diNote = document.getElementById('distnote');
+  function drawDist(mx) {
+    var ctx = clear(di);
+    var P = { x0: 40, y0: 20, x1: di.width - 12, y1: di.height - 34 };
+    var lo = 2.5, hi = 7.5;
+    function px(v) { return P.x0 + (v - lo) / (hi - lo) * (P.x1 - P.x0); }
+    var maxd = Math.max(normPdf(5.119, 5.119, 0.6), normPdf(5.946, 5.946, 0.6), normPdf(5.12, 5.12, 0.87));
+    function curve(m, s, color) {
+      ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath();
+      for (var g = 0; g <= 200; g++) {
+        var v = lo + g / 200 * (hi - lo);
+        var d = normPdf(v, m, s);
+        var y = P.y1 - d / maxd * (P.y1 - P.y0);
+        if (g === 0) ctx.moveTo(px(v), y); else ctx.lineTo(px(v), y);
+      }
+      ctx.stroke();
+    }
+    curve(5.119, 0.6, '#C7A252');
+    curve(5.946, 0.6, '#B31B1B');
+    curve(5.12, 0.87, '#46536B');
+    ctx.fillStyle = '#46536B'; ctx.font = '11.5px Helvetica';
+    ctx.fillText('G0 gold, G1 red, measured wave slate', P.x0, 12);
+    if (mx !== undefined && mx !== null) {
+      var vx = Math.max(lo, Math.min(hi, lo + (mx - P.x0) / (P.x1 - P.x0) * (hi - lo)));
+      ctx.strokeStyle = '#1F2430'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px(vx), P.y0); ctx.lineTo(px(vx), P.y1); ctx.stroke();
+      diNote.textContent = 'At rating ' + vx.toFixed(2) + ': G0 density ' + normPdf(vx, 5.119, 0.6).toFixed(3) +
+        ', G1 density ' + normPdf(vx, 5.946, 0.6).toFixed(3) + ', measured density ' + normPdf(vx, 5.12, 0.87).toFixed(3) +
+        '. The measured wave anchors the level; it is not a treatment arm.';
+    } else {
+      diNote.textContent = 'Move the cursor across the scale to read the densities.';
+    }
+  }
+  di.addEventListener('mousemove', function (e) {
+    var rect = di.getBoundingClientRect();
+    var x = (e.clientX - rect.left) * (di.width / rect.width);
+    drawDist(x);
+  });
+
+  drawSweep(); drawPareto(); drawForest(); drawDist();
+})();
+</script>
+</body>
+</html>

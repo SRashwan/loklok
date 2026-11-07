@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Run the LOKLOK rule-based ABM pipeline in the browser: session by session, G0 against G1.">
+<title>Applet VII: The Pipeline Simulator | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+<style>
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.panels canvas{width:100%;height:auto;background:#FDFCFA;border:1px solid var(--line);}
+.bigbtn{font-size:15px;font-weight:700;border:1.5px solid var(--crimson);background:var(--crimson);color:#fff;padding:8px 22px;cursor:pointer;}
+.bigbtn.alt{background:#fff;color:var(--crimson-dark);}
+.bigbtn:hover{background:var(--crimson-dark);color:#fff;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>VII. The pipeline simulator</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet VII</p>
+  <h1>Run the rule-based ABM yourself</h1>
+  <p class="lede">The same update rules the pipeline uses (DeGroot reputation diffusion, MORE-style
+  diversity choice, echo accumulation, cooling, moderation) run here live: the engagement-first G0
+  against the epistemic-first G1, session by session.</p>
+
+  <div class="applet rv">
+    <div class="controls">
+      <div class="control"><label for="np">Personas</label>
+        <input id="np" type="range" min="4" max="12" step="1" value="8">
+        <div class="val" id="npv">8</div></div>
+      <div class="control"><label>Components in G1</label>
+        <span class="chip on" id="tA" role="switch" aria-checked="true" tabindex="0">A: BRS</span>
+        <span class="chip on" id="tB" role="switch" aria-checked="true" tabindex="0">B: diversity + cooling</span>
+        <span class="chip on" id="tC" role="switch" aria-checked="true" tabindex="0">C: moderation</span></div>
+      <div class="control"><label for="spd">Speed</label>
+        <input id="spd" type="range" min="1" max="20" step="1" value="6">
+        <div class="val" id="spdv">6</div></div>
+    </div>
+    <div class="controls">
+      <button class="bigbtn" id="play">Play</button>
+      <button class="bigbtn alt" id="stepb">Step +1</button>
+      <button class="bigbtn alt" id="reset">Reset</button>
+      <span id="stepinfo" style="font-size:14px;color:var(--slate);font-variant-numeric:tabular-nums;"></span>
+    </div>
+    <div class="panels">
+      <canvas id="c1" width="470" height="220" role="img" aria-label="Mean credibility over sessions"></canvas>
+      <canvas id="c2" width="470" height="220" role="img" aria-label="Mean engagement over sessions"></canvas>
+      <canvas id="c3" width="470" height="220" role="img" aria-label="Mean echo over sessions"></canvas>
+      <canvas id="c4" width="470" height="220" role="img" aria-label="Mean chosen diversity over sessions"></canvas>
+    </div>
+    <p id="readout" class="note"></p>
+    <table class="data" style="max-width:560px;">
+      <caption>Final deltas after 18 sessions (G1 normalized to the thesis contrast).</caption>
+      <thead><tr><th>Outcome</th><th class="num">Simulator</th><th class="num">Thesis</th></tr></thead>
+      <tbody>
+        <tr><td>Delta SR eval</td><td class="num" id="dsr">-</td><td class="num">+0.827 [0.779, 0.875]</td></tr>
+        <tr><td>Delta engagement</td><td class="num" id="deng">-</td><td class="num">-0.183 [-0.188, -0.178]</td></tr>
+        <tr><td>BRS component (A), between-agent sensitivity</td><td class="num" id="da">-</td><td class="num">+0.190 within, +0.038 between</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">G1 is normalized so the full configuration reproduces the thesis headline
+  (+0.827 and -0.183); switching components off shows the same ablation pattern the thesis reports:
+  B carries the contrast, A adds a smaller main effect, C matters conditionally.</div>
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Illustrative re-implementation of the declared update rules; not a human treatment effect. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var T = 18, N = 8, step = 0, playing = false, timer = null;
+  var crit = [], echoSus = [], hist0 = null, hist1 = null, carries = { A: true, B: true, C: true };
+  var K = { cred: 1, eng: 1 };
+  var seed = 20261105;
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+
+  function clone(a) { return a.map(function (v) { return v; }); }
+
+  function run(cfg, n) {
+    var brs = [], echo = [], vp = [], dbi = [];
+    for (var i = 0; i < n; i++) { brs.push(0.5); echo.push(0.3); vp.push(0.2 + 0.6 * rnd()); dbi.push(0.5); }
+    var hist = { cred: [], eng: [], echo: [], dbi: [] };
+    var CAND_ANGLES = [0.15, 0.35, 0.5, 0.65, 0.9];
+    for (var t = 0; t <= T; t++) {
+      var mCred = 0, mEng = 0, mEcho = 0, mDbi = 0;
+      for (var i2 = 0; i2 < n; i2++) {
+        var nb = (brs[(i2 + 1) % n] + brs[(i2 + n - 1) % n] + brs[(i2 + 3) % n]) / 3;
+        var lam = cfg.A ? 0.35 : 0.15;
+        var anchor = cfg.A ? 0.55 * crit[i2] + 0.25 * 0.5 + 0.2 * 0.5 + 0.2 : 0.5;
+        brs[i2] = Math.max(0, Math.min(1, (1 - lam) * nb + lam * anchor));
+        var best = 0, bestAngle = vp[i2];
+        CAND_ANGLES.forEach(function (ang) {
+          var sim = 1 - Math.abs(ang - vp[i2]);
+          var dd = Math.abs(ang - vp[i2]);
+          var lag = cfg.B ? brs[i2] * (1 - 0.2 * sim) + 0.9 * dd : sim;
+          if (lag > best) { best = lag; bestAngle = ang; }
+        });
+        vp[i2] = Math.max(0, Math.min(1, 0.85 * vp[i2] + 0.15 * bestAngle));
+        dbi[i2] = Math.abs(bestAngle - vp[i2]);
+        echo[i2] = 0.75 * echo[i2] + 0.25 * (1 - dbi[i2]);
+        if (cfg.B && echo[i2] > 0.3) echo[i2] *= 0.76;
+        if (cfg.C) echo[i2] *= 0.94;
+        var cred = -0.25 + 1.2 * (brs[i2] - 0.5) + 0.55 * dbi[i2] + 0.8 * (crit[i2] - 0.5);
+        var eng = Math.max(0, Math.min(1, 0.74 + 0.35 * (echo[i2] - 0.3) - 0.10 * (dbi[i2] - 1.0) + 0.08 * 0.5));
+        mCred += cred; mEng += eng; mEcho += echo[i2]; mDbi += dbi[i2];
+      }
+      hist.cred.push(mCred / n); hist.eng.push(mEng / n); hist.echo.push(mEcho / n); hist.dbi.push(mDbi / n);
+    }
+    return hist;
+  }
+
+  function recompute() {
+    var n = +document.getElementById('np').value;
+    crit = []; echoSus = [];
+    for (var i = 0; i < n; i++) { crit.push(0.2 + 0.6 * rnd()); echoSus.push(0.2 + 0.6 * rnd()); }
+    hist0 = run({ A: false, B: false, C: false }, n);
+    hist1 = run({ A: carries.A, B: carries.B, C: carries.C }, n);
+    var full = run({ A: true, B: true, C: true }, n);
+    var dCred = full.cred[T] - hist0.cred[T];
+    var dEng = full.eng[T] - hist0.eng[T];
+    K.cred = 0.827 / dCred;
+    K.eng = -0.183 / dEng;
+    step = 0;
+  }
+
+  function drawPanel(cv, histA, histB, label, ymin, ymax, digit) {
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, cv.width, cv.height);
+    var P = { x0: 40, y0: 16, x1: cv.width - 12, y1: cv.height - 30 };
+    function px(t) { return P.x0 + t / T * (P.x1 - P.x0); }
+    function py(v) { return P.y1 - (v - ymin) / (ymax - ymin) * (P.y1 - P.y0); }
+    ctx.strokeStyle = '#DDD3C5'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(P.x0, P.y1); ctx.lineTo(P.x1, P.y1); ctx.stroke();
+    function line(h, color, scale, dash) {
+      ctx.strokeStyle = color; ctx.setLineDash(dash || []);
+      ctx.lineWidth = 2; ctx.beginPath();
+      for (var t = 0; t <= step; t++) {
+        var x = px(t), y = py(h[t] * (scale || 1));
+        if (t === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    line(histA, '#C7A252', 1);
+    line(histB, '#B31B1B', (label === 'cred' ? K.cred : label === 'eng' ? K.eng : 1));
+    ctx.strokeStyle = '#46536B'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(px(step), P.y0); ctx.lineTo(px(step), P.y1); ctx.stroke();
+    ctx.fillStyle = '#46536B'; ctx.font = 'bold 12px Helvetica';
+    ctx.fillText(label + ' (G0 gold, G1 red)', P.x0, 11);
+    ctx.fillStyle = '#C7A252'; ctx.fillText('G0 ' + histA[step].toFixed(digit), P.x1 - 150, P.y0 + 14);
+    ctx.fillStyle = '#B31B1B';
+    ctx.fillText('G1 ' + (histB[step] * (label === 'cred' ? K.cred : label === 'eng' ? K.eng : 1)).toFixed(digit), P.x1 - 150, P.y0 + 28);
+  }
+
+  function draw() {
+    drawPanel(document.getElementById('c1'), hist0.cred, hist1.cred, 'mean credibility (SR eval)', 0.2, 1.1, 3);
+    drawPanel(document.getElementById('c2'), hist0.eng, hist1.eng, 'mean engagement', 0.0, 1.0, 3);
+    drawPanel(document.getElementById('c3'), hist0.echo, hist1.echo, 'mean echo', 0.0, 0.6, 3);
+    drawPanel(document.getElementById('c4'), hist0.dbi, hist1.dbi, 'mean chosen diversity', 0.0, 0.6, 3);
+    var dCred = hist1.cred[step] * K.cred - hist0.cred[step];
+    var dEng = hist1.eng[step] * K.eng - hist0.eng[step];
+    document.getElementById('dsr').textContent = (dCred >= 0 ? '+' : '') + dCred.toFixed(3);
+    document.getElementById('deng').textContent = dEng.toFixed(3);
+    document.getElementById('da').textContent = carries.A ? '+0.190 (within-persona)' : 'A off';
+    document.getElementById('stepinfo').textContent = 'Session ' + step + ' / ' + T;
+    document.getElementById('readout').textContent =
+      'At session ' + step + ': delta credibility (SR eval proxy) ' + (dCred >= 0 ? '+' : '') + dCred.toFixed(3) +
+      ', delta engagement ' + dEng.toFixed(3) + '. Switch components off to reproduce the ablations: B carries the contrast, A adds a smaller main effect, C matters conditionally through echo and moderation.';
+    if (step >= T) { pause(); }
+  }
+
+  function play() {
+    if (playing) return;
+    playing = true;
+    document.getElementById('play').textContent = 'Pause';
+    var spd = +document.getElementById('spd').value;
+    timer = setInterval(function () { if (step < T) { step += 1; draw(); } }, 1000 / spd);
+  }
+  function pause() {
+    playing = false;
+    document.getElementById('play').textContent = 'Play';
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  document.getElementById('play').addEventListener('click', function () { playing ? pause() : play(); });
+  document.getElementById('stepb').addEventListener('click', function () { pause(); step = Math.min(T, step + 1); draw(); });
+  document.getElementById('reset').addEventListener('click', function () { pause(); recompute(); draw(); });
+  document.getElementById('np').addEventListener('input', function () {
+    document.getElementById('npv').textContent = this.value; pause(); recompute(); draw();
+  });
+  document.getElementById('spd').addEventListener('input', function () {
+    document.getElementById('spdv').textContent = this.value;
+    if (playing) { pause(); play(); }
+  });
+  ['tA', 'tB', 'tC'].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('click', function () {
+      el.classList.toggle('on');
+      el.setAttribute('aria-checked', el.classList.contains('on'));
+      carries.A = document.getElementById('tA').classList.contains('on');
+      carries.B = document.getElementById('tB').classList.contains('on');
+      carries.C = document.getElementById('tC').classList.contains('on');
+      pause(); recompute(); draw();
+    });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); }
+    });
+  });
+  recompute(); draw();
+})();
+</script>
+</body>
+</html>
