@@ -24,8 +24,8 @@ November 2026
 
 ## Read the full thesis
 
-- [**Read the full thesis page by page**](read/) ? all 361 pages in the browser.
-- [Complete thesis PDF](thesis_final.pdf) - 361 pages, 43/43 package checks passed.
+- [**Read the full thesis page by page**](read/) ? all 363 pages in the browser.
+- [Complete thesis PDF](thesis_final.pdf) - 363 pages, 43/43 package checks passed.
 - [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) - 20 pages, English first, Arabic second.
 - [English summary](Supervisor_Summary_EN.pdf)
 - [Arabic summary](Supervisor_Summary_AR.pdf)
@@ -46,6 +46,14 @@ A live trial was not possible, so the evidence has three layers. The measured la
 In this model the full design raised the evaluative rating by 0.83 points (95% interval 0.78 to 0.88) and a competence-format rating by 11.3 points on a 100-point scale, while engagement fell by 0.18 on a 0 to 1 scale. Most of the gain came from the diversity component, with moderation contributing mainly through its interaction with it. Across 256 draws that varied the assumed weights and mechanism parameters, the contrast was positive in 96.5% of cases but ranged from -0.24 to +1.81, and it depended chiefly on one declared link between exposure diversity and credibility.
 
 These are model-based implications, not treatment effects. The sample is a convenience sample, and no field causal test is claimed. The thesis contributes an explicit route from theory to a testable platform design, and a plan for a real deployment.
+
+## Why social media radio, not generic social media
+
+The thesis uses social media radio as a bounded, mechanism-oriented case, not as a representative sample of all social media. Radio-like audio is voice-centred and temporally organised; a listener encounters a programmed stream or episode, not an undifferentiated multimodal feed. This makes broadcaster identity, vocal presence, sequence, and repair observable, and gives engagement a behavioural referent (continued listening, replay, interaction) rather than a generic click. It also lets editorial selection, platform selection, and listener selection be separated, so BRS, diversity-constrained recommendation, echo control, and correction can be varied as distinct architectural levers.
+
+A generic "social media" design would confound modality with architecture: text, image, video, short-form, live, and ranked feeds bundle different attention regimes, production costs, and credibility cues; likes, watch time, completed listens, and credibility ratings are not construct-equivalent; and many platform features would change at once. The thesis therefore makes an analytical, not statistical, generalization: LOKLOK is a plausibility probe for EST, and the mechanism, not the medium, is the inferential target.
+
+The pipeline follows the same scope logic. The field wave fixes the population and radio-specific instruments; the qualitative stream supplies candidate design vocabulary, not calibration; the BGE-M3 four-stream representation is a pipeline feature, not evidence of human fidelity; the ABM instantiates the eight cells with 500 personas and 18 sessions inside a radio-like feed; and the randomized-assignment triangulation tests whether the contrast depends on assignment and interference. Extending the pipeline to text, image, or video platforms would require revalidated instruments, modality-specific stimuli, and a new identification argument.
 
 ## Qualitative machine-coding audit
 
@@ -339,6 +347,7 @@ Rashwan, S. M. A. (2026). *The Social Media Radio Innovation and Its Impact on U
 ## Integrity note
 
 The measured N=52 matrix is never altered to improve significance. Simulated results are never presented as measured human effects. The synthetic NMLS profile is a measurement diagnostic, not human media literacy. The Hamiltonian is a formal diagnostic, not a physical law. The BRS is a proposed metric, not a validated consequential ranking instrument.
+
 
 
 
