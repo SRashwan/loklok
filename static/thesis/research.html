@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The LOKLOK research design: problem, gap, motivation, aim, objectives, research questions, hypotheses, and acknowledgments.">
+<title>Research Design | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Research Design</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Research sections">
+      <h3>Research Design</h3>
+      <a class="cur" href="research.html">Contents</a>
+      <a href="#problem">1. The research problem</a>
+      <a href="#gap">2. The gap</a>
+      <a href="#motivation">3. Motivation</a>
+      <a href="#aim">4. Aim and objectives</a>
+      <a href="#rqs">5. Research questions</a>
+      <a href="#hypotheses">6. Hypotheses</a>
+      <a href="#tiers">7. What is claimed</a>
+      <a href="#ack">8. Acknowledgments</a>
+    </nav>
+    <article>
+      <p class="kicker">Chapters 1, 5 and 7 &middot; the complete research design</p>
+      <h1>The research design, stated completely</h1>
+      <div class="double-rule"></div>
+      <p class="lede">This page presents the problem, the gap, the motivation, the aim, the objectives,
+      the research questions, and the hypotheses exactly as the thesis defines them, with the status
+      of each after the study. It is the formal counterpart of the thesis's Chapter 1.</p>
+
+      <h2 id="problem">1. The research problem</h2>
+      <div class="callout">Platform design, audience measurement, and epistemic quality are studied in
+      separate literatures. Social media radio combines algorithmic recommendation, live voice, and
+      audience metrics, yet no framework links its architecture to a measurable audience rating of
+      how well students judge what they hear. Meanwhile engagement pressure rewards the opposite of
+      epistemic quality. The problem is not that platforms are bad; it is that their epistemic
+      consequences are unspecified, unmeasured, and therefore unmanaged.</div>
+      <p>In formal terms: the thesis treats architecture as a treatment whose epistemic effect has no
+      identified estimator in the literature, and provides one: a calibrated in-silico experiment
+      anchored in a measured wave, with pre-declared state-outcome weights and a randomized-assignment
+      triangulation.</p>
+
+      <h2 id="gap">2. The gap this research addresses</h2>
+      <div class="cards">
+        <div class="card"><span class="tag">Gap 1</span><h3>Disconnected literatures</h3>
+          <p>Platform design, audience evaluation, and epistemic quality are studied separately; no
+          construct links architecture to judgment.</p></div>
+        <div class="card"><span class="tag">Gap 2</span><h3>No measurable epistemic rating</h3>
+          <p>Filter bubbles and misinformation are described, but rarely connected to a measurable
+          audience rating or a testable design.</p></div>
+        <div class="card"><span class="tag">Gap 3</span><h3>Engagement pressure unmodeled</h3>
+          <p>The trade-off between epistemic gain and engagement cost is asserted but not quantified;
+          this thesis measures it (+0.827 versus -0.183).</p></div>
+        <div class="card"><span class="tag">Gap 4</span><h3>Assignment-dependence ignored</h3>
+          <p>Effects are reported without asking whether they survive different assignment designs;
+          the triangulation shows the BRS path does not.</p></div>
+      </div>
+
+      <h2 id="motivation">3. Motivation</h2>
+      <ul>
+        <li><b>Practical.</b> Egyptian university radio and social audio need a design language that
+        survives engagement pressure; LOKLOK is that specification.</li>
+        <li><b>Theoretical.</b> The field lacks a falsifiable framework linking platform architecture
+        to audience judgment; Epistemic Systems Theory (EST-P1 to EST-P4) supplies it.</li>
+        <li><b>Methodological.</b> When a live trial is impossible, a calibrated in-silico experiment
+        with declared weights, triangulated across assignment designs, is a reproducible way to make
+        the design implications explicit before any deployment.</li>
+        <li><b>Policy.</b> Misinformation governance needs mechanisms with named parameters
+        (reputation, diversity, moderation, cooling, attention) that regulators and platforms can
+        audit, rather than opaque ranking boxes.</li>
+        <li><b>Personal.</b> The candidate works in radio and television education; the thesis is the
+        honest, falsifiable version of the platform his students will actually use.</li>
+      </ul>
+
+      <h2 id="aim">4. Aim and objectives</h2>
+      <p class="lede"><b>Aim.</b> To propose Epistemic Systems Theory and the LOKLOK platform, and to
+      test, with a calibrated in-silico experiment anchored in a measured student wave, whether the
+      epistemic-first design raises evaluative and competence-format ratings without destroying
+      engagement.</p>
+      <table class="data">
+        <caption>The seven objectives and their status.</caption>
+        <thead><tr><th>#</th><th>Objective</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Synthesize the literature into EST with four testable propositions</td><td><span class="verdict ok">Done</span> Chapters 2-3</td></tr>
+          <tr><td>2</td><td>Specify the LOKLOK architecture (BRS, MORE, ERIC, cooling, gate, measurement surface)</td><td><span class="verdict ok">Done</span> Chapter 4</td></tr>
+          <tr><td>3</td><td>Collect and analyze a measured wave of university students to anchor the model</td><td><span class="verdict ok">Done</span> N = 52, Section 6.1</td></tr>
+          <tr><td>4</td><td>Build a reproducible calibrated in-silico experiment (500 personas, 8 cells, 18 sessions)</td><td><span class="verdict ok">Done</span> Sections 6.2-6.12</td></tr>
+          <tr><td>5</td><td>Validate the qualitative codebook and apply the pre-set machine-coding gate</td><td><span class="verdict mix">Done, negative result</span> Section 6.12.15</td></tr>
+          <tr><td>6</td><td>Triangulate the contrast across four assignment designs</td><td><span class="verdict ok">Done</span> Section 6.12.17</td></tr>
+          <tr><td>7</td><td>Derive design implications and a plan for a real deployment</td><td><span class="verdict ok">Done</span> Chapter 7 and the <a href="blueprint.html">Blueprint</a></td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="rqs">5. Research questions, with their answers</h2>
+      <table class="data">
+        <caption>RQ1-RQ6: proposition, evidence stream, and the status each question earned.</caption>
+        <thead><tr><th>Question</th><th>Proposition</th><th>Evidence stream</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>RQ1 Does architecture shape credibility and audience evaluation?</td><td>EST-P1</td><td>Measured wave + model BRS path</td><td><span class="verdict mix">Partial, model-conditional</span></td></tr>
+          <tr><td>RQ2 Do diversity and cooling constrain epistemic concentration?</td><td>EST-P2</td><td>Model: MORE dominant, topology-independent</td><td><span class="verdict ok">Supported within the model</span></td></tr>
+          <tr><td>RQ3 Can the instruments meet psychometric accountability?</td><td>EST-P3</td><td>Reliability + CFA + gate</td><td><span class="verdict mix">Mixed</span> reliability yes, structural validity no</td></tr>
+          <tr><td>RQ4 Do the EST constructs integrate into a coherent model?</td><td>EST-P4</td><td>Framework analysis</td><td><span class="verdict bad">Not established</span></td></tr>
+          <tr><td>RQ5 Which mechanisms and weights drive the contrast?</td><td>Results</td><td>256-point sweep + PRCC + ablations</td><td><span class="verdict ok">Answered</span> cred_dbi +0.77; B +0.6265</td></tr>
+          <tr><td>RQ6 What does the Gemini pilot add?</td><td>Method</td><td>192-call pilot vs rule-based ABM</td><td><span class="verdict ok">Answered</span> direction only; magnitude and engagement not reproduced</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="hypotheses">6. Hypotheses, with their outcomes</h2>
+      <table class="data">
+        <thead><tr><th>Hypothesis</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>H1 Structural credibility: architecture shapes credibility and evaluation (EST-P1)</td><td>Partial; model-conditional</td></tr>
+          <tr><td>H2 Diversity mechanism: diversity and cooling constrain epistemic concentration (EST-P2)</td><td>Supported within the model</td></tr>
+          <tr><td>H3 Psychometric validity: instruments meet accountability (EST-P3)</td><td>Mixed</td></tr>
+          <tr><td>H4 Integration: EST constructs form a coherent measurement model (EST-P4)</td><td>Not established</td></tr>
+          <tr><td>H5 DeGroot conformity (exploratory)</td><td>Exploratory; no confirmatory claim</td></tr>
+          <tr><td>H6 Scheduling and duration (exploratory)</td><td>Exploratory; no confirmatory claim</td></tr>
+          <tr><td>H7 Participatory performance (prospective, EST-P4)</td><td>Prospective; untested</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="tiers">7. What is claimed, and what is deliberately not</h2>
+      <div class="cards">
+        <div class="card"><span class="tag">Claimed</span><h3>Model implications</h3>
+          <p>What the specified design implies under declared weights, triangulated across assignment
+          designs and passed through placebo and negative controls.</p></div>
+        <div class="card"><span class="tag">Claimed</span><h3>Descriptive anchors</h3>
+          <p>The 52-student wave anchors the model level and persona spread; its associations are
+          descriptive.</p></div>
+        <div class="card"><span class="tag">Not claimed</span><h3>Human treatment effects</h3>
+          <p>No field RCT, no causal claim about students, no claim that the BRS should rank anyone
+          consequentially.</p></div>
+        <div class="card"><span class="tag">Not claimed</span><h3>Human NMLS validation</h3>
+          <p>The competence profile is simulated from the GRM; no human administration is claimed.</p></div>
+      </div>
+
+      <h2 id="ack">8. Acknowledgments</h2>
+      <p>The candidate acknowledges, with gratitude, the people and institutions that made this
+      research possible:</p>
+      <div class="callout">
+        <b>Prof. Inas Abou Youssef</b>, Dean of the Faculty of Mass Communication, and
+        <b>Prof. Inas Abdel Hamid</b>, Vice Dean for Graduate Studies and Research, Ahram Canadian
+        University, for their patience and effort in making this thesis a reality; the
+        <b>supervisors, Dr. Engi Aboul-Ezz</b> (Beni Suef University) and <b>Dr. Mostafa El Banna</b>
+        (Ahram Canadian University), for their supervision and careful readings; the
+        <b>Faculty of Mass Communication, Ahram Canadian University</b>, for the environment in which
+        the work was done; and the <b>52 students</b> who completed the questionnaire, whose records
+        anchor every number in this study.
+      </div>
+      <p><small class="meta">Full profiles: <a href="university.html">University and People</a>.
+      The thesis front matter carries the formal acknowledgments and declarations.</small></p>
+      <p><a class="btn" href="guide.html">Reading guide &rarr;</a>
+      <a class="btn" href="thesis_final.pdf">Download the thesis</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="quality.html">Research quality</a></li><li><a href="blueprint.html">Platform blueprint</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>

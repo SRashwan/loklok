@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Research quality in the LOKLOK thesis: reliability, validity, sensitivity, robustness, and reproducibility, with equations and plain-language explanations.">
+<title>Research Quality | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+.duo .box{border:1px solid var(--line);background:#fff;padding:12px 14px;}
+.duo .box.complex{border-left:3px solid var(--crimson);}
+.duo .box.simple{border-left:3px solid var(--gold);}
+.duo .box h4{margin:0 0 6px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;}
+.duo .box.complex h4{color:var(--crimson-dark);}
+.duo .box.simple h4{color:#8A6A1F;}
+.duo .box p,.duo .box li{font-size:13.5px;color:var(--slate);margin:4px 0;}
+@media (max-width:860px){.duo{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Research Quality</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Quality sections">
+      <h3>Research Quality</h3>
+      <a class="cur" href="quality.html">Contents</a>
+      <a href="#reliability">1. Reliability</a>
+      <a href="#validity">2. Validity</a>
+      <a href="#sensitivity">3. Sensitivity</a>
+      <a href="#robustness">4. Robustness</a>
+      <a href="#reproducibility">5. Reproducibility</a>
+      <a href="#inference">6. Inference quality</a>
+      <a href="#board">7. The verdict board</a>
+    </nav>
+    <article>
+      <p class="kicker">Everything the thesis did to check itself</p>
+      <h1>Reliability, validity, sensitivity, robustness</h1>
+      <div class="double-rule"></div>
+      <p class="lede">Research quality is not one number; it is a set of distinct questions: is the
+      measure stable (reliability), does it mean what it claims (validity), how much do the answers
+      move with the assumptions (sensitivity), do they survive changes in design (robustness), and
+      can anyone redo it (reproducibility)? This page answers all five for this thesis, in formal and
+      in plain terms.</p>
+
+      <h2 id="reliability">1. Reliability: is the measure stable?</h2>
+      <div class="duo">
+        <div class="box complex"><h4>Formal statement</h4>
+          <p>Cronbach's alpha (internal consistency):</p>
+          <p>$$\alpha = \frac{k}{k-1}\left(1 - \frac{\sum_i \sigma_i^2}{\sigma_T^2}\right)$$</p>
+          <p>Model-based omega (one-factor, standardized loadings \(\lambda_i\), residuals \(\psi_i\)):</p>
+          <p>$$\omega = \frac{(\sum_i \lambda_i)^2}{(\sum_i \lambda_i)^2 + \sum_i \psi_i}$$</p>
+          <p>Cohen's kappa for coder agreement:</p>
+          <p>$$\kappa = \frac{p_o - p_e}{1 - p_e}$$</p>
+        </div>
+        <div class="box simple"><h4>Plain terms</h4>
+          <p>Alpha asks: do the items of one scale agree with each other? Omega asks the same
+          question through a factor model instead of raw sums. Kappa asks: beyond chance, how much do
+          two coders agree? All three are reported here, together with split-half and test-retest
+          where available.</p>
+        </div>
+      </div>
+      <table class="data">
+        <caption>Reported reliability, instrument by instrument.</caption>
+        <thead><tr><th>Measure</th><th class="num">Alpha</th><th class="num">Omega</th><th class="num">Guttman lambda6</th><th class="num">ICC</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>BRS (11 items, measured)</td><td class="num">.957</td><td class="num">.957</td><td class="num">-</td><td class="num">-</td><td><span class="verdict ok">High</span></td></tr>
+          <tr><td>PB (5 items, measured)</td><td class="num">.947</td><td class="num">.962</td><td class="num">-</td><td class="num">-</td><td><span class="verdict ok">High</span></td></tr>
+          <tr><td>NMLS (35 items, synthetic)</td><td class="num">.948</td><td class="num">.953</td><td class="num">.952</td><td class="num">.953</td><td><span class="verdict ok">High, model property</span></td></tr>
+          <tr><td>MCS + PB (8 items, synthetic)</td><td class="num">.738</td><td class="num">.816</td><td class="num">.719</td><td class="num">.751</td><td><span class="verdict mix">Acceptable, model property</span></td></tr>
+          <tr><td>Human coding (3 coders, pooled kappa)</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td>.762 / .852 / .861 pooled; per-code median .28 (C02) to .95 (I07); leave-one-out micro-F1 .99</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="validity">2. Validity: does it mean what it claims?</h2>
+      <table class="data">
+        <caption>The validity ledger, exactly as the thesis states it.</caption>
+        <thead><tr><th>Kind of validity</th><th>Question</th><th>What the thesis did</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Content</td><td>Do the items cover the construct?</td><td>BRS and PB items follow the supplied instrument; the NMLS is the published 35-item scale used without redefinition</td><td><span class="verdict ok">Stated</span></td></tr>
+          <tr><td>Convergent</td><td>Do related measures agree?</td><td>PB correlates with the star rating, Spearman rho = .67</td><td><span class="verdict ok">Reported</span></td></tr>
+          <tr><td>Structural (construct)</td><td>Does the factor model fit?</td><td>Single-factor CFA fit was poor, so no structural validity is claimed</td><td><span class="verdict bad">Not established</span></td></tr>
+          <tr><td>Measurement invariance</td><td>Are group comparisons of latent means fair?</td><td>No completed invariance test; group figures describe observed scores only</td><td><span class="verdict mix">Not estimated</span></td></tr>
+          <tr><td>Internal (causal)</td><td>Is the contrast free of confounding?</td><td>In-silico: placebo factor D (-0.003), negative controls, mechanism checks; field: no RCT, so no causal claim</td><td><span class="verdict mix">Model-conditional only</span></td></tr>
+          <tr><td>External</td><td>Does it generalize?</td><td>Convenience sample; representativeness explicitly not claimed</td><td><span class="verdict bad">Not claimed</span></td></tr>
+          <tr><td>Consequential</td><td>Is the score safe for high-stakes decisions?</td><td>The BRS is a proposed score, not a validated consequential ranking instrument</td><td><span class="verdict bad">Not validated</span></td></tr>
+        </tbody>
+      </table>
+      <div class="callout"><b>Common-method bias.</b> The star rating and PB came from the same
+      respondents and instrument; the thesis cites Podsakoff et al. (2024) and reports the
+      associations as same-source covariance-prone rather than as purified effects.</div>
+
+      <h2 id="sensitivity">3. Sensitivity: how much do the answers move with the assumptions?</h2>
+      <div class="duo">
+        <div class="box complex"><h4>Formal statement</h4>
+          <p>Partial rank correlation of input \(x_j\) with the contrast \(y\), given the other inputs:</p>
+          <p>$$r_{x_j} = \frac{\mathrm{Cov}(x_j, y \mid x_{-j})}{\sqrt{\mathrm{Var}(x_j \mid x_{-j})\;\mathrm{Var}(y \mid x_{-j})}}$$</p>
+        </div>
+        <div class="box simple"><h4>Plain terms</h4>
+          <p>Sensitivity asks: if I change one declared weight, how far does the result move? The
+          sweep changes all eleven inputs together across 256 draws; the PRCC ranks which single
+          input, everything else held at its typical value, moves the contrast most.</p>
+        </div>
+      </div>
+      <table class="data">
+        <caption>The sensitivity checks and their numbers.</caption>
+        <thead><tr><th>Check</th><th class="num">Result</th><th>Reading</th></tr></thead>
+        <tbody>
+          <tr><td>256-point joint sweep</td><td class="num">median +0.567, range -0.244 to +1.810, 96.5% positive</td><td>The contrast is usually positive but assumption-dependent</td></tr>
+          <tr><td>Top PRCC</td><td class="num">cred_dbi +0.77; cred_brs +0.31; cred_echo -0.27</td><td>One declared link carries most of the result, and it is named</td></tr>
+          <tr><td>Leave-one-filter-out ablation</td><td class="num">DeGroot -0.233, Lagrange -0.750, Hilbert -0.453; others ~0</td><td>Three filters are outcome-active in this wiring</td></tr>
+          <tr><td>Zewail gate ablation</td><td class="num">off +0.194, simple decay +0.110, half/double tau -0.018</td><td>The gate is not inert; it dampens the contrast</td></tr>
+          <tr><td>Source ablation</td><td class="num">quantitative-only -0.009; shuffled text -0.019</td><td>The semantic block is contextual, not load-bearing</td></tr>
+          <tr><td>60-row sensitivity</td><td class="num">+0.808 vs +0.827</td><td>Stable to the excluded duplicate vectors</td></tr>
+          <tr><td>Content stress test</td><td class="num">+0.636 at poor-content share 0.763</td><td>Sign preserved under an arbitrary but severe stress</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="robustness">4. Robustness: does it survive changes in design?</h2>
+      <div class="duo">
+        <div class="box complex"><h4>Formal statement</h4>
+          <p>The same estimator under four assignment rules:</p>
+          <p>$$\widehat{ATE} = \frac{1}{n_1}\sum_{i: Z_i=1} Y_i - \frac{1}{n_0}\sum_{i: Z_i=0} Y_i$$</p>
+          <p>with \(Z\) fixed within personas, randomized per agent, drawn from the potential-outcome
+          matrix, or assigned per cluster.</p>
+        </div>
+        <div class="box simple"><h4>Plain terms</h4>
+          <p>Robustness asks: does the finding survive a different way of running the study? A result
+          that survives every assignment rule is a property of the design; one that moves with
+          assignment is a property of the network.</p>
+        </div>
+      </div>
+      <table class="data">
+        <thead><tr><th>Design change</th><th class="num">Result</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>Topology: ER / WS / BA graphs</td><td class="num">+0.827 / +0.826 / +0.832</td><td><span class="verdict ok">Robust</span></td></tr>
+          <tr><td>Anchor bootstrap (50 resamples)</td><td class="num">+0.839 [0.805, 0.884], 100% positive</td><td><span class="verdict ok">Robust</span></td></tr>
+          <tr><td>Within-persona vs agent-randomized vs design-based vs cluster</td><td class="num">+0.827 / +0.630 / +0.807 / +0.659</td><td><span class="verdict mix">Sign robust, magnitude assignment-dependent</span></td></tr>
+          <tr><td>B (diversity) main effect across designs</td><td class="num">near +0.63 everywhere</td><td><span class="verdict ok">Assignment-robust</span></td></tr>
+          <tr><td>A (BRS) main effect across designs</td><td class="num">+0.190 / +0.038 / +0.182</td><td><span class="verdict bad">Interference-sensitive</span></td></tr>
+          <tr><td>Placebo factor D</td><td class="num">-0.003 SR, -0.082 SRcomp</td><td><span class="verdict ok">Pass</span></td></tr>
+          <tr><td>Negative controls (pre-treatment trait)</td><td class="num">+0.001, -0.008, 0.000</td><td><span class="verdict ok">Pass</span></td></tr>
+          <tr><td>Mechanism checks</td><td class="num">B raises diversity +1.299; A raises BRS +0.019; B x C lowers echo -0.340</td><td><span class="verdict ok">Pass</span></td></tr>
+          <tr><td>Agent formalism (Gemini pilot)</td><td class="num">direction reproduced; magnitude +2.650; engagement reversed +0.163</td><td><span class="verdict mix">Direction robust only</span></td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="reproducibility">5. Reproducibility: can anyone redo it?</h2>
+      <table class="data">
+        <thead><tr><th>Element</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Code, seeds, and notebooks</td><td>Pipeline, ABM, R scripts, and Colab notebooks shipped; notebooks pass JSON validation</td></tr>
+          <tr><td>Package integrity</td><td>43 of 43 automated checks pass; SHA-256 manifest over every file</td></tr>
+          <tr><td>Manuscript quality</td><td>366 pages, compiled in three passes, no overfull boxes, no undefined references, zero em dashes</td></tr>
+          <tr><td>Figures</td><td>Every figure regenerates from the saved outputs; the site data JSON is generated, not hand-entered</td></tr>
+          <tr><td>Browsable sources</td><td>The code tree is browsable in the repository and served on this site</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="inference">6. Inference quality: what the intervals mean</h2>
+      <div class="duo">
+        <div class="box complex"><h4>Formal statement</h4>
+          <p>Frequentist: \(\bar d \pm 1.96\,s/\sqrt{n}\) over the 500 generated personas.
+          Bayesian: a one-sample normal summary of the same paired differences. Both are
+          re-expressions of the same simulated draws.</p>
+        </div>
+        <div class="box simple"><h4>Plain terms</h4>
+          <p>The narrow interval [0.779, 0.875] describes variation across generated personas, not
+          uncertainty about humans. The thesis follows the ASA statement on p-values
+          (Wasserstein &amp; Lazar, 2016) and does not dress either summary up as independent
+          evidence. Watch the two frameworks accumulate live in the
+          <a href="interactive/stats.html">inference animation</a>.</p>
+        </div>
+      </div>
+
+      <h2 id="board">7. The verdict board</h2>
+      <table class="data">
+        <thead><tr><th>Quality criterion</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>Reliability (instruments)</td><td><span class="verdict ok">High, reported with alpha and omega</span></td></tr>
+          <tr><td>Reliability (human coding)</td><td><span class="verdict ok">High in aggregate; per-code reported honestly</span></td></tr>
+          <tr><td>Structural validity</td><td><span class="verdict bad">Not claimed; CFA fit poor</span></td></tr>
+          <tr><td>Invariance</td><td><span class="verdict mix">Not estimated</span></td></tr>
+          <tr><td>Sensitivity</td><td><span class="verdict ok">Fully mapped; top driver named (PRCC +0.77)</span></td></tr>
+          <tr><td>Robustness</td><td><span class="verdict mix">Sign robust across designs; BRS path assignment-dependent</span></td></tr>
+          <tr><td>Internal controls</td><td><span class="verdict ok">Placebo, negative, mechanism checks pass</span></td></tr>
+          <tr><td>Reproducibility</td><td><span class="verdict ok">43/43 checks, manifest, seeds, browsable code</span></td></tr>
+          <tr><td>Machine-coding gate</td><td><span class="verdict bad">Not met; reported as the null it is</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">The honest pattern: reliability reported with the right coefficients,
+      validity claimed only where the data support it, sensitivity and robustness mapped rather than
+      assumed, and the null results published. That is the research-quality standard the thesis
+      holds itself to.</div>
+      <p><a class="btn" href="research.html">The research design &rarr;</a>
+      <a class="btn" href="references.html">The reference shelf &rarr;</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="research.html">Research design</a></li><li><a href="blueprint.html">Platform blueprint</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>
