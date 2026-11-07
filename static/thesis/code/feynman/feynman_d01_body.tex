@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (a) at (-1.2,-1.2);
+\vertex (b) at (1.2,1.2);
+\vertex (v) at (0,0);
+\vertex (s) at (-1.9,1.2);
+\diagram*{
+(s) -- [photon, edge label'=audio signal] (v),
+(a) -- [fermion, edge label'=$S_0$] (v) -- [fermion, edge label=$S_1$] (b),
+};
+\end{feynman}
+\end{tikzpicture}

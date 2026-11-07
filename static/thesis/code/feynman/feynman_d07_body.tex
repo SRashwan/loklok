@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (a) at (-1.9,0);
+\vertex (b) at (1.9,0);
+\vertex[blob] (g) at (0,0);
+\diagram*{
+(a) -- [fermion, edge label'=$BRS_0$] (g) -- [fermion, edge label=$BRS_1$] (b),
+(g) -- [gluon, half left, looseness=1.5, edge label'=evidence] (g),
+};
+\end{feynman}
+\end{tikzpicture}

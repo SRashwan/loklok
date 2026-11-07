@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (a) at (-1.9,-1.0);
+\vertex (b) at (1.9,-1.0);
+\vertex (c) at (-1.9,1.0);
+\vertex (d) at (1.9,1.0);
+\vertex (v1) at (-0.7,-1.0);
+\vertex (v2) at (0.7,1.0);
+\diagram*{
+(a) -- [fermion, edge label'=student] (v1) -- [fermion, edge label'=$cred_1$] (b),
+(c) -- [fermion, edge label=broadcaster] (v2) -- [fermion, edge label=$BRS_1$] (d),
+(v1) -- [photon, edge label=BRS anchor] (v2),
+};
+\end{feynman}
+\end{tikzpicture}

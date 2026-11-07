@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex[crossed dot] (x) at (0,0);
+\vertex (i) at (-1.9,0);
+\vertex (b1) at (1.9,1.0);
+\vertex (b2) at (1.9,-1.0);
+\diagram*{
+(i) -- [fermion, edge label'=persona] (x),
+(x) -- [fermion, edge label=world A: within] (b1),
+(x) -- [fermion, edge label'=world B: between] (b2),
+};
+\end{feynman}
+\end{tikzpicture}

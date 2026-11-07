@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (a) at (-1.9,-1.0);
+\vertex (b) at (1.9,-1.0);
+\vertex (c) at (-1.9,1.0);
+\vertex (d) at (1.9,1.0);
+\vertex (v1) at (-0.7,-1.0);
+\vertex (v2) at (0.7,1.0);
+\vertex[blob] (g) at (0,0);
+\diagram*{
+(a) -- [fermion, edge label'=viewpoint x] (v1) -- [fermion, edge label'=$x_1$] (b),
+(c) -- [fermion, edge label=viewpoint y] (v2) -- [fermion, edge label=$y_1$] (d),
+(v1) -- [gluon] (g) -- [gluon] (v2),
+};
+\end{feynman}
+\end{tikzpicture}

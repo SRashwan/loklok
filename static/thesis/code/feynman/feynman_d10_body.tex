@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (a) at (-1.9,0);
+\vertex[crossed dot] (v) at (0,0);
+\vertex[blob] (d) at (1.9,0);
+\diagram*{
+(a) -- [fermion, edge label'=theta] (v),
+(v) -- [photon, edge label=response] (d),
+};
+\end{feynman}
+\end{tikzpicture}

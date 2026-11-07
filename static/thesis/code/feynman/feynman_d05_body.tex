@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (a) at (-1.7,0);
+\vertex (b) at (1.7,0);
+\vertex (v) at (0,0);
+\vertex (k) at (1.0,1.5);
+\diagram*{
+(a) -- [fermion, edge label'=echo in] (v) -- [fermion, edge label=echo out] (b),
+(v) -- [photon, edge label'=cooling] (k),
+};
+\end{feynman}
+\end{tikzpicture}

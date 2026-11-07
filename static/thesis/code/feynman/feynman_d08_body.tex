@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (m) at (-1.9,0.8);
+\vertex (c) at (1.9,0.8);
+\vertex[blob] (v) at (0,0);
+\vertex (p) at (0.9,-1.4);
+\diagram*{
+(m) -- [scalar, edge label'=misinfo] (v) -- [scalar, edge label=corrected] (c),
+(v) -- [photon, edge label'=reflection prompt] (p),
+};
+\end{feynman}
+\end{tikzpicture}
