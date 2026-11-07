@@ -11,10 +11,10 @@ taxonomies:
 menu:
   main:
     - name: Thesis
-      url: papers/
+      url: thesis/
       weight: 2
     - name: Planning
-      url: courses/
+      url: thesis/#8-reproduction-and-planning
       weight: 5
     - name: Data
       url: data/
@@ -37,7 +37,7 @@ params:
   ShowBreadCrumbs: false
   ShowCodeCopyButtons: true
   ShowAllPagesInArchive: false
-  MainSections: ["books", "courses", "papers", "data"]
+  MainSections: ["books", "courses", "papers", "data", "thesis"]
   ShowToc: false
   disableScrollToTop: true
   TocOpen: true
