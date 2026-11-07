@@ -94,16 +94,20 @@
   named people and roles only as recorded in the submitted front matter.</p>
 
   <div class="dean rv">
-    <div class="av" aria-hidden="true">ACU</div>
+    <img class="ph" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid var(--crimson);margin:0;" src="people/dean-inas-abou-youssef.jpg" alt="Portrait of Prof. Inas Abou Youssef, Dean of the Faculty of Mass Communication">
     <div>
       <p class="kicker" style="margin-bottom:2px;">Office of the Dean</p>
-      <h2 style="margin:0 0 4px;">Faculty of Mass Communication</h2>
-      <div class="role" style="font-size:13.5px;color:var(--slate);">The Dean's office oversees the
-      Faculty's departments, postgraduate supervision, and the media-innovation programs under which
-      this thesis was submitted.</div>
+      <h2 style="margin:0 0 4px;">Prof. Inas Abou Youssef</h2>
+      <div class="role" style="font-size:13.5px;color:var(--slate);">Dean of the Faculty of Mass Communication and
+      Acting Dean of the School of Business Administration, Ahram Canadian University; Professor of
+      Journalism.</div>
       <blockquote>Universities build the media their graduates will run. A thesis about how platform
       architecture shapes what students hear, and what they become able to judge, belongs precisely
       to this Faculty's mission: media innovation in the public interest.</blockquote>
+      <p style="font-size:13px;color:var(--slate);">The candidate acknowledges Prof. Inas Abou Youssef
+      with gratitude for her patience and effort in making this thesis a reality, and for leading the
+      Faculty under whose supervision it was completed.</p>
+      <div class="actions"><a class="follow" style="text-decoration:none;" href="people/dean.html">View profile</a></div>
       <div class="reacts" data-target="dean"></div>
     </div>
   </div>
@@ -137,7 +141,7 @@
     <div class="pcard rv" id="card-banna">
       <img class="ph" src="people/banna.jpg" alt="Portrait of Dr. Mostafa El Banna">
       <h3>Dr. Mostafa El Banna</h3>
-      <div class="role">Supervisor<br>Lecturer, Visual Media Department,
+      <div class="role">Supervisor<br>Assistant Professor, Visual Communication Department,
       Faculty of Mass Communication, Ahram Canadian University</div>
       <div class="inst">Ahram Canadian University</div>
       <div class="actions">
@@ -146,7 +150,36 @@
       </div>
       <div class="reacts" data-target="banna"></div>
     </div>
+    <div class="pcard rv" id="card-dean">
+      <img class="ph" src="people/dean-inas-abou-youssef.jpg" alt="Portrait of Prof. Inas Abou Youssef">
+      <h3>Prof. Inas Abou Youssef</h3>
+      <div class="role">Dean of the Faculty of Mass Communication; Acting Dean of the School of
+      Business Administration; Professor of Journalism</div>
+      <div class="inst">Ahram Canadian University</div>
+      <div class="actions">
+        <button class="follow" data-follow="dean">Follow</button>
+        <button class="sharebtn" data-share>Share profile</button>
+      </div>
+      <div class="reacts" data-target="dean2"></div>
+    </div>
+    <div class="pcard rv" id="card-vicedean">
+      <img class="ph" src="people/vicedean-inas-abdel-hamid.jpg" alt="Portrait of Prof. Inas Abdel Hamid">
+      <h3>Prof. Inas Abdel Hamid</h3>
+      <div class="role">Vice Dean for Graduate Studies and Research; Professor, Integrated
+      Marketing Communications</div>
+      <div class="inst">Ahram Canadian University</div>
+      <div class="actions">
+        <button class="follow" data-follow="vicedean">Follow</button>
+        <button class="sharebtn" data-share>Share profile</button>
+      </div>
+      <div class="reacts" data-target="vicedean"></div>
+    </div>
   </div>
+
+  <div class="callout rv">With deep gratitude: the candidate acknowledges
+  <b>Prof. Inas Abou Youssef</b> (Dean) and <b>Prof. Inas Abdel Hamid</b> (Vice Dean for Graduate
+  Studies and Research) for their patience and effort in making this thesis a reality, alongside
+  the two supervisors whose names appear on the title page.</div>
 
   <div class="comments rv">
     <h3>Notes and well-wishes for the candidate</h3>
@@ -182,7 +215,7 @@
   'use strict';
   var LS_KEY = 'loklok_people_v1';
   var REACTS = [['\uD83D\uDC4F', 'Respect'], ['\uD83D\uDCA1', 'Insightful'], ['\u2764\uFE0F', 'Supportive'], ['\uD83C\uDF93', 'Congrats'], ['\uD83D\uDD25', 'Landmark']];
-  var seedCounts = { dean: [12, 9, 21, 15, 6], author: [18, 11, 25, 19, 8], engi: [14, 22, 10, 16, 5], banna: [10, 17, 12, 14, 4] };
+  var seedCounts = { dean: [12, 9, 21, 15, 6], author: [18, 11, 25, 19, 8], engi: [14, 22, 10, 16, 5], banna: [10, 17, 12, 14, 4], dean2: [20, 15, 26, 18, 9], vicedean: [16, 13, 22, 17, 7] };
   function load() {
     try { return JSON.parse(localStorage.getItem(LS_KEY)) || { follows: {}, myReacts: {}, extra: {}, comments: [] }; }
     catch (e) { return { follows: {}, myReacts: {}, extra: {}, comments: [] }; }

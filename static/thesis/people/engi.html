@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Dr. Engi Aboul-Ezz: profile page for the LOKLOK thesis.">
+<title>Dr. Engi Aboul-Ezz | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+<link rel="stylesheet" href="people.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../algorithms.html">Algorithms</a>
+      <a href="../results.html">Results</a>
+      <a href="../university.html">University</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+<div class="crumbs">Overview &rarr; University &rarr; <span>Dr. Engi Aboul-Ezz</span></div>
+<div class="wrap">
+  <div class="profile">
+    <div class="card rv">
+      <img src="engi.jpg" alt="Portrait of Dr. Engi Aboul-Ezz">
+      <h2>Dr. Engi Aboul-Ezz</h2>
+      <div class="role">Supervisor<br>Associate Professor, Radio and Television Department, Faculty of Mass Communication, Beni Suef University</div>
+      <div class="inst">Beni Suef University</div>
+      <button class="follow" id="follow">Follow</button>
+      <div class="reacts" id="reacts"></div>
+    </div>
+    <div class="rv">
+      <p class="kicker">Profile</p>
+      <h1>Dr. Engi Aboul-Ezz</h1>
+      <div class="double-rule"></div>
+      <p class="bio">The first supervisor of the LOKLOK thesis. Dr. Engi Aboul-Ezz guided the framing of the research problem, the development of the radio-specific scope, and the theoretical grounding of Epistemic Systems Theory, with sustained feedback across every draft of the manuscript.</p>
+      <div class="ack">The candidate acknowledges Dr. Engi Aboul-Ezz with gratitude for her supervision, patience, and the careful readings that shaped the thesis into its final form.</div>
+      <table class="facts">
+        <thead><tr><th colspan="2">Record</th></tr></thead>
+        <tbody><tr><td>Full name</td><td>Dr. Engi Aboul-Ezz</td></tr><tr><td>Role in the thesis</td><td>Supervisor</td></tr><tr><td>Title</td><td>Associate Professor</td></tr><tr><td>Department</td><td>Radio and Television Department</td></tr><tr><td>Faculty</td><td>Mass Communication</td></tr><tr><td>Institution</td><td>Beni Suef University</td></tr></tbody>
+      </table>
+      <p><a class="btn" href="../university.html">&larr; University page</a>
+         <a class="btn" href="../index.html">Thesis overview</a></p>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Roles follow the thesis front matter and official ACU faculty pages. &copy; 2026 Sherif M. A. E. Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var KEY = 'loklok_people_v1';
+  var slug = 'engi';
+  var REACTS = [['👏', 'Respect'], ['💡', 'Insightful'], ['❤️', 'Supportive'], ['🎓', 'Congrats'], ['🔥', 'Landmark']];
+  var seeds = { author: [18, 11, 25, 19, 8], engi: [14, 22, 10, 16, 5], banna: [10, 17, 12, 14, 4], dean: [20, 15, 26, 18, 9], vicedean: [16, 13, 22, 17, 7] };
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  var store = load();
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+  var box = document.getElementById('reacts');
+  REACTS.forEach(function (r, i) {
+    var b = document.createElement('button');
+    b.className = 'react' + (store['my_' + slug] === i ? ' on' : '');
+    var extra = (store['extra_' + slug] && store['extra_' + slug][i]) || 0;
+    b.textContent = r[0] + ' ' + r[1] + ' ' + ((seeds[slug][i] || 0) + extra);
+    b.addEventListener('click', function () {
+      store['extra_' + slug] = store['extra_' + slug] || [0, 0, 0, 0, 0];
+      if (store['my_' + slug] === i) {
+        store['my_' + slug] = -1;
+        store['extra_' + slug][i] = Math.max(0, store['extra_' + slug][i] - 1);
+      } else {
+        if (store['my_' + slug] >= 0) store['extra_' + slug][store['my_' + slug]] = Math.max(0, store['extra_' + slug][store['my_' + slug]] - 1);
+        store['my_' + slug] = i;
+        store['extra_' + slug][i] += 1;
+      }
+      save();
+      var bl = document.createElement('span');
+      bl.className = 'bubble'; bl.textContent = r[0];
+      b.appendChild(bl);
+      setTimeout(function () { if (bl.parentNode) bl.parentNode.removeChild(bl); }, 1000);
+      render();
+    });
+    box.appendChild(b);
+  });
+  function render() {
+    box.innerHTML = '';
+    REACTS.forEach(function (r, i) {
+      var b = document.createElement('button');
+      b.className = 'react' + (store['my_' + slug] === i ? ' on' : '');
+      var extra = (store['extra_' + slug] && store['extra_' + slug][i]) || 0;
+      b.textContent = r[0] + ' ' + r[1] + ' ' + ((seeds[slug][i] || 0) + extra);
+      b.addEventListener('click', function () { box.removeChild(b); });
+      box.appendChild(b);
+    });
+  }
+  var f = document.getElementById('follow');
+  if (f) {
+    if (store['f_' + slug]) { f.classList.add('on'); f.textContent = 'Following'; }
+    f.addEventListener('click', function () {
+      store['f_' + slug] = !store['f_' + slug];
+      f.classList.toggle('on', store['f_' + slug]);
+      f.textContent = store['f_' + slug] ? 'Following' : 'Follow';
+      save();
+    });
+  }
+})();
+</script>
+</body>
+</html>
