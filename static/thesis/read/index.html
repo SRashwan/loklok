@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LOKLOK Thesis — Full Reader</title>
+<style>
+  :root { --ink:#1f2328; --muted:#606a76; --line:#d8dee6; --paper:#ffffff; --soft:#f4f6f8; --accent:#1f4e79; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:var(--soft); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  header { background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; position:sticky; top:0; z-index:20; }
+  header h1 { font-size:16px; margin:0; letter-spacing:.01em; }
+  header .spacer { flex:1; }
+  .btn, button, select, input[type=number] { font:inherit; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:6px; padding:6px 10px; }
+  button:hover, .btn:hover { background:var(--soft); text-decoration:none; }
+  .layout { display:grid; grid-template-columns:310px minmax(0,1fr); min-height:calc(100vh - 58px); }
+  aside { background:var(--paper); border-right:1px solid var(--line); padding:14px 12px 30px 12px; max-height:calc(100vh - 58px); overflow:auto; position:sticky; top:58px; }
+  aside h2 { font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); margin:0 0 10px 4px; }
+  .toc a { display:block; color:var(--ink); padding:4px 5px; border-radius:4px; font-size:13px; line-height:1.3; }
+  .toc a:hover { background:var(--soft); text-decoration:none; }
+  .toc a.l1 { font-weight:700; margin-top:7px; color:#111; }
+  .toc a.l2 { padding-left:16px; color:#333; }
+  .toc a.l3 { padding-left:30px; color:#555; font-size:12px; }
+  .main { padding:18px 22px 34px 22px; }
+  .toolbar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 12px 0; }
+  .toolbar .pageinfo { color:var(--muted); font-size:13px; margin-left:4px; }
+  .stage { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+  .stage img { display:block; width:100%; height:auto; border:1px solid #eef1f5; background:#fff; }
+  .stage .caption { color:var(--muted); font-size:12px; margin-top:8px; text-align:center; }
+  .chapter { font-weight:600; margin:4px 0 10px 0; color:#111; }
+  .hint { color:var(--muted); font-size:12px; }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns:1fr; }
+    aside { position:static; max-height:240px; border-right:0; border-bottom:1px solid var(--line); }
+    .main { padding:12px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>LOKLOK Thesis — Full Reader</h1>
+  <a class="btn" href="../">Thesis overview</a>
+  <a class="btn" href="../thesis_final.pdf">Download PDF</a>
+  <div class="spacer"></div>
+  <button id="prev" type="button">← Previous</button>
+  <input id="pageInput" type="number" min="1" value="1" aria-label="Page number" style="width:78px">
+  <button id="go" type="button">Go</button>
+  <button id="next" type="button">Next →</button>
+</header>
+<div class="layout">
+  <aside>
+    <h2>Contents</h2>
+    <div class="toc" id="toc"></div>
+  </aside>
+  <main class="main">
+    <div class="toolbar">
+      <span class="pageinfo" id="pageInfo">Page 1 of 355</span>
+      <span class="hint">Use ← → keys to move. The page list follows the PDF bookmarks.</span>
+    </div>
+    <div class="chapter" id="chapter"></div>
+    <div class="stage">
+      <img id="pageImage" alt="Thesis page" loading="eager">
+      <div class="caption" id="caption"></div>
+    </div>
+  </main>
+</div>
+<script>
+const TOTAL = 355;
+const IMG = (n) => `../pages/page-${String(n).padStart(3,'0')}.jpg`;
+let manifest = null;
+let current = 1;
+
+function clamp(n){ n = parseInt(n,10); if (!Number.isFinite(n)) n=1; return Math.min(TOTAL, Math.max(1,n)); }
+function nearestTitle(page){
+  if(!manifest || !manifest.toc) return '';
+  let best = null;
+  for(const e of manifest.toc){ if(e.page <= page) best = e; else break; }
+  return best ? best.title : '';
+}
+function setPage(n, push=true){
+  current = clamp(n);
+  document.getElementById('pageImage').src = IMG(current);
+  document.getElementById('pageInput').value = current;
+  document.getElementById('pageInfo').textContent = `Page ${current} of ${TOTAL}`;
+  const t = nearestTitle(current);
+  document.getElementById('chapter').textContent = t;
+  document.getElementById('caption').textContent = t ? `PDF page ${current} — ${t}` : `PDF page ${current}`;
+  document.getElementById('pageImage').alt = `Thesis page ${current}${t?': '+t:''}`;
+  if(push) history.replaceState(null,'',`?page=${current}`);
+  document.getElementById('pageImage').scrollIntoView({block:'start', behavior:'smooth'});
+}
+function buildToc(){
+  const box = document.getElementById('toc');
+  box.innerHTML = '';
+  if(!manifest || !manifest.toc) return;
+  for(const e of manifest.toc){
+    if(e.level > 2) continue;
+    const a = document.createElement('a');
+    a.href = `?page=${e.page}`;
+    a.textContent = e.title;
+    a.className = 'l'+e.level;
+    a.onclick = (ev)=>{ ev.preventDefault(); setPage(e.page); };
+    box.appendChild(a);
+  }
+}
+fetch('../pages/manifest.json').then(r=>r.json()).then(data=>{
+  manifest = data;
+  buildToc();
+  const q = new URLSearchParams(location.search).get('page');
+  setPage(q || 1, false);
+}).catch(()=>{ setPage(1,false); });
+document.getElementById('prev').onclick = ()=>setPage(current-1);
+document.getElementById('next').onclick = ()=>setPage(current+1);
+document.getElementById('go').onclick = ()=>setPage(document.getElementById('pageInput').value);
+document.getElementById('pageInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') setPage(e.target.value); });
+document.addEventListener('keydown', (e)=>{ if(e.target.tagName==='INPUT') return; if(e.key==='ArrowLeft') setPage(current-1); if(e.key==='ArrowRight') setPage(current+1); });
+</script>
+</body>
+</html>

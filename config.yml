@@ -13,6 +13,9 @@ menu:
     - name: Thesis
       url: thesis/
       weight: 2
+    - name: Read Thesis
+      url: thesis/read/
+      weight: 3
     - name: Planning
       url: thesis/#8-reproduction-and-planning
       weight: 5

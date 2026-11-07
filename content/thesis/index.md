@@ -22,8 +22,9 @@ November 2026
 
 ---
 
-## Download the thesis
+## Read the full thesis
 
+- [**Read the full thesis page by page**](read/) ? all 355 pages in the browser.
 - [Complete thesis PDF](thesis_final.pdf) — 355 pages, 39/39 package checks passed.
 - [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) — 21 pages, English first, Arabic second.
 - [English summary](Supervisor_Summary_EN.pdf)
