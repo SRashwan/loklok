@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The LOKLOK audio and signal lab: the samples the riders assessed, FFT and spectrum analysis, audio transformers, and Dirichlet radio programming.">
+<title>Audio and Signal Lab | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+.diag{background:#fff;border:1px solid var(--line);padding:10px;overflow-x:auto;margin:14px 0;}
+.diag .node{cursor:pointer;}
+.diag .node rect{fill:#16325C;stroke:#0E1420;transition:fill .2s;}
+.diag .node text{fill:#fff;font-size:10.5px;font-family:var(--sans);}
+.diag .node:hover rect,.diag .node:focus rect{fill:var(--crimson);outline:none;}
+.diag .node.tf rect{fill:#0E7490;}
+.diag .edge{stroke:#C7A252;stroke-width:1.5;fill:none;marker-end:url(#arra);}
+.explain{background:var(--paper-2);border:1px solid var(--line);padding:14px 16px;margin:12px 0;font-size:14.5px;}
+.explain b{color:var(--crimson-dark);}
+.sample{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;border:1px solid var(--line);padding:16px;margin:14px 0;}
+.sample h3{margin:0 0 4px;}
+.sample canvas{width:100%;height:auto;background:#FDFCFA;border:1px solid var(--line);display:block;margin-top:6px;}
+.sample .play{font-size:13px;font-weight:700;border:1.5px solid var(--crimson);background:var(--crimson);color:#fff;padding:6px 16px;cursor:pointer;border-radius:3px;}
+.sample .play:hover{background:var(--crimson-dark);}
+.lab{background:#fff;border:1px solid var(--line);padding:16px;margin:14px 0;}
+.lab canvas{width:100%;height:auto;background:#FDFCFA;border:1px solid var(--line);display:block;margin:8px 0;}
+.sched{display:flex;gap:2px;margin:10px 0;flex-wrap:wrap;}
+.sched .h{width:calc(100%/24 - 2px);height:34px;border-radius:2px;position:relative;}
+.sched .h:hover{outline:2px solid var(--ink);}
+.sched .h .tip{display:none;position:absolute;bottom:38px;left:50%;transform:translateX(-50%);background:#16325C;color:#fff;font-size:10px;padding:3px 7px;white-space:nowrap;z-index:5;border-radius:2px;}
+.sched .h:hover .tip{display:block;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Audio and Signal Lab</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Audio lab sections">
+      <h3>Audio Lab</h3>
+      <a class="cur" href="audio.html">Contents</a>
+      <a href="#riders">1. What the riders listened to</a>
+      <a href="#samples">2. The audio samples</a>
+      <a href="#fft">3. FFT and spectrum analysis</a>
+      <a href="#playground">4. The FFT playground</a>
+      <a href="#transformers">5. Audio transformers</a>
+      <a href="#dirichlet">6. Dirichlet radio programming</a>
+    </nav>
+    <article>
+      <p class="kicker">The audio dimension &middot; signal processing and programming</p>
+      <h1>The audio and signal lab</h1>
+      <div class="double-rule"></div>
+      <p class="lede">LOKLOK is a radio platform: everything it measures passes through audio. This
+      page presents what the measured-wave riders assessed, the signal processing a working platform
+      needs (FFT, spectrograms, and audio transformers), and the Dirichlet programming model that
+      decides what plays each hour.</p>
+
+      <h2 id="riders">1. What the Uber riders listened to</h2>
+      <p>The measured wave asked 52 university students about a social media radio listening episode
+      during an Uber ride, with the post-broadcast battery completed at the end of the episode.
+      The archive contains the questionnaire, the 25-topic Arabic topic list, and the researcher's
+      27.7-minute self-report recording; the <b>original broadcast recordings the riders heard are
+      not in the archive</b>, and the thesis says so. The samples below are therefore synthesized
+      illustrations of the episode kinds the questionnaire describes (bulletin, talk, music,
+      correction, promo), generated for this lab. The self-report audio itself is preserved in the
+      raw package.</p>
+
+      <h2 id="samples">2. The audio samples</h2>
+      <p>Each sample shows its waveform, its dominant spectral peaks, and a log-magnitude
+      spectrogram, all computed offline with a Hann-windowed FFT. Press play, then open the
+      playground below to dissect any of them yourself.</p>
+      <div id="samples"></div>
+
+      <h2 id="fft">3. FFT and spectrum analysis</h2>
+      <p>The Fourier transform is how a radio platform hears. The discrete transform and its
+      efficient radix-2 form:</p>
+      <div class="eq">$$X_k = \sum_{n=0}^{N-1} x_n\, e^{-2\pi i\, kn/N}, \qquad
+      X_k = \sum_{\text{even}} x_{2m} e^{-2\pi i km/(N/2)} + e^{-2\pi i k/N}\sum_{\text{odd}} x_{2m+1} e^{-2\pi i km/(N/2)}$$</div>
+      <p>Windowing tames spectral leakage (a Hann window \(w_n = 0.5\,(1 - \cos(2\pi n/(N-1)))\)),
+      and a spectrogram is a stack of short-window FFTs along time. In the thesis's pipeline, the
+      analogue is the attention gate: the EMA probe samples the listener's state at a moment, like
+      a short-time window samples the signal.</p>
+      <div class="diag" style="text-align:center;">
+        <svg viewBox="0 0 1080 170" role="img" aria-label="Audio analysis pipeline; click a block">
+          <defs><marker id="arra" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C7A252"/></marker></defs>
+          <g class="node" tabindex="0" data-exp="a0"><rect x="10" y="55" width="140" height="56" rx="4"/><text x="80" y="79" text-anchor="middle">Capture</text><text x="80" y="95" text-anchor="middle">16 kHz PCM stream</text></g>
+          <g class="node" tabindex="0" data-exp="a1"><rect x="180" y="55" width="140" height="56" rx="4"/><text x="250" y="79" text-anchor="middle">Pre-emphasis</text><text x="250" y="95" text-anchor="middle">de-emphasis filter</text></g>
+          <g class="node" tabindex="0" data-exp="a2"><rect x="350" y="55" width="140" height="56" rx="4"/><text x="420" y="79" text-anchor="middle">Frame + window</text><text x="420" y="95" text-anchor="middle">25 ms frames, Hann</text></g>
+          <g class="node" tabindex="0" data-exp="a3"><rect x="520" y="55" width="140" height="56" rx="4"/><text x="590" y="79" text-anchor="middle">FFT</text><text x="590" y="95" text-anchor="middle">radix-2, magnitude</text></g>
+          <g class="node" tabindex="0" data-exp="a4"><rect x="690" y="55" width="140" height="56" rx="4"/><text x="760" y="79" text-anchor="middle">Mel filterbank</text><text x="760" y="95" text-anchor="middle">40 bands, log scale</text></g>
+          <g class="node tf" tabindex="0" data-exp="a5"><rect x="860" y="55" width="170" height="56" rx="4"/><text x="945" y="79" text-anchor="middle">Transformer encoder</text><text x="945" y="95" text-anchor="middle">AST / Wav2Vec2 / CLAP</text></g>
+          <path class="edge" d="M150,83 L178,83"/><path class="edge" d="M320,83 L348,83"/><path class="edge" d="M490,83 L518,83"/><path class="edge" d="M660,83 L688,83"/><path class="edge" d="M830,83 L858,83"/>
+        </svg>
+      </div>
+      <div class="explain" id="audexp"><b>Click a block</b> for its role. The transformer output is an
+      audio embedding that joins the text embedding block: in the thesis's current run the audio path
+      is proposed, not executed, and it is labeled as such.</div>
+
+      <h2 id="playground">4. The FFT playground</h2>
+      <div class="lab">
+        <div class="controls">
+          <div class="control"><label for="samp">Sample</label>
+            <select id="samp" style="font-size:13.5px;padding:7px 10px;border:1px solid var(--line-dark);background:#fff;"></select></div>
+          <div class="control"><label for="tpos">Analysis position (s)</label>
+            <input id="tpos" type="range" min="0" max="1" step="0.01" value="0">
+            <div class="val" id="tposv">0.00 s</div></div>
+          <div class="control"><label>FFT size</label>
+            <span class="chip on" id="n512">512</span>
+            <span class="chip" id="n1024">1024</span>
+            <span class="chip" id="n2048">2048</span></div>
+        </div>
+        <canvas id="wave" width="920" height="150" aria-label="Waveform with analysis window"></canvas>
+        <canvas id="spec" width="920" height="220" aria-label="Magnitude spectrum"></canvas>
+        <canvas id="spg" width="920" height="180" aria-label="Spectrogram"></canvas>
+        <p id="readout" class="note">The FFT runs in your browser on the decoded PCM samples: this is the
+        same transform the offline figures used, recomputed live.</p>
+      </div>
+
+      <h2 id="transformers">5. Audio transformers for the platform</h2>
+      <table class="data">
+        <thead><tr><th>Model</th><th>Job on LOKLOK</th><th>Status in the thesis</th></tr></thead>
+        <tbody>
+          <tr><td>Whisper (ASR)</td><td>Transcribe episodes for the text embedding block and for ERIC's quote checking</td><td>Proposed; the self-report transcript exists, ASR provenance is disclosed</td></tr>
+          <tr><td>Wav2Vec2 / AST</td><td>Audio classification: music vs speech vs noise, and propaganda style detection</td><td>Proposed; not run</td></tr>
+          <tr><td>CLAP</td><td>Audio-text alignment: an audio embedding in the same space as BGE-M3 text, feeding the diversity term</td><td>Proposed; the current dbi uses text embeddings only</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">Honesty rule applied: the current pipeline's diversity term is built from
+      BGE-M3 text embeddings; the audio transformer path above is the thesis's stated next layer,
+      not a completed result.</div>
+
+      <h2 id="dirichlet">6. Dirichlet radio programming</h2>
+      <p>The programming question: what mix of categories should each hour contain? The Dirichlet
+      distribution is the natural answer: a probability distribution over probability vectors.</p>
+      <div class="eq">$$x \sim \mathrm{Dir}(\alpha_1, \dots, \alpha_K), \qquad
+      p(x) \propto \prod_{k=1}^{K} x_k^{\,\alpha_k - 1}, \qquad
+      H = -\sum_k x_k \log x_k$$</div>
+      <p><b>Reading the parameters.</b> Alpha below 1 concentrates mass on a few categories
+      (specialized hours); alpha above 1 spreads it (balanced hours). Drawing one vector per hour
+      gives the day's programming targets; MORE then ranks the best item inside each drawn mix.
+      This is how the platform's schedule inherits the diversity constraint: the constraint lives
+      in the prior, not in a hand-tuned timetable.</p>
+      <div class="lab">
+        <h3 style="margin-top:0;">Draw your own broadcast day</h3>
+        <div class="controls" id="dirctrls"></div>
+        <div class="controls"><button class="btn solid" id="drawday">Draw a full day (24 hours)</button>
+          <span id="entropy" style="font-size:14px;color:var(--slate);"></span></div>
+        <div class="sched" id="sched"></div>
+        <p class="note">Each hour is one Dirichlet draw over the categories; the bar colors show the
+        winning category, and the entropy H measures how balanced the day is. Try all alphas at 0.3
+        (specialized hours), then all at 3 (balanced programming).</p>
+      </div>
+
+      <div class="callout">Everything on this page is illustrative or proposed unless it cites a
+      thesis section. The measured-wave audio is described, not replayed; the samples are
+      synthesized; the transformers are the next layer.</div>
+      <p><a class="btn" href="pipeline.html">The pipeline &rarr;</a>
+      <a class="btn" href="blueprint.html">The blueprint &rarr;</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="pipeline.html">The pipeline</a></li><li><a href="ratings.html">Student Ratings</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var EXPS = {
+    a0: '<b>Capture.</b> The live stream is digitized at 16 kHz mono PCM, the working rate of this lab and of the speech models used.',
+    a1: '<b>Pre-emphasis.</b> A high-pass tilt boosts high frequencies before analysis so speech energy is not buried under bass; the inverse filter restores the signal.',
+    a2: '<b>Frame + window.</b> The stream is cut into overlapping 25 ms frames multiplied by a Hann window to control spectral leakage.',
+    a3: '<b>FFT.</b> The radix-2 Cooley-Tukey transform converts each frame to the frequency domain; the magnitude spectrum is what you see in the playground.',
+    a4: '<b>Mel filterbank.</b> 40 triangular filters spaced on the mel (perceptual) scale summarize the spectrum the way human hearing does.',
+    a5: '<b>Transformer encoder.</b> An audio transformer (AST, Wav2Vec2, or CLAP) turns the sequence of features into an embedding that joins the text block. Proposed in the thesis, not run.',
+  };
+  document.querySelectorAll('.diag .node').forEach(function (g) {
+    g.addEventListener('click', function () { document.getElementById('audexp').innerHTML = EXPS[g.getAttribute('data-exp')]; });
+    g.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); g.click(); } });
+  });
+
+  /* sample cards */
+  var samples = [];
+  function drawArray(cv, arr, color, ylo, yhi) {
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, cv.width, cv.height);
+    var n = arr.length;
+    ctx.strokeStyle = color; ctx.lineWidth = 1.2; ctx.beginPath();
+    arr.forEach(function (v, i) {
+      var x = i / (n - 1) * cv.width;
+      var y = cv.height - (v - ylo) / (yhi - ylo) * cv.height;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  }
+  function drawSpec(cv, peaks) {
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, cv.width, cv.height);
+    var maxF = 4000;
+    peaks.forEach(function (p) {
+      var x = p.freq / maxF * cv.width;
+      var y = cv.height - p.amp * cv.height;
+      ctx.strokeStyle = '#B31B1B'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x, cv.height); ctx.lineTo(x, y); ctx.stroke();
+      ctx.fillStyle = '#46536B'; ctx.font = '10px Helvetica';
+      ctx.fillText(p.freq.toFixed(0) + ' Hz', x + 3, Math.max(10, y - 3));
+    });
+    ctx.fillStyle = '#46536B'; ctx.font = '10.5px Helvetica';
+    ctx.fillText('dominant peaks (0-4 kHz)', 6, 12);
+  }
+  function drawSpg(cv, spg) {
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    if (!spg || !spg.length) return;
+    var rows = spg.length, cols = spg[0].length;
+    var bw = cv.width / cols, bh = cv.height / rows;
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+      var v = Math.max(0, Math.min(1, spg[r][c]));
+      var r2 = Math.round(22 + v * 60), g2 = Math.round(50 + v * 60), b2 = Math.round(92 + v * 90);
+      ctx.fillStyle = 'rgb(' + r2 + ',' + g2 + ',' + b2 + ')';
+      ctx.fillRect(c * bw, r * bh, bw + 0.5, bh + 0.5);
+    }
+  }
+  fetch('data/audio_samples.json').then(function (r) { return r.json(); }).then(function (d) {
+    samples = d.samples;
+    var box = document.getElementById('samples');
+    samples.forEach(function (s, i) {
+      var el = document.createElement('div');
+      el.className = 'sample';
+      el.innerHTML = '<div><h3>' + s.title.replace(/&/g, '&amp;') + '</h3>' +
+        '<p style="font-size:13.5px;color:var(--slate);">' + s.purpose.replace(/&/g, '&amp;') + '</p>' +
+        '<audio id="au' + i + '" src="audio/samples/' + s.file + '" preload="none"></audio>' +
+        '<button class="play" data-i="' + i + '">Play / pause (' + s.seconds.toFixed(1) + ' s)</button>' +
+        '<canvas id="wv' + i + '" width="440" height="110" aria-label="Waveform"></canvas></div>' +
+        '<div><canvas id="sp' + i + '" width="440" height="150" aria-label="Spectrum peaks"></canvas>' +
+        '<canvas id="sg' + i + '" width="440" height="150" aria-label="Spectrogram"></canvas></div>';
+      box.appendChild(el);
+      drawArray(document.getElementById('wv' + i), s.waveform, '#16325C', -1, 1);
+      drawSpec(document.getElementById('sp' + i), s.peaks);
+      drawSpg(document.getElementById('sg' + i), s.spectrogram);
+      el.querySelector('.play').addEventListener('click', function () {
+        var a = document.getElementById('au' + i);
+        if (a.paused) a.play(); else a.pause();
+      });
+    });
+    var sel = document.getElementById('samp');
+    samples.forEach(function (s, i) {
+      var o = document.createElement('option');
+      o.value = i; o.textContent = s.title;
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', function () { loadPlayground(+sel.value); });
+    loadPlayground(0);
+  });
+
+  /* playground: decode wav + client-side FFT */
+  var pg = { data: null, sr: 16000, nfft: 1024 };
+  function decodeWav(buf) {
+    var dv = new DataView(buf);
+    var fmt = 0, pos = 12, channels = 1, bits = 16, rate = 16000;
+    while (pos < dv.byteLength - 8) {
+      var id = String.fromCharCode(dv.getUint8(pos), dv.getUint8(pos + 1), dv.getUint8(pos + 2), dv.getUint8(pos + 3));
+      var size = dv.getUint32(pos + 4, true);
+      if (id === 'fmt ') {
+        channels = dv.getUint16(pos + 10, true);
+        rate = dv.getUint32(pos + 12, true);
+        bits = dv.getUint16(pos + 22, true);
+      } else if (id === 'data') {
+        fmt = pos + 8;
+        break;
+      }
+      pos += 8 + size + (size % 2);
+    }
+    var n = Math.floor((dv.byteLength - fmt) / 2);
+    var out = new Float32Array(n);
+    for (var i = 0; i < n; i++) out[i] = dv.getInt16(fmt + i * 2, true) / 32768;
+    pg.sr = rate;
+    return out;
+  }
+  function fft(re, im) {
+    var n = re.length;
+    if (n === 1) return;
+    var evR = [], evI = [], odR = [], odI = [];
+    for (var i = 0; i < n; i += 2) { evR.push(re[i]); evI.push(im[i]); odR.push(re[i + 1]); odI.push(im[i + 1]); }
+    fft(evR, evI); fft(odR, odI);
+    for (var k = 0; k < n / 2; k++) {
+      var ang = -2 * Math.PI * k / n, cr = Math.cos(ang), ci = Math.sin(ang);
+      var tr = cr * odR[k] - ci * odI[k], ti = cr * odI[k] + ci * odR[k];
+      re[k] = evR[k] + tr; im[k] = evI[k] + ti;
+      re[k + n / 2] = evR[k] - tr; im[k + n / 2] = evI[k] - ti;
+    }
+  }
+  function windowedFFT(x, start, nfft) {
+    var n = Math.min(nfft, x.length - start);
+    var p2 = 1; while (p2 * 2 <= n) p2 *= 2;
+    var re = new Float64Array(p2), im = new Float64Array(p2);
+    for (var i = 0; i < p2; i++) {
+      var w = 0.5 * (1 - Math.cos(2 * Math.PI * i / (p2 - 1)));
+      re[i] = x[start + i] * w;
+    }
+    fft(re, im);
+    var out = [];
+    for (var k = 0; k < p2 / 2; k++) out.push(Math.sqrt(re[k] * re[k] + im[k] * im[k]) / p2 * 2);
+    return out;
+  }
+  function loadPlayground(idx) {
+    var s = samples[idx];
+    fetch('audio/samples/' + s.file).then(function (r) { return r.arrayBuffer(); }).then(function (b) {
+      pg.data = decodeWav(b);
+      drawPG();
+    });
+  }
+  function drawPG() {
+    if (!pg.data) return;
+    var cvW = document.getElementById('wave'), cvS = document.getElementById('spec'), cvG = document.getElementById('spg');
+    var wctx = cvW.getContext('2d');
+    wctx.clearRect(0, 0, cvW.width, cvW.height);
+    wctx.fillStyle = '#FDFCFA'; wctx.fillRect(0, 0, cvW.width, cvW.height);
+    var step = Math.max(1, Math.floor(pg.data.length / cvW.width));
+    wctx.strokeStyle = '#16325C'; wctx.lineWidth = 1.2; wctx.beginPath();
+    for (var x = 0; x < cvW.width; x++) {
+      var v = pg.data[x * step];
+      var y = cvW.height / 2 - v * cvW.height / 2;
+      if (x === 0) wctx.moveTo(x, y); else wctx.lineTo(x, y);
+    }
+    wctx.stroke();
+    var t = +document.getElementById('tpos').value * pg.data.length;
+    var nfft = pg.nfft;
+    var spec = windowedFFT(pg.data, Math.min(t, pg.data.length - nfft), nfft);
+    var sctx = cvS.getContext('2d');
+    sctx.clearRect(0, 0, cvS.width, cvS.height);
+    sctx.fillStyle = '#FDFCFA'; sctx.fillRect(0, 0, cvS.width, cvS.height);
+    var maxAmp = Math.max.apply(null, spec);
+    var maxF = 4000, bins = spec.length, hzPer = pg.sr / 2 / bins;
+    var usable = Math.floor(maxF / hzPer);
+    sctx.strokeStyle = '#B31B1B'; sctx.lineWidth = 1.6; sctx.beginPath();
+    for (var k = 0; k < usable; k++) {
+      var fx = k / usable * cvS.width;
+      var fy = cvS.height - spec[k] / maxAmp * (cvS.height - 24);
+      if (k === 0) sctx.moveTo(fx, fy); else sctx.lineTo(fx, fy);
+    }
+    sctx.stroke();
+    sctx.fillStyle = '#46536B'; sctx.font = '10.5px Helvetica';
+    sctx.fillText('magnitude spectrum at ' + (+document.getElementById('tpos').value).toFixed(2) + ' s, ' + nfft + '-point FFT, 0-4 kHz', 6, 12);
+    /* spectrogram */
+    var gctx = cvG.getContext('2d');
+    gctx.clearRect(0, 0, cvG.width, cvG.height);
+    gctx.fillStyle = '#FDFCFA'; gctx.fillRect(0, 0, cvG.width, cvG.height);
+    var hop = nfft / 2, cols = Math.floor((pg.data.length - nfft) / hop), rows = 60;
+    var maxM = 0;
+    var mags = [];
+    for (var c = 0; c < Math.min(cols, 96); c++) {
+      var sp = windowedFFT(pg.data, c * hop, nfft);
+      var row = [];
+      for (var r = 0; r < rows; r++) {
+        var b = Math.floor(r / rows * Math.min(usable, sp.length));
+        var v = Math.log1p(sp[b] + 1e-6);
+        row.push(v);
+        if (v > maxM) maxM = v;
+      }
+      mags.push(row);
+    }
+    var bw = cvG.width / mags.length, bh = cvG.height / rows;
+    for (var c2 = 0; c2 < mags.length; c2++) for (var r2 = 0; r2 < rows; r2++) {
+      var v2 = mags[c2][r2] / maxM;
+      var rr = Math.round(22 + v2 * 60), gg = Math.round(50 + v2 * 60), bb = Math.round(92 + v2 * 90);
+      gctx.fillStyle = 'rgb(' + rr + ',' + gg + ',' + bb + ')';
+      gctx.fillRect(c2 * bw, r2 * bh, bw + 0.5, bh + 0.5);
+    }
+    var top3 = spec.map(function (v, k) { return { v: v, f: k * hzPer }; }).sort(function (a, b) { return b.v - a.v; }).slice(0, 3);
+    document.getElementById('readout').innerHTML = 'Dominant frequencies at this position: <b>' +
+      top3.map(function (p) { return p.f.toFixed(0) + ' Hz'; }).join(', ') +
+      '</b>. The spectrum is a ' + nfft + '-point radix-2 FFT with a Hann window, computed in your browser from the decoded PCM.';
+  }
+  document.getElementById('tpos').addEventListener('input', function () {
+    document.getElementById('tposv').textContent = (+this.value).toFixed(2) + ' s';
+    drawPG();
+  });
+  [['n512', 512], ['n1024', 1024], ['n2048', 2048]].forEach(function (p) {
+    document.getElementById(p[0]).addEventListener('click', function () {
+      pg.nfft = p[1];
+      ['n512', 'n1024', 'n2048'].forEach(function (x) { document.getElementById(x).classList.remove('on'); });
+      this.classList.add('on');
+      drawPG();
+    });
+  });
+
+  /* Dirichlet programming */
+  var CATS = ['News', 'Talk', 'Music', 'Education', 'Promo'];
+  var COLORS = ['#B31B1B', '#16325C', '#0E7490', '#8A6A1F', '#C7A252'];
+  var box = document.getElementById('dirctrls');
+  CATS.forEach(function (c, i) {
+    var d = document.createElement('div');
+    d.className = 'control';
+    d.innerHTML = '<label>' + c + ' concentration alpha</label><input type="range" min="0.1" max="4" step="0.1" value="1" data-i="' + i + '"><div class="val" data-v="' + i + '">1.0</div>';
+    box.appendChild(d);
+  });
+  function gamma(a) {
+    if (a < 1) { var u = Math.random(); return gamma(a + 1) * Math.pow(u, 1 / a); }
+    var d = a - 1 / 3, c = 1 / Math.sqrt(9 * d), x, v;
+    do { x = 0; v = 1 + c * x;
+      while (v <= 0) { x = Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(2 * Math.PI * Math.random()); v = 1 + c * x; }
+      v = v * v * v;
+    } while (Math.random() > 1 - 0.0331 * x * x * x * x && Math.log(Math.random()) > 0.5 * x * x + d * (1 - v + Math.log(v)));
+    return d * v;
+  }
+  function dirichlet(alphas) {
+    var g = alphas.map(gamma), s = g.reduce(function (a, b) { return a + b; }, 0);
+    return g.map(function (v) { return v / s; });
+  }
+  document.getElementById('drawday').addEventListener('click', drawDay);
+  box.addEventListener('input', function (e) {
+    if (e.target.dataset.i !== undefined) {
+      document.querySelector('[data-v="' + e.target.dataset.i + '"]').textContent = (+e.target.value).toFixed(1);
+    }
+  });
+  function drawDay() {
+    var alphas = CATS.map(function (c, i) { return +box.querySelectorAll('input')[i].value; });
+    var sched = document.getElementById('sched');
+    sched.innerHTML = '';
+    var Hsum = 0;
+    for (var h = 0; h < 24; h++) {
+      var x = dirichlet(alphas);
+      var win = 0;
+      x.forEach(function (v, i) { if (v > x[win]) win = i; });
+      var H = 0;
+      x.forEach(function (v) { if (v > 0) H -= v * Math.log(v); });
+      Hsum += H;
+      var el = document.createElement('div');
+      el.className = 'h';
+      el.style.background = COLORS[win];
+      el.innerHTML = '<span class="tip">' + CATS[win] + ' (h' + h + ')</span>';
+      sched.appendChild(el);
+    }
+    document.getElementById('entropy').textContent = 'Mean hourly entropy H = ' + (Hsum / 24).toFixed(2) + ' (' + (Hsum / 24).toFixed(2) < 0 ? 'low' : '' + ')';
+    document.getElementById('entropy').textContent = 'Mean hourly entropy H = ' + (Hsum / 24).toFixed(2) + '. Alpha < 1 gives specialized hours; alpha > 1 gives balanced programming.';
+  }
+  drawDay();
+})();
+</script>
+</body>
+</html>

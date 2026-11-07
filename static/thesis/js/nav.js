@@ -18,6 +18,7 @@
     { id: 'framework', label: 'Framework', href: 'framework.html' },
     { id: 'pipeline', label: 'The Pipeline', href: 'pipeline.html' },
     { id: 'ratings', label: 'Student Ratings', href: 'ratings.html' },
+    { id: 'audio', label: 'Audio Lab', href: 'audio.html' },
     { id: 'algorithms', label: 'Algorithms', href: 'algorithms.html' },
     { id: 'blueprint', label: 'Blueprint', href: 'blueprint.html' },
     { id: 'quality', label: 'Quality', href: 'quality.html' },
