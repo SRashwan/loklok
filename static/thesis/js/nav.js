@@ -15,10 +15,12 @@
   ];
   var more = [
     { id: 'guide', label: 'Reading Guide', href: 'guide.html' },
+    { id: 'framework', label: 'Framework', href: 'framework.html' },
     { id: 'algorithms', label: 'Algorithms', href: 'algorithms.html' },
     { id: 'blueprint', label: 'Blueprint', href: 'blueprint.html' },
     { id: 'quality', label: 'Quality', href: 'quality.html' },
     { id: 'edition', label: 'Interactive Edition', href: 'edition.html' },
+    { id: 'jats', label: 'JATS Reader', href: 'jats.html' },
     { id: 'references', label: 'References', href: 'references.html' },
     { id: 'downloads', label: 'Downloads', href: 'downloads.html' },
     { id: 'university', label: 'University &amp; People', href: 'university.html' },

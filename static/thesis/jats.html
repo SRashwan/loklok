@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive JATS XML reader for the LOKLOK thesis: structured sections, navigation, and linked references rendered from the JATS file.">
+<title>JATS Reader | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<style>
+body.j{background:var(--paper);}
+.jr{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:0;background:#fff;border:1px solid var(--line);}
+.jr .side{background:#FBF8F3;border-right:1px solid var(--line);padding:14px 10px;position:sticky;top:0;height:calc(100vh - 62px);overflow:auto;align-self:start;}
+.jr .side h3{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson-dark);margin:4px 8px 8px;}
+.jr .side input{width:100%;padding:7px 10px;border:1px solid var(--line);font-size:13px;margin-bottom:8px;}
+.jr .side a{display:block;font-size:13px;color:var(--slate);padding:5px 8px;border-left:2px solid transparent;}
+.jr .side a:hover{background:var(--paper-2);border-left-color:var(--gold);}
+.jr .doc{padding:30px 40px 80px;max-width:780px;}
+.jr .doc .atitle{font-family:var(--serif);font-size:27px;line-height:1.25;margin:0 0 10px;}
+.jr .doc .au{font-size:14.5px;font-weight:700;color:var(--crimson-dark);}
+.jr .doc .aff{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
+.jr .doc .abstract{background:var(--paper-2);border:1px solid var(--line);border-left:4px solid var(--gold);padding:14px 16px;margin:14px 0;font-size:14.5px;}
+.jr .doc .kw{margin:10px 0;display:flex;flex-wrap:wrap;gap:6px;}
+.jr .doc h2{font-family:var(--serif);font-size:21px;margin:30px 0 10px;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:4px;}
+.jr .doc p{font-size:15.5px;line-height:1.7;color:#2A3140;margin:0 0 12px;}
+.jr .doc .refitem{margin:0 0 10px;font-size:13.5px;color:var(--slate);}
+.jr .doc .refitem .doi{display:block;font-size:12px;margin-top:2px;}
+.jr .doc a{color:var(--crimson-dark);}
+.jr .meta{font-size:12px;color:var(--muted);margin:6px 0 0;}
+@media (max-width:900px){.jr{grid-template-columns:1fr;}.jr .side{position:static;height:auto;max-height:280px;}}
+</style>
+</head>
+<body class="j">
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>JATS Reader</span></div>
+
+<div class="wrap" style="padding-top:18px;">
+  <p class="kicker">The machine-readable record, rendered</p>
+  <h1 style="font-size:30px;">The interactive JATS reader</h1>
+  <p class="lede">This page parses <a href="downloads/thesis_jats.xml">downloads/thesis_jats.xml</a>
+  live in your browser with the DOM parser, the same way a publisher's production system ingests it.
+  Sections, the abstract, keywords, and the 77-entry reference list are rendered structurally, not as
+  plain text. The file itself is the NLM JATS 1.3 Journal Publishing XML required by PubMed Central,
+  Springer, Elsevier, and PLOS submission systems.</p>
+
+  <div class="jr">
+    <aside class="side">
+      <h3>Document structure</h3>
+      <input id="q" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+      <div id="nav"></div>
+    </aside>
+    <main class="doc" id="doc">
+      <p class="meta">Loading the JATS document...</p>
+    </main>
+  </div>
+
+  <div class="callout">External validators for this file: eZeeJATS and the JATS4R preview, both open
+  tools; the file conforms to the Journal Publishing DTD 1.3 and includes a full ref-list with DOIs,
+  so it can be submitted to a publisher without conversion.</div>
+  <p><a class="btn" href="downloads/thesis_jats.xml">Download the raw JATS XML</a>
+  <a class="btn" href="edition.html">Back to the interactive edition</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var doc = document.getElementById('doc');
+  var navBox = document.getElementById('nav');
+  var xml = null;
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function tget(node, tag) {
+    var el = node.getElementsByTagName(tag)[0];
+    return el ? el.textContent.trim() : '';
+  }
+  function tgetNS(node, ns, tag) {
+    var els = node.getElementsByTagNameNS(ns, tag);
+    return els.length ? els[0].textContent.trim() : '';
+  }
+
+  fetch('downloads/thesis_jats.xml').then(function (r) { return r.text(); }).then(function (txt) {
+    var parser = new DOMParser();
+    xml = parser.parseFromString(txt, 'application/xml');
+    if (xml.getElementsByTagName('parsererror').length) {
+      doc.innerHTML = '<p class="meta">The JATS file could not be parsed. Download it and open it in a JATS-aware tool.</p>';
+      return;
+    }
+    render();
+  }).catch(function () {
+    doc.innerHTML = '<p class="meta">Could not load the JATS file. Please reload the page.</p>';
+  });
+
+  function render() {
+    var NS = 'http://www.w3.org/1999/xlink';
+    var out = '';
+    var title = tget(xml, 'article-title');
+    var sub = tget(xml, 'subtitle');
+    var author = xml.getElementsByTagName('name')[0];
+    var auName = author ? (tget(author, 'surname') + ', ' + tget(author, 'given-names')) : '';
+    var aff = tget(xml, 'institution');
+    var abs = tget(xml, 'abstract');
+    var kws = xml.getElementsByTagName('kwd');
+    var kwList = [];
+    for (var i = 0; i < kws.length; i++) kwList.push(kws[i].textContent.trim());
+
+    out += '<h1 class="atitle">' + esc(title) + '</h1>';
+    if (sub) out += '<p class="meta" style="font-size:16px;font-style:italic;">' + esc(sub) + '</p>';
+    out += '<p class="au">' + esc(auName) + '</p>';
+    out += '<p class="aff">' + esc(aff) + ' &middot; Faculty of Mass Communication, Department of Radio and Television, Giza, Egypt &middot; November 2026</p>';
+    out += '<div class="abstract"><b>Abstract.</b> ' + esc(abs) + '</div>';
+    if (kwList.length) out += '<div class="kw">' + kwList.map(function (k) { return '<span class="tag">' + esc(k) + '</span>'; }).join('') + '</div>';
+
+    var nav = '';
+    var secs = xml.getElementsByTagName('sec');
+    for (var s = 0; s < secs.length; s++) {
+      var sec = secs[s];
+      var st = tget(sec, 'title');
+      var id = sec.getAttribute('id') || ('sec' + s);
+      nav += '<a href="#' + id + '" data-t="' + esc(st.toLowerCase()) + '">' + esc(st) + '</a>';
+      out += '<h2 id="' + id + '">' + esc(st) + '</h2>';
+      var ps = sec.getElementsByTagName('p');
+      for (var p = 0; p < ps.length; p++) out += '<p>' + esc(ps[p].textContent.trim()) + '</p>';
+    }
+
+    var refs = xml.getElementsByTagName('ref');
+    out += '<h2 id="references">References (' + refs.length + ')</h2>';
+    for (var r2 = 0; r2 < refs.length; r2++) {
+      var ref = refs[r2];
+      var mc = ref.getElementsByTagName('mixed-citation')[0];
+      var doi = tget(ref, 'pub-id');
+      var link = tgetNS(ref, NS, 'ext-link');
+      out += '<div class="refitem" id="' + esc(ref.getAttribute('id')) + '">' +
+        esc(mc ? mc.textContent.trim() : ref.textContent.trim()) +
+        (doi ? '<a class="doi" href="https://doi.org/' + esc(doi) + '" target="_blank" rel="noopener">https://doi.org/' + esc(doi) + '</a>' : '') +
+        (link ? '<a class="doi" href="' + esc(link) + '" target="_blank" rel="noopener">' + esc(link) + '</a>' : '') +
+        '</div>';
+    }
+    doc.innerHTML = out;
+    navBox.innerHTML = nav;
+    navBox.insertAdjacentHTML('afterbegin', '<a href="#references">References (' + refs.length + ')</a>');
+    document.getElementById('q').addEventListener('input', function () {
+      var q = this.value.toLowerCase();
+      navBox.querySelectorAll('a').forEach(function (a) { a.style.display = a.dataset.t && a.dataset.t.indexOf(q) < 0 ? 'none' : ''; });
+    });
+  }
+})();
+</script>
+</body>
+</html>

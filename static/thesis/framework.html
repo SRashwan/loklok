@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The theoretical and conceptual framework of the LOKLOK thesis: EST propositions, constructs, variables (IV, DV, mediators, moderators, controls), and block diagrams.">
+<title>Framework | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+.diag{background:#fff;border:1px solid var(--line);padding:10px;overflow-x:auto;margin:14px 0;}
+.diag .node{cursor:pointer;}
+.diag .node rect{fill:#16325C;stroke:#0E1420;transition:fill .2s;}
+.diag .node text{fill:#fff;font-size:11px;font-family:var(--sans);}
+.diag .node:hover rect,.diag .node:focus rect{fill:var(--crimson);outline:none;}
+.diag .node.iv rect{fill:#7C1414;}
+.diag .node.dv rect{fill:#0E7490;}
+.diag .node.mod rect{fill:#8A6A1F;}
+.diag .node.con rect{fill:#46536B;}
+.diag .edge{stroke:#C7A252;stroke-width:1.5;fill:none;marker-end:url(#arrf);}
+.diag .edge.modline{stroke-dasharray:5 4;stroke:#8A6A1F;marker-end:url(#arrf2);}
+.explain{background:var(--paper-2);border:1px solid var(--line);padding:14px 16px;margin:12px 0;font-size:14.5px;}
+.explain b{color:var(--crimson-dark);}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--slate);margin:8px 0 0;}
+.legend i{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Framework</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Framework sections">
+      <h3>Framework</h3>
+      <a class="cur" href="framework.html">Contents</a>
+      <a href="#theory">1. Theoretical framework</a>
+      <a href="#conceptual">2. Conceptual framework</a>
+      <a href="#fieldmodel">3. The field-wave model</a>
+      <a href="#abmmodel">4. The experiment model</a>
+      <a href="#variables">5. The variable ledger</a>
+      <a href="#measurement">6. The measurement model</a>
+      <a href="#mapping">7. Propositions to components</a>
+    </nav>
+    <article>
+      <p class="kicker">Chapters 3, 4 and 5 &middot; the constructs and variables, stated fully</p>
+      <h1>The theoretical and conceptual framework</h1>
+      <div class="double-rule"></div>
+      <p class="lede">Every variable in this thesis has a declared type, an operationalization, and a
+      source. This page states them all: the theoretical lens (EST), the two conceptual models (the
+      descriptive field wave and the causal-in-the-model experiment), the variable ledger with
+      independent variables, dependent variables, mediators, moderators, and controls, and the
+      measurement model behind every score.</p>
+
+      <h2 id="theory">1. The theoretical framework: EST</h2>
+      <p>The thesis theorizes through <b>Epistemic Systems Theory</b>, four falsifiable propositions
+      that link platform architecture to audience judgment. EST is the lens; LOKLOK is its
+      specification; the experiment is its test.</p>
+      <table class="data">
+        <thead><tr><th>Proposition</th><th>Theoretical claim</th><th>Tested by</th></tr></thead>
+        <tbody>
+          <tr><td>EST-P1</td><td>Architecture is a structural condition of credibility</td><td>Factor A (BRS) in the ABM; PB-star associations in the field wave</td></tr>
+          <tr><td>EST-P2</td><td>Diversity and cooling constrain epistemic concentration</td><td>Factor B (MORE + cooling); the dominant path in the decomposition</td></tr>
+          <tr><td>EST-P3</td><td>Measurement is an accountability requirement</td><td>Reliability, CFA, the machine-coding gate; reported separately from claims</td></tr>
+          <tr><td>EST-P4</td><td>Participation and evidence-based production are the educational test</td><td>Reserved for the prospective field experiment (H7)</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="conceptual">2. The conceptual framework in one paragraph</h2>
+      <p>Platform components (A: reputation architecture, B: diversity and cooling, C: moderation)
+      act on the listener's states (reputation beliefs, chosen diversity, echo, attention), and those
+      states produce the observable ratings (evaluative and competence) and engagement. Persona traits
+      and the declared weights shape how strongly each component transmits; the whole model is
+      anchored by a measured wave and audited by controls. The field wave is descriptive: it fixes the
+      level and spread of the anchors, and no causal wording is attached to it.</p>
+
+      <h2 id="fieldmodel">3. The field-wave model (descriptive)</h2>
+      <div class="diag" style="text-align:center;">
+        <svg viewBox="0 0 900 220" role="img" aria-label="Field wave conceptual diagram; click a node">
+          <defs>
+            <marker id="arrf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C7A252"/></marker>
+            <marker id="arrf2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker>
+          </defs>
+          <g class="node con" tabindex="0" data-exp="fx"><rect x="40" y="70" width="180" height="60" rx="4"/><text x="130" y="96" text-anchor="middle">Covariates</text><text x="130" y="114" text-anchor="middle">ride duration, interaction, context</text></g>
+          <g class="node iv" tabindex="0" data-exp="fx1"><rect x="300" y="70" width="200" height="60" rx="4"/><text x="400" y="96" text-anchor="middle">Predictors (observed)</text><text x="400" y="114" text-anchor="middle">BRS items, PB items</text></g>
+          <g class="node dv" tabindex="0" data-exp="fx2"><rect x="620" y="70" width="200" height="60" rx="4"/><text x="720" y="96" text-anchor="middle">Outcome (observed)</text><text x="720" y="114" text-anchor="middle">star rating</text></g>
+          <path class="edge" d="M220,100 L298,100"/>
+          <path class="edge" d="M500,100 L618,100"/>
+          <path class="edge modline" d="M400,130 L400,160 L720,160 L720,132" marker-end="none"/>
+          <text x="560" y="176" text-anchor="middle" style="font-size:11px;fill:#8A6A1F;">Spearman rho = .67 (PB to star); same-source covariance reported</text>
+          <text x="130" y="60" text-anchor="middle" style="font-size:11px;fill:#46536B;">N = 52 of 60; convenience sample</text>
+          <text x="720" y="60" text-anchor="middle" style="font-size:11px;fill:#0E7490;">no causal wording anywhere</text>
+        </svg>
+      </div>
+      <div class="legend">
+        <span><i style="background:#7C1414;"></i>predictor (observed)</span>
+        <span><i style="background:#0E7490;"></i>outcome (observed)</span>
+        <span><i style="background:#46536B;"></i>covariate</span>
+        <span><i style="background:#8A6A1F;"></i>moderator / adjustment</span>
+      </div>
+      <div class="explain" id="fieldexp"><b>Click a node</b> to read its role. The field wave is the
+      descriptive layer: it anchors the model level (G0 = PB mean 5.119) and the persona spread, and
+      its associations are reported with the common-method caveat.</div>
+
+      <h2 id="abmmodel">4. The experiment model (causal within the model)</h2>
+      <div class="diag" style="text-align:center;">
+        <svg viewBox="0 0 1080 460" role="img" aria-label="In-silico experiment conceptual diagram; click a node">
+          <defs>
+            <marker id="arrf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C7A252"/></marker>
+            <marker id="arrf2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8A6A1F"/></marker>
+          </defs>
+          <g class="node iv" tabindex="0" data-exp="ax"><rect x="40" y="30" width="170" height="58" rx="4"/><text x="125" y="55" text-anchor="middle">A: BRS architecture</text><text x="125" y="72" text-anchor="middle">reputation anchor (on/off)</text></g>
+          <g class="node iv" tabindex="0" data-exp="bx"><rect x="40" y="130" width="170" height="58" rx="4"/><text x="125" y="155" text-anchor="middle">B: diversity + cooling</text><text x="125" y="172" text-anchor="middle">MORE + echo cooling (on/off)</text></g>
+          <g class="node iv" tabindex="0" data-exp="cx"><rect x="40" y="230" width="170" height="58" rx="4"/><text x="125" y="255" text-anchor="middle">C: ERIC moderation</text><text x="125" y="272" text-anchor="middle">reflect, invite, correct (on/off)</text></g>
+          <g class="node" tabindex="0" data-exp="mx"><rect x="330" y="30" width="180" height="52" rx="4"/><text x="420" y="53" text-anchor="middle">Mediator: reputation b_i</text><text x="420" y="68" text-anchor="middle">anchored DeGroot update</text></g>
+          <g class="node" tabindex="0" data-exp="mx2"><rect x="330" y="110" width="180" height="52" rx="4"/><text x="420" y="133" text-anchor="middle">Mediator: chosen diversity</text><text x="420" y="148" text-anchor="middle">dbi from the MORE objective</text></g>
+          <g class="node" tabindex="0" data-exp="mx3"><rect x="330" y="190" width="180" height="52" rx="4"/><text x="420" y="213" text-anchor="middle">Mediator: echo e</text><text x="420" y="228" text-anchor="middle">accumulation + cooling</text></g>
+          <g class="node" tabindex="0" data-exp="mx4"><rect x="330" y="270" width="180" height="52" rx="4"/><text x="420" y="293" text-anchor="middle">Mediator: attention gate g</text><text x="420" y="308" text-anchor="middle">exp(-dt / tau) coherence</text></g>
+          <g class="node dv" tabindex="0" data-exp="dy"><rect x="620" y="40" width="180" height="58" rx="4"/><text x="710" y="63" text-anchor="middle">DV: SR eval (1-7)</text><text x="710" y="81" text-anchor="middle">+0.827 [0.779, 0.875]</text></g>
+          <g class="node dv" tabindex="0" data-exp="dy2"><rect x="620" y="140" width="180" height="58" rx="4"/><text x="710" y="163" text-anchor="middle">DV: SR comp (0-100)</text><text x="710" y="181" text-anchor="middle">+11.30 [10.64, 11.95]</text></g>
+          <g class="node dv" tabindex="0" data-exp="dy3"><rect x="620" y="240" width="180" height="58" rx="4"/><text x="710" y="263" text-anchor="middle">DV: engagement (0-1)</text><text x="710" y="281" text-anchor="middle">-0.183 [-0.188, -0.178]</text></g>
+          <g class="node mod" tabindex="0" data-exp="mo"><rect x="860" y="60" width="190" height="58" rx="4"/><text x="955" y="83" text-anchor="middle">Moderators (persona)</text><text x="955" y="101" text-anchor="middle">scrutiny c_i, echo susceptibility, viewpoint</text></g>
+          <g class="node mod" tabindex="0" data-exp="mo2"><rect x="860" y="180" width="190" height="58" rx="4"/><text x="955" y="203" text-anchor="middle">Moderators (declared)</text><text x="955" y="221" text-anchor="middle">cred_dbi, cred_brs, cred_echo, q, prop</text></g>
+          <g class="node con" tabindex="0" data-exp="co"><rect x="860" y="300" width="190" height="58" rx="4"/><text x="955" y="323" text-anchor="middle">Controls</text><text x="955" y="341" text-anchor="middle">placebo D, negative controls, topology, seed</text></g>
+          <path class="edge" d="M210,59 L328,56"/>
+          <path class="edge" d="M210,159 L328,136"/>
+          <path class="edge" d="M210,259 L328,216"/>
+          <path class="edge" d="M210,259 L328,296"/>
+          <path class="edge" d="M510,56 L618,69"/>
+          <path class="edge" d="M510,136 L618,169"/>
+          <path class="edge" d="M510,216 L618,269"/>
+          <path class="edge" d="M510,296 L618,269"/>
+          <path class="edge" d="M510,216 L618,69"/>
+          <path class="edge modline" d="M955,118 L955,150 L790,150 L790,169" marker-end="none"/>
+          <path class="edge modline" d="M860,209 L790,209 L790,169" marker-end="none"/>
+          <path class="edge modline" d="M860,329 L800,329 L800,285" marker-end="none"/>
+          <text x="420" y="360" text-anchor="middle" style="font-size:11px;fill:#46536B;">solid arrows: the declared causal paths inside the model; dashed: moderation and control paths</text>
+          <text x="125" y="392" text-anchor="middle" style="font-size:11px;fill:#7C1414;">IV: three manipulated factors (2^3 = 8 cells)</text>
+          <text x="710" y="392" text-anchor="middle" style="font-size:11px;fill:#0E7490;">DV: the measurement surface</text>
+        </svg>
+      </div>
+      <div class="legend">
+        <span><i style="background:#7C1414;"></i>independent variable (manipulated factor)</span>
+        <span><i style="background:#16325C;"></i>mediator (mechanism state)</span>
+        <span><i style="background:#0E7490;"></i>dependent variable (outcome)</span>
+        <span><i style="background:#8A6A1F;"></i>moderator / control</span>
+      </div>
+      <div class="explain" id="abmexp"><b>Click a node</b> to read its definition. The diagram is the
+      thesis's causal graph inside the simulation: factors change states, states change outcomes,
+      traits and weights shape the transmission, and controls audit the whole loop.</div>
+
+      <h2 id="variables">5. The variable ledger</h2>
+      <table class="data">
+        <caption>Every construct with its type, operationalization, and source. Field = measured; Sim = simulated; Declared = design input.</caption>
+        <thead><tr><th>Variable</th><th>Type</th><th>Operationalization</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>A: BRS architecture</td><td>IV</td><td>Anchored DeGroot update on/off; anchor = 0.55 c_i + 0.25 g + 0.20 q-bar + 0.20; lambda 0.35 vs 0.15</td><td>Sim</td></tr>
+          <tr><td>B: diversity + cooling</td><td>IV</td><td>MORE objective with dbi term; echo cooling x0.76 past theta_c</td><td>Sim</td></tr>
+          <tr><td>C: ERIC moderation</td><td>IV</td><td>Penalty max(0, 1.4(p_prop - tau_mod)); reflection prompt</td><td>Sim</td></tr>
+          <tr><td>Reputation b_i</td><td>Mediator</td><td>Per-broadcaster belief, network-averaged with evidence anchor</td><td>Sim</td></tr>
+          <tr><td>Chosen diversity dbi</td><td>Mediator</td><td>1 - Hilbert overlap between listener and chosen candidate</td><td>Sim</td></tr>
+          <tr><td>Echo e</td><td>Mediator</td><td>e(t+1) = 0.75 e + 0.25 (1 - dbi), cooled past theta_c</td><td>Sim</td></tr>
+          <tr><td>Attention gate g</td><td>Mediator</td><td>exp(-dt/tau) times distraction and phase-locking terms</td><td>Sim</td></tr>
+          <tr><td>SR eval</td><td>DV</td><td>Evaluative rating 1-7; G0 anchored at PB mean 5.119</td><td>Sim</td></tr>
+          <tr><td>SR comp</td><td>DV</td><td>NMLS 35-item GRM-IRT profile rescaled to 0-100</td><td>Sim</td></tr>
+          <tr><td>Engagement</td><td>DV</td><td>0.74 + 0.35(e-.30) - 0.10(dbi-1) + 0.08(q-.5), session-average and terminal</td><td>Sim</td></tr>
+          <tr><td>Critical scrutiny c_i</td><td>Moderator</td><td>Persona trait 0.2-0.8, drawn with the persona</td><td>Sim (prior)</td></tr>
+          <tr><td>Echo susceptibility</td><td>Moderator</td><td>Persona trait scaling echo accumulation</td><td>Sim (prior)</td></tr>
+          <tr><td>State-outcome weights</td><td>Moderator (parameter)</td><td>cred_dbi, cred_brs, cred_echo, cred_q, cred_prop: declared, swept over 256 draws</td><td>Declared</td></tr>
+          <tr><td>Placebo D / negative controls</td><td>Control</td><td>Absent factor and pre-treatment traits: -0.003; +0.001, -0.008, 0.000</td><td>Sim</td></tr>
+          <tr><td>Topology, seed, 60-row file</td><td>Control</td><td>ER/WS/BA; seed 20261105; sensitivity +0.808</td><td>Sim / Field</td></tr>
+          <tr><td>PB, BRS items, star rating</td><td>Field predictors/outcomes</td><td>5-item PB (alpha .947), 11-item BRS (.957), star; rho = .67</td><td>Field</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="measurement">6. The measurement model</h2>
+      <p>Both simulated rating formats are generated from latent constructs through the Samejima
+      graded response model; the field instruments are the published batteries scored as designed.</p>
+      <div class="eq">$$P(x \ge k \mid \theta) = \frac{1}{1+\exp[-a(\theta-b_k)]}$$</div>
+      <ul>
+        <li><b>Latent construct:</b> media literacy theta (simulated) behind the NMLS profile;
+        evaluative credibility behind SR eval; engagement behind the declared mapping.</li>
+        <li><b>Indicators:</b> NMLS 35 items across four domains (functional and critical consumption
+        and prosumption); MCS + PB 8 items; BRS 11 items; PB 5 items.</li>
+        <li><b>Model-fit stance:</b> reliability is reported (alpha and omega); structural validity is
+        not claimed (poor CFA); invariance is not estimated. Full ledger on the
+        <a href="quality.html">Quality page</a>.</li>
+      </ul>
+
+      <h2 id="mapping">7. Propositions to components to outcomes</h2>
+      <table class="data">
+        <thead><tr><th>Proposition</th><th>Component</th><th>Path in the model</th><th>Finding</th></tr></thead>
+        <tbody>
+          <tr><td>EST-P1</td><td>A (BRS)</td><td>A &rarr; reputation &rarr; SR eval</td><td>+0.190 within-persona, +0.038 between agents</td></tr>
+          <tr><td>EST-P2</td><td>B (MORE + cooling)</td><td>B &rarr; diversity and echo &rarr; SR eval + engagement</td><td>+0.6265 main effect; assignment-robust</td></tr>
+          <tr><td>EST-P3</td><td>Measurement surface</td><td>GRM-IRT scoring, reliability, the gate</td><td>Mixed; reported honestly</td></tr>
+          <tr><td>EST-P4</td><td>ERIC + the field plan</td><td>B x C &rarr; echo and ratings; prospective field test</td><td>+0.3791 interaction; H7 untested</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">The diagrams above are the thesis's conceptual model made explicit: the
+      field wave is descriptive anchoring; the causal language lives strictly inside the simulation,
+      and every arrow can be switched off, which is exactly what the ablations and the
+      randomized-assignment triangulation do.</div>
+      <p><a class="btn" href="blueprint.html">Build on it: the blueprint &rarr;</a>
+      <a class="btn" href="interactive/">Exercise the model &rarr;</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="research.html">Research design</a></li><li><a href="quality.html">Research quality</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var EXPS = {
+    fx: '<b>Covariates.</b> Ride duration, interaction level, and context items. They adjust the associations and feed the DML/IPW debiasing before persona construction.',
+    fx1: '<b>Predictors (observed).</b> The 11 BRS items and the 5 PB items. In the field wave there is no manipulation, so these are observed predictors, never called causes.',
+    fx2: '<b>Outcome (observed).</b> The star rating. Its Spearman association with PB is rho = .67, reported with the same-source caveat (Podsakoff et al., 2024).',
+    ax: '<b>A: BRS architecture (IV).</b> Toggling the anchored reputation update on and off. The triangulation shows this path is interference-sensitive: +0.190 within-persona, +0.038 between agents.',
+    bx: '<b>B: diversity + cooling (IV).</b> The MORE objective with the diversity term plus echo cooling. The dominant path: main effect +0.6265, assignment-robust.',
+    cx: '<b>C: ERIC moderation (IV).</b> The reflect-invite-correct gate. Near zero alone (-0.0121) but +0.3791 through the B x C interaction.',
+    mx: '<b>Mediator: reputation b_i.</b> The broadcaster belief state updated by DeGroot averaging with the evidence anchor; it transmits the A path to the ratings.',
+    mx2: '<b>Mediator: chosen diversity dbi.</b> 1 minus the Hilbert overlap between the listener and the chosen candidate; it transmits the B path.',
+    mx3: '<b>Mediator: echo e.</b> The accumulated sameness state, cooled past theta_c; it transmits the engagement cost.',
+    mx4: '<b>Mediator: attention gate g.</b> The exp(-dt/tau) coherence factor that scales retention and the evidence anchor.',
+    dy: '<b>DV: SR eval.</b> The evaluative rating (1-7). Headline: +0.827 [0.779, 0.875], t(499) = 33.93.',
+    dy2: '<b>DV: SR comp.</b> The competence-format rating (0-100) from the 35-item NMLS profile. Headline: +11.30 [10.64, 11.95].',
+    dy3: '<b>DV: engagement.</b> The 0-1 engagement state. Headline: -0.183 session-average (-0.217 terminal): the measured cost of the epistemic gain.',
+    mo: '<b>Persona moderators.</b> Critical scrutiny, echo susceptibility, and viewpoint: drawn with each persona, they scale how strongly the components transmit.',
+    mo2: '<b>Declared moderators.</b> The state-outcome weights (cred_dbi, cred_brs, cred_echo, cred_q, cred_prop): design inputs, varied over the 256-point sweep; cred_dbi is the top driver (PRCC +0.77).',
+    co: '<b>Controls.</b> Placebo factor D (-0.003), pre-treatment negative controls (+0.001, -0.008, 0.000), ER/WS/BA topologies, and the fixed seed. They audit the diagram, not the story.',
+  };
+  document.querySelectorAll('.diag .node').forEach(function (g) {
+    g.addEventListener('click', function () {
+      var target = g.getAttribute('data-exp').indexOf('f') === 0 ? 'fieldexp' : 'abmexp';
+      document.getElementById(target).innerHTML = EXPS[g.getAttribute('data-exp')];
+    });
+    g.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); g.click(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
