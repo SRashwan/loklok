@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Results of the LOKLOK master's thesis: measured wave, calibrated in-silico experiment, triangulation, and qualitative validation.">
+<title>Results | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="abstract.html">Abstract</a>
+      <a href="guide.html">Reading Guide</a>
+      <a href="results.html">Results</a>
+      <a href="interactive/">Interactive</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Results</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Results sections">
+      <h3>Results</h3>
+      <a class="cur" href="results.html">Summary</a>
+      <a href="#measured">The measured wave</a>
+      <a href="#headline">Headline contrast</a>
+      <a href="#decomposition">Decomposition</a>
+      <a href="#sweep">The joint sweep</a>
+      <a href="#triangulation">Triangulation</a>
+      <a href="#qual">Qualitative gate</a>
+      <a href="#gemini">Gemini pilot</a>
+      <a href="#figures">Figures</a>
+    </nav>
+    <article>
+      <p class="kicker">Chapter 6 &middot; Thesis pp. 200-255</p>
+      <h1>Results</h1>
+      <div class="double-rule"></div>
+      <p class="lede">Everything below is model-conditional unless the tier label says otherwise.
+      The numbers come from the reproducible archive; every figure links to its source data.</p>
+
+      <h2 id="measured">The measured wave <span class="verdict mix">Tier 1</span></h2>
+      <table class="data">
+        <thead><tr><th>Quantity</th><th class="num">Value</th><th>Reading</th></tr></thead>
+        <tbody>
+          <tr><td>Usable questionnaires</td><td class="num">52 of 60</td><td>8 duplicate vectors removed</td></tr>
+          <tr><td>Perceived benefit</td><td class="num">5.12 (SD 0.87)</td><td>7-point scale</td></tr>
+          <tr><td>PB - star correlation</td><td class="num">&rho; = .67</td><td>Descriptive association</td></tr>
+          <tr><td>BRS reliability</td><td class="num">&alpha; = .957</td><td>Internal consistency</td></tr>
+          <tr><td>PB reliability</td><td class="num">&alpha; = .947</td><td>&omega; = .962</td></tr>
+          <tr><td>Single-factor CFA</td><td class="num">Poor fit</td><td>No structural validity claimed</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="headline">Headline contrast <span class="verdict mix">Tier 2</span></h2>
+      <p>The epistemic-first configuration G1 against the engagement-first status quo G0, 500 personas,
+      18 sessions, GRM-IRT scoring.</p>
+      <table class="data">
+        <thead><tr><th>Outcome</th><th class="num">Estimate</th><th class="num">95% interval</th><th class="num">t(499)</th><th class="num">d</th></tr></thead>
+        <tbody>
+          <tr><td>Evaluative rating</td><td class="num">+0.827</td><td class="num">[0.779, 0.875]</td><td class="num">33.93</td><td class="num">1.52</td></tr>
+          <tr><td>Competence rating</td><td class="num">+11.30</td><td class="num">[10.64, 11.95]</td><td class="num">33.74</td><td class="num">1.51</td></tr>
+          <tr><td>Engagement</td><td class="num">&minus;0.183</td><td class="num">[&minus;0.188, &minus;0.178]</td><td class="num">&minus;74.41</td><td class="num">&minus;3.33</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="decomposition">Full-factorial decomposition</h2>
+      <table class="data">
+        <thead><tr><th>Effect</th><th class="num">Value</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>A (BRS)</td><td class="num">+0.1905</td><td>Smaller main effect</td></tr>
+          <tr><td>B (diversity/cooling)</td><td class="num">+0.6265</td><td>The dominant path</td></tr>
+          <tr><td>C (ERIC moderation)</td><td class="num">&minus;0.0121</td><td>Near zero alone</td></tr>
+          <tr><td>B x C</td><td class="num">+0.3791</td><td>Nearly half the total contrast</td></tr>
+          <tr><td>A x B, A x C, A x B x C</td><td class="num">+0.0216, &minus;0.0084, +0.0886</td><td>Small</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="sweep">The 256-point joint sweep</h2>
+      <p>Varying six mechanism parameters and five state-outcome weights, including zero:
+      median +0.567 (IQR [0.383, 0.802]), mean +0.593, range &minus;0.244 to +1.810, 96.5% of draws
+      positive. The top partial rank correlations: diversity-to-credibility +0.77, BRS-to-credibility
+      +0.31, echo-to-credibility &minus;0.27.</p>
+
+      <h2 id="triangulation">Randomized-assignment triangulation</h2>
+      <table class="data">
+        <thead><tr><th>Design</th><th class="num">Worlds</th><th class="num">Delta SR eval</th><th class="num">Delta engagement</th></tr></thead>
+        <tbody>
+          <tr><td>Within-persona</td><td class="num">1</td><td class="num">+0.827</td><td class="num">&minus;0.217</td></tr>
+          <tr><td>Agent-randomized</td><td class="num">40</td><td class="num">+0.630 [0.384, 0.851]</td><td class="num">&minus;0.232</td></tr>
+          <tr><td>Design-based</td><td class="num">400</td><td class="num">+0.807 [0.470, 1.109]</td><td class="num">&minus;0.217</td></tr>
+          <tr><td>Cluster-randomized</td><td class="num">20</td><td class="num">+0.659 [0.338, 0.948]</td><td class="num">&minus;0.226</td></tr>
+        </tbody>
+      </table>
+      <p>The B main effect stays near +0.63 everywhere. The A main effect collapses from +0.190 to
+      +0.038 [&minus;0.075, 0.131] between agents and recovers to +0.182 [0.011, 0.336] in the
+      interference-free design: BRS diffusion is the interference-sensitive component. Placebo D
+      gives &minus;0.003; mechanism checks pass (B raises chosen diversity +1.299, A raises BRS
+      +0.019, B x C lowers echo &minus;0.340).</p>
+
+      <h2 id="qual">The qualitative gate <span class="verdict bad">Not met</span></h2>
+      <table class="data">
+        <thead><tr><th>Coding pass</th><th class="num">Micro-F1</th><th>Outcome</th></tr></thead>
+        <tbody>
+          <tr><td>Human gold (3 coders)</td><td class="num">reference</td><td>Pairwise kappa .762 / .852 / .861</td></tr>
+          <tr><td>Qwen 7B zero-shot</td><td class="num">.193</td><td>0 of 25 usable; 32.0% quotes fabricated</td></tr>
+          <tr><td>Qwen 7B gold 5-fold</td><td class="num">.320</td><td>0 of 25 usable; 16.1% fabricated</td></tr>
+          <tr><td>Claude first pass</td><td class="num">.452</td><td>2 of 25 usable; no mechanism code</td></tr>
+        </tbody>
+      </table>
+      <p>The pre-set rule (8 positives, kappa at least .60, at most 5% fabrication) was met by no
+      mechanism code, so E1 to E3 were not eligible; E1 and E2 are reported as exploratory checks and
+      E3 was not run. The qualitative layer remains an assumption audit.</p>
+
+      <h2 id="gemini">Gemini persona-agent pilot</h2>
+      <p>Direction reproduced, magnitude not: +2.650 [2.342, 2.967] versus +0.827; engagement reversed
+      at +0.163 versus &minus;0.183. A single-shot appraisal has no 18-session state updates, so it has
+      no mechanism for the engagement cost.</p>
+
+      <h2 id="figures">Figures</h2>
+      <div class="gallery">
+        <figure class="fig"><img src="figures/fig6_1_sr_distributions.png" alt="Evaluative rating distributions"><figcaption>Fig. 6.1 Distributional shift in student ratings.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_2_factorial_cells.png" alt="Eight factorial cell means"><figcaption>Fig. 6.2 The eight factorial cells.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_3_radar.png" alt="Six-dimension student-rating profile"><figcaption>Fig. 6.3 Six-dimension rating profile.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_4_longitudinal.png" alt="Longitudinal trajectories and echo cooling"><figcaption>Fig. 6.4 Trajectories and echo cooling.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_5_pareto_hamiltonian.png" alt="Pareto structure"><figcaption>Fig. 6.5 Epistemic-engagement Pareto structure.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_6_grm_irt.png" alt="GRM-IRT diagnostics"><figcaption>Fig. 6.6 GRM-IRT measurement diagnostics.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_9_misinfo.png" alt="Adversarial misinformation stress test"><figcaption>Fig. 6.9 Misinformation stress test.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_10_sobol.png" alt="Joint sweep sensitivity"><figcaption>Fig. 6.10 Joint sweep sensitivity.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_11_zewail.png" alt="Zewail gate ablation"><figcaption>Fig. 6.11 Zewail gate ablation.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig6_12_reliability.png" alt="Reliability diagnostics"><figcaption>Fig. 6.12 Reliability diagnostics.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig_gemini_pilot.png" alt="Gemini pilot comparison"><figcaption>Fig. 6.13 Gemini persona-agent pilot.</figcaption></figure>
+        <figure class="fig"><img src="figures/fig_latent_diagnostics.png" alt="Latent-space diagnostics"><figcaption>Fig. 5.x Latent-space diagnostics.</figcaption></figure>
+      </div>
+      <p><a class="btn" href="interactive/cells.html">Explore the eight cells interactively &rarr;</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="guide.html">Reading guide</a></li><li><a href="interactive/">Interactive laboratory</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif M. A. E. Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+<script src="js/site.js"></script>
+</body>
+</html>

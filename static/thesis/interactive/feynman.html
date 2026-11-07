@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Feynman-diagram notation of the ten LOKLOK experimental processes, interactive.">
+<title>Applet IV: Feynman Diagrams | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>IV. Feynman diagrams</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet IV</p>
+  <h1>The ten processes in Feynman notation</h1>
+  <p class="lede">The full supplement is <a href="../Feynman_Supplementary.pdf">available as PDF</a>.
+  Here every line is live: click a line or a vertex to read what it stands for in the LOKLOK reading.</p>
+
+  <div class="applet rv">
+    <div class="controls" id="tabs" role="tablist" aria-label="Choose a diagram"></div>
+    <div id="stage" style="display:grid;grid-template-columns:1.2fr 1fr;gap:18px;">
+      <svg id="svg" viewBox="0 0 100 100" role="img" aria-label="Feynman diagram"
+        style="width:100%;height:auto;background:#FDFCFA;border:1px solid #DDD3C5;"></svg>
+      <div>
+        <h3 id="dtitle" style="margin-top:0;"></h3>
+        <p id="dread" style="font-size:14px;color:var(--slate);"></p>
+        <p id="delem" style="font-size:13px;color:var(--muted);"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">Pedagogical notation borrowed from particle physics; the diagrams are
+  supplements, not physics claims. Line conventions: solid arrow = agent or content line; wiggly =
+  audio signal, cooling, prompt, or response; curly = platform mechanism exchange; dashed =
+  misinformation and corrected content; blob = algorithmic filter; cross = randomization or
+  measurement point.</div>
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Pedagogical supplements to the thesis. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var DIAGS = [
+    { id: 'D1', name: 'Listening as absorption',
+      lines: [{ t: 'photon', x1: 20, y1: 70, x2: 50, y2: 50, label: 'audio signal' },
+              { t: 'fermion', x1: 20, y1: 30, x2: 50, y2: 50, label: 'S0' },
+              { t: 'fermion', x1: 50, y1: 50, x2: 80, y2: 70, label: 'S1' }],
+      read: 'A broadcaster emits an audio signal (photon). The listener line (fermion) absorbs it at a vertex and continues with an updated judgment state S0 to S1.' },
+    { id: 'D2', name: 'EST-P1: the BRS anchor exchange',
+      lines: [{ t: 'fermion', x1: 15, y1: 30, x2: 45, y2: 30, label: 'student' },
+              { t: 'fermion', x1: 45, y1: 30, x2: 85, y2: 30, label: 'cred1' },
+              { t: 'fermion', x1: 15, y1: 70, x2: 55, y2: 70, label: 'broadcaster' },
+              { t: 'fermion', x1: 55, y1: 70, x2: 85, y2: 70, label: 'BRS1' },
+              { t: 'photon', x1: 45, y1: 30, x2: 55, y2: 70, label: 'BRS anchor' }],
+      read: 'Student and broadcaster exchange the BRS anchor at a scattering vertex: architecture enters as the exchanged field, not as an external parameter.' },
+    { id: 'D3', name: 'EST-P2: the MORE diversity constraint',
+      lines: [{ t: 'fermion', x1: 15, y1: 30, x2: 45, y2: 30, label: 'viewpoint x' },
+              { t: 'fermion', x1: 45, y1: 30, x2: 85, y2: 30, label: 'x1' },
+              { t: 'fermion', x1: 15, y1: 70, x2: 55, y2: 70, label: 'viewpoint y' },
+              { t: 'fermion', x1: 55, y1: 70, x2: 85, y2: 70, label: 'y1' },
+              { t: 'gluon', x1: 45, y1: 30, x2: 50, y2: 50, label: '' },
+              { t: 'gluon', x1: 50, y1: 50, x2: 55, y2: 70, label: '' }],
+      blobs: [{ x: 50, y: 50, label: 'MORE' }],
+      read: 'Two viewpoints exchange a diversity constraint through the MORE filter (blob): the constraint is local to the platform, so the viewpoints emerge correlated.' },
+    { id: 'D4', name: 'The Zewail-inspired attention gate',
+      lines: [{ t: 'fermion', x1: 10, y1: 50, x2: 50, y2: 50, label: 'attention' },
+              { t: 'fermion', x1: 50, y1: 50, x2: 90, y2: 50, label: 'retained' },
+              { t: 'gluon', x1: 50, y1: 50, x2: 50, y2: 50, label: 'tau gate', loop: true }],
+      blobs: [{ x: 50, y: 50, label: 'gate' }],
+      read: 'Attention passes through the gate blob and emerges retained. The self-loop is the gate self-interaction parameterized by the dephasing time tau.' },
+    { id: 'D5', name: 'Algorithmic cooling of echo',
+      lines: [{ t: 'fermion', x1: 10, y1: 50, x2: 50, y2: 50, label: 'echo in' },
+              { t: 'fermion', x1: 50, y1: 50, x2: 90, y2: 50, label: 'echo out' },
+              { t: 'photon', x1: 50, y1: 50, x2: 82, y2: 18, label: 'cooling' }],
+      read: 'The echo line radiates a cooling photon, like bremsstrahlung: the radiated energy is removed from the echo state.' },
+    { id: 'D6', name: 'The main experiment: G0 to G1',
+      lines: [{ t: 'fermion', x1: 10, y1: 35, x2: 45, y2: 35, label: 'student G0' },
+              { t: 'fermion', x1: 45, y1: 35, x2: 90, y2: 35, label: 'SR eval +0.827' },
+              { t: 'fermion', x1: 10, y1: 65, x2: 45, y2: 65, label: 'content G0' },
+              { t: 'fermion', x1: 45, y1: 65, x2: 90, y2: 65, label: 'engagement -0.183' },
+              { t: 'gluon', x1: 45, y1: 35, x2: 45, y2: 65, label: 'LOKLOK filters', curve: 14 }],
+      read: 'Student and content enter from G0 and exchange the LOKLOK filter field. The outgoing states carry the headline observables +0.827 and -0.183: the platform acts between them, never on them separately.' },
+    { id: 'D7', name: 'The BRS evidence update',
+      lines: [{ t: 'fermion', x1: 10, y1: 50, x2: 50, y2: 50, label: 'BRS0' },
+              { t: 'fermion', x1: 50, y1: 50, x2: 90, y2: 50, label: 'BRS1' },
+              { t: 'gluon', x1: 50, y1: 50, x2: 50, y2: 50, label: 'evidence', loop: true }],
+      blobs: [{ x: 50, y: 50, label: 'update' }],
+      read: 'Reputation passes through an update blob; each loop order is one round of evidence-based revision, the diagrammatic form of the reputation contraction.' },
+    { id: 'D8', name: 'ERIC moderation as a correction vertex',
+      lines: [{ t: 'scalar', x1: 10, y1: 42, x2: 50, y2: 50, label: 'misinfo' },
+              { t: 'scalar', x1: 50, y1: 50, x2: 90, y2: 42, label: 'corrected' },
+              { t: 'photon', x1: 50, y1: 50, x2: 78, y2: 78, label: 'reflection prompt' }],
+      blobs: [{ x: 50, y: 50, label: 'ERIC' }],
+      read: 'Misinformation enters the ERIC blob and leaves corrected; the radiated photon is the reflection prompt sent back to the user. Moderation as interaction, not deletion.' },
+    { id: 'D9', name: 'Randomized assignment as a branching vertex',
+      lines: [{ t: 'fermion', x1: 10, y1: 50, x2: 42, y2: 50, label: 'persona' },
+              { t: 'fermion', x1: 42, y1: 50, x2: 88, y2: 32, label: 'world A: within' },
+              { t: 'fermion', x1: 42, y1: 50, x2: 88, y2: 68, label: 'world B: between' }],
+      crosses: [{ x: 42, y: 50 }],
+      read: 'A persona line splits at the crossed vertex into the two assignment worlds. The crossing marks the randomization point, the only place where the designs differ.' },
+    { id: 'D10', name: 'GRM-IRT measurement',
+      lines: [{ t: 'fermion', x1: 10, y1: 50, x2: 45, y2: 50, label: 'theta' },
+              { t: 'photon', x1: 45, y1: 50, x2: 82, y2: 50, label: 'response' }],
+      crosses: [{ x: 45, y: 50 }],
+      blobs: [{ x: 82, y: 50, label: 'GRM-IRT' }],
+      read: 'The latent trait reaches the crossed measurement vertex and emits a response photon absorbed by the GRM-IRT detector. The cross separates the unobservable trait from the observed rating.' },
+  ];
+
+  var svg = document.getElementById('svg');
+  var NS = 'http://www.w3.org/2000/svg';
+  var current = null;
+
+  function el(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  function path(d, cls) {
+    var p = el('path', { d: d, class: cls });
+    return p;
+  }
+
+  function fermion(x1, y1, x2, y2, label) {
+    var g = el('g', { class: 'ln fermion', 'data-kind': 'fermion' });
+    var line = el('line', { x1: x1, y1: y1, x2: x2, y2: y2, stroke: '#1F2430', 'stroke-width': 1.6,
+      'marker-end': 'url(#arr)' });
+    g.appendChild(line);
+    if (label) { g.appendChild(el('text', { x: (x1 + x2) / 2, y: (y1 + y2) / 2 - 3, class: 'lbl', 'text-anchor': 'middle' }))
+      .textContent = label; }
+    return g;
+  }
+  function wavy(x1, y1, x2, y2, label, cls, dash) {
+    var g = el('g', { class: 'ln ' + cls, 'data-kind': cls });
+    var d = 'M' + x1 + ',' + y1;
+    var seg = 8, n = Math.max(2, Math.round(Math.hypot(x2 - x1, y2 - y1) / seg));
+    var ux = (x2 - x1) / n, uy = (y2 - y1) / n, px = -uy, py = ux, amp = 3.2;
+    for (var i = 0; i < n; i++) {
+      var mx = x1 + ux * (i + 0.5), my = y1 + uy * (i + 0.5);
+      var s = (i % 2 === 0) ? 1 : -1;
+      d += ' Q' + (mx + px * amp * s) + ',' + (my + py * amp * s) + ' ' + (x1 + ux * (i + 1)) + ',' + (y1 + uy * (i + 1));
+    }
+    var p = el('path', { d: d, fill: 'none', stroke: cls === 'scalar' ? '#8A6A1F' : '#B31B1B',
+      'stroke-width': 1.6, 'stroke-dasharray': cls === 'scalar' ? '5,3' : 'none' });
+    g.appendChild(p);
+    if (label) { g.appendChild(el('text', { x: (x1 + x2) / 2, y: (y1 + y2) / 2 - 5, class: 'lbl', 'text-anchor': 'middle' }))
+      .textContent = label; }
+    return g;
+  }
+  function gluon(x1, y1, x2, y2, label, loop, curve) {
+    var g = el('g', { class: 'ln gluon', 'data-kind': 'gluon' });
+    var d;
+    if (loop) {
+      d = 'M' + x1 + ',' + (y1 - 4) + ' C' + (x1 + 16) + ',' + (y1 - 22) + ' ' + (x2 + 16) + ',' + (y2 + 6) + ' ' + x2 + ',' + (y2 + 2);
+    } else if (curve) {
+      d = 'M' + x1 + ',' + y1 + ' C' + (x1 + curve) + ',' + (y1 + 4) + ' ' + (x2 - curve) + ',' + (y2 - 4) + ' ' + x2 + ',' + y2;
+    } else {
+      d = 'M' + x1 + ',' + y1 + ' C' + (x1 + 4) + ',' + y1 + ' ' + (x2 - 4) + ',' + y2 + ' ' + x2 + ',' + y2;
+    }
+    var p = el('path', { d: d, fill: 'none', stroke: '#0E7490', 'stroke-width': 1.6 });
+    g.appendChild(p);
+    if (label) { g.appendChild(el('text', { x: loop ? x1 + 14 : (x1 + x2) / 2, y: loop ? y1 - 22 : (y1 + y2) / 2 - 4, class: 'lbl', 'text-anchor': 'middle' }))
+      .textContent = label; }
+    return g;
+  }
+
+  var defs = el('defs', {});
+  defs.innerHTML = '<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F2430"/></marker>';
+  svg.appendChild(defs);
+
+  function render(d) {
+    current = d;
+    while (svg.childNodes.length > 1) svg.removeChild(svg.lastChild);
+    (d.lines || []).forEach(function (l) {
+      var g = l.t === 'fermion' ? fermion(l.x1, l.y1, l.x2, l.y2, l.label)
+        : (l.t === 'gluon' ? gluon(l.x1, l.y1, l.x2, l.y2, l.label, l.loop, l.curve)
+          : wavy(l.x1, l.y1, l.x2, l.y2, l.label, l.t));
+      g.addEventListener('click', function () { explain('line', g.getAttribute('data-kind')); });
+      svg.appendChild(g);
+    });
+    (d.blobs || []).forEach(function (b) {
+      var g = el('g', { class: 'ln blob', 'data-kind': 'blob' });
+      g.appendChild(el('circle', { cx: b.x, cy: b.y, r: 5.5, fill: '#B31B1B' }));
+      g.appendChild(el('text', { x: b.x, y: b.y - 9, class: 'lbl', 'text-anchor': 'middle' })).textContent = b.label;
+      g.addEventListener('click', function () { explain('blob', 'blob'); });
+      svg.appendChild(g);
+    });
+    (d.crosses || []).forEach(function (c) {
+      var g = el('g', { class: 'ln cross', 'data-kind': 'cross' });
+      g.appendChild(el('circle', { cx: c.x, cy: c.y, r: 4, fill: '#fff', stroke: '#1F2430', 'stroke-width': 1.4 }));
+      g.appendChild(el('line', { x1: c.x - 2.5, y1: c.y - 2.5, x2: c.x + 2.5, y2: c.y + 2.5, stroke: '#1F2430', 'stroke-width': 1.2 }));
+      g.appendChild(el('line', { x1: c.x + 2.5, y1: c.y - 2.5, x2: c.x - 2.5, y2: c.y + 2.5, stroke: '#1F2430', 'stroke-width': 1.2 }));
+      g.addEventListener('click', function () { explain('cross', 'cross'); });
+      svg.appendChild(g);
+    });
+    document.getElementById('dtitle').textContent = d.id + '. ' + d.name;
+    document.getElementById('dread').textContent = d.read;
+    document.getElementById('delem').textContent = 'Click a line or vertex to identify it.';
+    svg.setAttribute('aria-label', d.id + ': ' + d.name);
+  }
+
+  var KINDS = {
+    fermion: 'Agent or content line: student, listener, broadcaster, viewpoint, or content. The arrow gives the direction of judgment or content flow.',
+    photon: 'Wiggly line: an audio signal, a broadcast, cooling radiation, a reflection prompt, or a measurement response.',
+    gluon: 'Curly line: a platform mechanism exchange (diversity constraint, LOKLOK filters, gate self-interaction, evidence loop).',
+    scalar: 'Dashed line: misinformation before, and corrected content after, moderation.',
+    blob: 'Filled circle: an algorithmic filter or update (MORE, ERIC, BRS evidence update, the attention gate, the GRM-IRT detector).',
+    cross: 'Crossed vertex: a randomization point or a measurement point separating latent from observed.',
+  };
+  function explain(label, kind) {
+    document.getElementById('delem').textContent = label + ': ' + (KINDS[kind] || '');
+  }
+
+  var tabs = document.getElementById('tabs');
+  DIAGS.forEach(function (d) {
+    var chip = document.createElement('span');
+    chip.className = 'chip'; chip.textContent = d.id;
+    chip.setAttribute('role', 'tab');
+    chip.addEventListener('click', function () {
+      tabs.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('on'); });
+      chip.classList.add('on'); render(d);
+    });
+    tabs.appendChild(chip);
+  });
+  tabs.querySelector('.chip').classList.add('on');
+  render(DIAGS[0]);
+})();
+</script>
+</body>
+</html>

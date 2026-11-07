@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive laboratory for the LOKLOK thesis: applets reproducing the model arithmetic.">
+<title>Interactive Laboratory | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../abstract.html">Abstract</a>
+      <a href="../guide.html">Reading Guide</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../downloads.html">Downloads</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Interactive Laboratory</span></div>
+
+<div class="wrap">
+  <p class="kicker">Five instruments &middot; no plugins &middot; works offline</p>
+  <h1>The interactive laboratory</h1>
+  <p class="lede rv">Each instrument reproduces a piece of the thesis's arithmetic in the browser.
+  They are simplified linearisations of the declared model, stated as such on every page; the exact
+  numbers always come from the 18-session simulation reported in the thesis.</p>
+
+  <section class="rv d1">
+    <h2><span class="rule-tag">I</span>The trade-off explorer</h2>
+    <p>Move the declared state-outcome weights and watch the epistemic gain and the engagement cost
+    move together across a sampled Pareto frontier, with the 256-draw sweep band drawn for reference.</p>
+    <a class="btn solid" href="tradeoff.html">Open applet</a>
+  </section>
+
+  <section class="rv d2">
+    <h2><span class="rule-tag">II</span>The BRS diffusion simulator</h2>
+    <p>A seven-agent network runs the reputation update live. Switch the BRS path on and off, and
+    switch between within-persona and between-agent assignment to see why the effect is
+    interference-sensitive (+0.190 versus +0.038).</p>
+    <a class="btn solid" href="brs.html">Open applet</a>
+  </section>
+
+  <section class="rv d3">
+    <h2><span class="rule-tag">III</span>The eight cells</h2>
+    <p>The full 2^3 factorial as an explorable chart: cell means, main effects, interactions, and the
+    contrast under four assignment designs.</p>
+    <a class="btn solid" href="cells.html">Open applet</a>
+  </section>
+
+  <section class="rv d4">
+    <h2><span class="rule-tag">IV</span>Feynman diagrams</h2>
+    <p>The ten experimental processes in particle-physics notation. Click any line or vertex to read
+    exactly what it stands for.</p>
+    <a class="btn solid" href="feynman.html">Open applet</a>
+  </section>
+
+  <section class="rv d5">
+    <h2><span class="rule-tag">V</span>The codebook examiner</h2>
+    <p>All 25 qualitative codes with human agreement and machine performance, checked against the
+    pre-set usability gate. Sort, filter, and read the honest conclusion.</p>
+    <a class="btn solid" href="codebook.html">Open applet</a>
+  </section>
+
+  <div class="callout rv">Every applet labels its inputs as declared assumptions and its outputs as
+  illustrative. Nothing here is a human treatment effect.</div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="../index.html">Overview</a></li><li><a href="../results.html">Results</a></li><li><a href="../read/">Read online</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif M. A. E. Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+<script src="../js/site.js"></script>
+</body>
+</html>

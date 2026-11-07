@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Trade-off explorer: an interactive linearisation of the LOKLOK declared state-outcome weights.">
+<title>Applet I: The Trade-off Explorer | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>I. Trade-off explorer</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet I</p>
+  <h1>The trade-off explorer</h1>
+  <p class="lede">A linearisation of the declared state-outcome model, calibrated so the default
+  position reproduces the thesis headline (+0.827 and &minus;0.183). Move the weights and watch the
+  two outcomes move together.</p>
+
+  <div class="applet rv">
+    <div class="controls">
+      <div class="control"><label for="wd">Diversity-to-credibility weight (cred_dbi)</label>
+        <input id="wd" type="range" min="0" max="2" step="0.02" value="1">
+        <div class="val" id="wdv">1.00</div></div>
+      <div class="control"><label for="wa">BRS-to-credibility weight (cred_brs)</label>
+        <input id="wa" type="range" min="0" max="2" step="0.02" value="1">
+        <div class="val" id="wav">1.00</div></div>
+      <div class="control"><label for="we">Echo-to-credibility weight (cred_echo)</label>
+        <input id="we" type="range" min="-1" max="0" step="0.02" value="-0.45">
+        <div class="val" id="wev">-0.45</div></div>
+      <div class="control"><label>Moderation (C) on?</label>
+        <span class="chip on" id="mod" role="switch" aria-checked="true" tabindex="0">on</span></div>
+      <div class="control"><label for="wen">Engagement weight (declared)</label>
+        <input id="wen" type="range" min="0.5" max="1.5" step="0.01" value="1">
+        <div class="val" id="wenv">1.00</div></div>
+    </div>
+    <canvas id="plot" width="940" height="430" role="img"
+      aria-label="Pareto scatter of epistemic gain against engagement cost"></canvas>
+    <p id="readout" class="note">Defaults reproduce the thesis headline.</p>
+  </div>
+
+  <div class="callout">The exact relationship comes from the 18-session simulation (Section 6.14).
+  This page is an illustrative linearisation: its purpose is to make the trade-off's geometry
+  visible, not to replace the reported numbers. The grey band is the 256-draw sweep range
+  (&minus;0.244 to +1.810); the dashed line is the median +0.567.</div>
+
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Illustrative linearisation of the declared model; not a human treatment effect. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var canvas = document.getElementById('plot');
+  var ctx = canvas.getContext('2d');
+  var DEN = 1.184;   // normaliser so defaults reproduce +0.827
+
+  function sr(wd, wa, we, mod) {
+    return 0.827 * (0.6265 * wd + 0.1905 * wa + (mod ? 0.3791 - 0.0121 : 0) + 0.42 * (-we - 0.45) * 0.10) / DEN;
+  }
+  function eng(wen, mod) {
+    return -0.183 * wen * (mod ? 1.0 : 0.94);
+  }
+
+  /* sample the frontier once (seeded) */
+  var R = [];
+  var seed = 7;
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  for (var i = 0; i < 500; i++) {
+    var wd = rnd() * 2, wa = rnd() * 2, we = -rnd(), mod = rnd() > 0.5, wen = 0.5 + rnd();
+    R.push({ x: eng(wen, mod), y: sr(wd, wa, we, mod) });
+  }
+
+  var P = { x0: 34, y0: 34, x1: canvas.width - 46, y1: canvas.height - 44 };
+  function draw() {
+    var wd = +document.getElementById('wd').value;
+    var wa = +document.getElementById('wa').value;
+    var we = +document.getElementById('we').value;
+    var wen = +document.getElementById('wen').value;
+    var mod = document.getElementById('mod').classList.contains('on');
+    document.getElementById('wdv').textContent = wd.toFixed(2);
+    document.getElementById('wav').textContent = wa.toFixed(2);
+    document.getElementById('wev').textContent = we.toFixed(2);
+    document.getElementById('wenv').textContent = wen.toFixed(2);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    /* axes */
+    var xLo = -0.30, xHi = 0.10, yLo = -0.3, yHi = 1.9;
+    function px(x) { return P.x0 + (x - xLo) / (xHi - xLo) * (P.x1 - P.x0); }
+    function py(y) { return P.y1 - (y - yLo) / (yHi - yLo) * (P.y1 - P.y0); }
+
+    /* sweep band */
+    ctx.fillStyle = 'rgba(199,162,82,.10)';
+    ctx.fillRect(P.x0, py(1.810), P.x1 - P.x0, py(-0.244) - py(1.810));
+    ctx.strokeStyle = '#C7A252'; ctx.setLineDash([5, 5]); ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(P.x0, py(0.567)); ctx.lineTo(P.x1, py(0.567)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = '#C9BCA7'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(px(0), P.y0); ctx.lineTo(px(0), P.y1); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(P.x0, py(0)); ctx.lineTo(P.x1, py(0)); ctx.stroke();
+
+    /* frontier sample */
+    ctx.fillStyle = 'rgba(179,27,27,.28)';
+    R.forEach(function (r) {
+      if (r.x < xLo || r.x > xHi || r.y < yLo || r.y > yHi) return;
+      ctx.beginPath(); ctx.arc(px(r.x), py(r.y), 2.6, 0, 7); ctx.fill();
+    });
+
+    /* current point */
+    var x = eng(wen, mod), y = sr(wd, wa, we, mod);
+    var below = R.filter(function (r) { return r.y <= y; }).length;
+    ctx.fillStyle = '#16325C';
+    ctx.beginPath(); ctx.arc(px(x), py(y), 6, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#16325C'; ctx.lineWidth = 2;
+    ctx.strokeRect(px(x) - 9, py(y) - 9, 18, 18);
+
+    ctx.fillStyle = '#46536B'; ctx.font = '12px Helvetica, Arial';
+    ctx.fillText('epistemic gain (delta SR eval)', P.x0, 16);
+    ctx.save(); ctx.translate(12, (P.y0 + P.y1) / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillText('engagement change (delta engagement)', 0, 0); ctx.restore();
+    ctx.fillText('median +0.567', P.x1 - 92, py(0.567) - 5);
+    ctx.fillText('96.5% of draws positive (right of this line)', px(0) + 6, 18);
+    ctx.fillText('sweep range', P.x1 - 78, py(1.810) + 12);
+
+    document.getElementById('readout').textContent =
+      'With these weights: delta SR eval = +' + y.toFixed(3) + ' (' +
+      (below / R.length * 100).toFixed(0) + 'th percentile of the sampled frontier), delta engagement = ' +
+      x.toFixed(3) + '. Defaults: +0.827 and -0.183 (terminal measure -0.217).';
+  }
+  ['wd', 'wa', 'we', 'wen'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', draw);
+  });
+  var mod = document.getElementById('mod');
+  mod.addEventListener('click', function () {
+    mod.classList.toggle('on'); mod.setAttribute('aria-checked', mod.classList.contains('on')); draw();
+  });
+  mod.addEventListener('keydown', function (e) {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); mod.click(); }
+  });
+  draw();
+})();
+</script>
+</body>
+</html>

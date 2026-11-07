@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The eight cells: interactive factorial decomposition of the LOKLOK experiment.">
+<title>Applet III: The Eight Cells | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>III. The eight cells</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet III</p>
+  <h1>The eight cells</h1>
+  <p class="lede">The within-persona design runs every persona through all eight A/B/C
+  combinations. Click a cell to see its composition; switch metrics; then compare the contrast
+  across the four assignment designs.</p>
+
+  <div class="applet rv">
+    <div class="controls">
+      <div class="control"><label>Metric</label>
+        <span class="chip on" id="mSr">SR eval</span>
+        <span class="chip" id="mEng">Engagement</span></div>
+      <div class="control"><label>View</label>
+        <span class="chip on" id="vCells">Cell means</span>
+        <span class="chip" id="vDesigns">Assignment designs</span></div>
+    </div>
+    <canvas id="plot" width="940" height="400" role="img" aria-label="Factorial cell means bar chart"></canvas>
+    <p id="readout" class="note"></p>
+  </div>
+
+  <div class="callout">Cell values are the saved outputs of the reproducible pipeline
+  (factorial_cells.csv and design_comparison.csv). Intervals for the randomized designs are 2.5 and
+  97.5 percentiles over independent worlds or draws.</div>
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Saved pipeline outputs; model-conditional values only. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var canvas = document.getElementById('plot');
+  var ctx = canvas.getContext('2d');
+  var data = null;
+  var metric = 'sr', view = 'cells', sel = -1;
+
+  var NAMES = ['G0', 'A', 'B', 'AB', 'C', 'AC', 'BC', 'G1 (ABC)'];
+  function cellLabel(d) { return NAMES[d.a * 4 + d.b * 2 + d.c]; }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    var P = { x0: 46, y0: 30, x1: canvas.width - 26, y1: canvas.height - 56 };
+
+    if (view === 'cells') {
+      var vals = data.cells.map(function (c) {
+        return metric === 'sr' ? c.sr : (c.engagement === null ? 0 : c.engagement);
+      });
+      var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+      var y0 = Math.min(lo, 0), y1 = hi * 1.12;
+      function py(v) { return P.y1 - (v - y0) / (y1 - y0) * (P.y1 - P.y0); }
+      ctx.strokeStyle = '#C9BCA7'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(P.x0, py(0)); ctx.lineTo(P.x1, py(0)); ctx.stroke();
+      var bw = (P.x1 - P.x0) / 8;
+      data.cells.forEach(function (c, i) {
+        var x = P.x0 + i * bw;
+        var v = vals[i];
+        var on = metric === 'sr' || c.engagement !== null;
+        ctx.fillStyle = on ? (i === sel ? '#7C1414' : (c.b && c.c ? '#B31B1B' : '#16325C')) : '#D9CFC0';
+        var h = py(v) - py(0);
+        ctx.fillRect(x + 6, Math.min(py(0), py(v)), bw - 12, Math.abs(h));
+        ctx.fillStyle = '#46536B'; ctx.font = 'bold 12px Helvetica'; ctx.textAlign = 'center';
+        ctx.fillText(cellLabel(c), x + bw / 2, P.y1 + 16);
+        if (on) { ctx.fillText((metric === 'sr' ? '+' : '') + v.toFixed(3), x + bw / 2, Math.min(py(0), py(v)) - 6); }
+        ctx.textAlign = 'left';
+      });
+      ctx.fillStyle = '#46536B'; ctx.font = '12px Helvetica';
+      ctx.fillText(metric === 'sr' ? 'Evaluative rating by cell (1-7 scale, mean)' : 'Engagement by cell (0-1, mean)', P.x0, 16);
+      document.getElementById('readout').innerHTML =
+        sel >= 0 ? ('<b>' + cellLabel(data.cells[sel]) + '</b>: components ' +
+          (data.cells[sel].a ? 'A on, ' : 'A off, ') + (data.cells[sel].b ? 'B on, ' : 'B off, ') +
+          (data.cells[sel].c ? 'C on. ' : 'C off. ') + 'SR eval +' + data.cells[sel].sr.toFixed(3) +
+          (data.cells[sel].engagement !== null ? ', engagement ' + data.cells[sel].engagement.toFixed(3) : '') +
+          '. The B and BC cells sit highest; C alone is slightly below G0.')
+        : 'Click a bar to read its composition. The B and BC cells carry the contrast.';
+    } else {
+      var rows = data.designs;
+      var lo = 0, hi = 1.0;
+      function py2(v) { return P.y1 - (v - lo) / (hi - lo) * (P.y1 - P.y0); }
+      ctx.strokeStyle = '#C9BCA7'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(P.x0, py2(0)); ctx.lineTo(P.x1, py2(0)); ctx.stroke();
+      var bw2 = (P.x1 - P.x0) / rows.length;
+      rows.forEach(function (r, i) {
+        var x = P.x0 + i * bw2;
+        var v = metric === 'sr' ? r.sr : r.eng;
+        ctx.fillStyle = i === 1 ? '#B31B1B' : '#16325C';
+        var h = (v[0] - 0) / 1.0 * (P.y1 - P.y0);
+        ctx.fillRect(x + 8, py2(0) - h, bw2 - 16, h);
+        ctx.strokeStyle = '#46536B'; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(x + bw2 / 2, py2(v[1])); ctx.lineTo(x + bw2 / 2, py2(v[2])); ctx.stroke();
+        ctx.fillStyle = '#46536B'; ctx.font = 'bold 11px Helvetica'; ctx.textAlign = 'center';
+        ctx.fillText(r.name, x + bw2 / 2, P.y1 + 16);
+        ctx.fillText(v[0].toFixed(3), x + bw2 / 2, py2(0) - h - 6);
+        ctx.textAlign = 'left';
+      });
+      ctx.fillStyle = '#46536B'; ctx.font = '12px Helvetica';
+      ctx.fillText(metric === 'sr' ? 'Delta SR eval by design (whiskers: 2.5-97.5 percentiles)' : 'Delta engagement by design', P.x0, 16);
+      document.getElementById('readout').innerHTML =
+        'The contrast stays positive in every design but moves with assignment: +0.827 within-persona,
+        +0.630 between agents, +0.807 design-based, +0.659 cluster-randomized. The between-agent design
+        (red) is the one where the BRS path weakens.';
+    }
+  }
+
+  canvas.addEventListener('click', function (e) {
+    if (view !== 'cells') return;
+    var rect = canvas.getBoundingClientRect();
+    var x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    var P = { x0: 46, x1: canvas.width - 26 };
+    var bw = (P.x1 - P.x0) / 8;
+    var i = Math.floor((x - P.x0) / bw);
+    sel = (i >= 0 && i < 8 && i === sel) ? -1 : i;
+    draw();
+  });
+
+  getThesis().then(function (d) {
+    data = d;
+    document.getElementById('mSr').addEventListener('click', function () {
+      metric = 'sr'; document.getElementById('mSr').classList.add('on');
+      document.getElementById('mEng').classList.remove('on'); draw();
+    });
+    document.getElementById('mEng').addEventListener('click', function () {
+      metric = 'eng'; document.getElementById('mEng').classList.add('on');
+      document.getElementById('mSr').classList.remove('on'); draw();
+    });
+    document.getElementById('vCells').addEventListener('click', function () {
+      view = 'cells'; document.getElementById('vCells').classList.add('on');
+      document.getElementById('vDesigns').classList.remove('on'); draw();
+    });
+    document.getElementById('vDesigns').addEventListener('click', function () {
+      view = 'designs'; document.getElementById('vDesigns').classList.add('on');
+      document.getElementById('vCells').classList.remove('on'); draw();
+    });
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

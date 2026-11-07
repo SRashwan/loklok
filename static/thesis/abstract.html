@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Abstract of the LOKLOK master's thesis: Epistemic Systems Theory, the LOKLOK platform, and the calibrated in-silico experiment.">
+<title>Abstract | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="abstract.html">Abstract</a>
+      <a href="guide.html">Reading Guide</a>
+      <a href="results.html">Results</a>
+      <a href="interactive/">Interactive</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Abstract</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Abstract sections">
+      <h3>Abstract</h3>
+      <a class="cur" href="abstract.html">Full abstract</a>
+      <a href="#question">The question</a>
+      <a href="#layers">Three evidence layers</a>
+      <a href="#result">The model result</a>
+      <a href="#boundaries">Boundaries</a>
+      <div class="note">Word count about 400. The Arabic abstract appears in the manuscript's front matter.</div>
+    </nav>
+    <article>
+      <p class="kicker">Abstract &middot; Thesis pp. ix-x</p>
+      <h1>Abstract</h1>
+      <div class="double-rule"></div>
+
+      <p id="question" class="lede">This thesis asks whether the design of a social media radio platform
+      can improve how university students judge what they hear, without losing the audience. It proposes
+      LOKLOK, a platform with four features: a reputation score for broadcasters, recommendations
+      constrained to keep viewpoints varied, moderation with prompts for reflection, and a built-in
+      measurement surface. Epistemic Systems Theory links these features to audience judgment.</p>
+
+      <h2 id="layers">Three evidence layers</h2>
+      <p>A live trial was not possible, so the evidence has three layers. The measured layer is a
+      questionnaire from 52 students (60 collected, 8 removed) riding Uber in 6th of October City, Giza.
+      Perceived benefit averaged 5.12 on a seven-point scale (SD = 0.87) and correlated with the star
+      rating (&rho; = .67). The credibility and perceived-benefit scales were reliable (&alpha; = .96 and
+      .95), but the factor model fitted poorly, so no structural validity is claimed. The qualitative
+      layer is a group-session transcript and a researcher's self-report. Three coders labelled 193
+      usable segments with good agreement (pairwise &kappa; = .76 to .86), yet the transcripts contain
+      little participant speech about the mechanisms. A local 7B model and an assistant first pass did
+      not reach the pre-set reliability rule for any mechanism code, so this layer serves as an audit of
+      assumptions, not as model input. The modelling layer is a calibrated in-silico experiment: 500
+      synthetic personas drawn from the distribution of the 52 respondents were run through eight
+      combinations of three design components over 18 sessions, with the status-quo arm anchored to the
+      measured mean.</p>
+
+      <h2 id="result">The model result</h2>
+      <p>In the model, the full design raised the evaluative rating by 0.83 points (interval 0.78 to
+      0.88 across generated personas) and a competence-format rating by 11.3 points on a 100-point scale,
+      while engagement fell by 0.18 on a 0 to 1 scale. When treatment was assigned between agents on the
+      network instead of within personas, the evaluative gain fell to 0.63 (0.38 to 0.85). The diversity
+      component (+0.63) and the engagement cost held in every design, while the reputation component
+      shrank from +0.19 to +0.04, so reputation is interference-sensitive. Across 256 draws that varied
+      the assumed weights, the contrast was positive in 96.5% of cases but ranged from &minus;0.24 to
+      +1.81, and it depended mainly on one declared link between exposure diversity and credibility.</p>
+
+      <h2 id="boundaries">Boundaries</h2>
+      <p>These are model-based implications from a convenience sample, not treatment effects; no field
+      causal test is claimed. The thesis offers an explicit route from theory to a testable platform
+      design and a plan for a real deployment.</p>
+
+      <div class="double-rule"></div>
+      <p><small class="meta"><b>Keywords:</b> social media radio; Epistemic Systems Theory; misinformation
+      governance; broadcaster reputation; agent-based modelling; calibrated in-silico experiment;
+      psychometric reporting.</small></p>
+      <p><a class="btn" href="thesis_final.pdf">Download the full thesis</a>
+         <a class="btn" href="guide.html">Reading guide &rarr;</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="results.html">Results</a></li><li><a href="interactive/">Interactive laboratory</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif M. A. E. Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+<script src="js/site.js"></script>
+</body>
+</html>

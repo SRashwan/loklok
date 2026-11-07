@@ -16,6 +16,9 @@ menu:
     - name: Read Thesis
       url: thesis/read/
       weight: 3
+    - name: Interactive
+      url: thesis/interactive/
+      weight: 4
     - name: Planning
       url: thesis/#8-reproduction-and-planning
       weight: 5
@@ -66,7 +69,7 @@ params:
         url: data/
         weight: 7
       - name: Preview Thesis (PDF)
-        url: thesis.pdf
+        url: thesis/thesis_final.pdf
         weight: 6
 
   socialIcons:

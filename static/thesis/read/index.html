@@ -3,126 +3,164 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LOKLOK Thesis â€” Full Reader</title>
+<meta name="description" content="Read the 366-page LOKLOK master's thesis page by page.">
+<title>Read the Thesis | LOKLOK</title>
 <style>
-  :root { --ink:#1f2328; --muted:#606a76; --line:#d8dee6; --paper:#ffffff; --soft:#f4f6f8; --accent:#1f4e79; }
-  * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; background:var(--soft); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; }
-  a { color:var(--accent); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  header { background:var(--paper); border-bottom:1px solid var(--line); padding:10px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; position:sticky; top:0; z-index:20; }
-  header h1 { font-size:16px; margin:0; letter-spacing:.01em; }
-  header .spacer { flex:1; }
-  .btn, button, select, input[type=number] { font:inherit; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:6px; padding:6px 10px; }
-  button:hover, .btn:hover { background:var(--soft); text-decoration:none; }
-  .layout { display:grid; grid-template-columns:310px minmax(0,1fr); min-height:calc(100vh - 58px); }
-  aside { background:var(--paper); border-right:1px solid var(--line); padding:14px 12px 30px 12px; max-height:calc(100vh - 58px); overflow:auto; position:sticky; top:58px; }
-  aside h2 { font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); margin:0 0 10px 4px; }
-  .toc a { display:block; color:var(--ink); padding:4px 5px; border-radius:4px; font-size:13px; line-height:1.3; }
-  .toc a:hover { background:var(--soft); text-decoration:none; }
-  .toc a.l1 { font-weight:700; margin-top:7px; color:#111; }
-  .toc a.l2 { padding-left:16px; color:#333; }
-  .toc a.l3 { padding-left:30px; color:#555; font-size:12px; }
-  .main { padding:18px 22px 34px 22px; }
-  .toolbar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 12px 0; }
-  .toolbar .pageinfo { color:var(--muted); font-size:13px; margin-left:4px; }
-  .stage { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:14px; box-shadow:0 1px 2px rgba(0,0,0,.04); overflow:auto; }
-  .stage img { display:block; width:var(--zoom,100%); max-width:none; height:auto; border:1px solid #eef1f5; background:#fff; }
-  .stage .caption { color:var(--muted); font-size:12px; margin-top:8px; text-align:center; }
-  .chapter { font-weight:600; margin:4px 0 10px 0; color:#111; }
-  .hint { color:var(--muted); font-size:12px; }
-  @media (max-width: 900px) {
-    .layout { grid-template-columns:1fr; }
-    aside { position:static; max-height:240px; border-right:0; border-bottom:1px solid var(--line); }
-    .main { padding:12px; }
-  }
+:root{--crimson:#B31B1B;--crimson-dark:#7C1414;--gold:#C7A252;--paper:#FBF8F3;
+  --ink:#1F2430;--slate:#46536B;--line:#DDD3C5;
+  --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+  --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box;}
+body{margin:0;background:#E9E2D5;font-family:var(--sans);color:var(--ink);}
+.topbar{background:var(--crimson-dark);color:#fff;border-bottom:3px solid var(--gold);}
+.topbar .in{max-width:1180px;margin:0 auto;padding:9px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.wordmark{font-family:var(--serif);font-size:17px;font-weight:700;color:#fff;text-decoration:none;}
+.topbar .links{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;}
+.topbar .links a{color:#fff;font-size:12.5px;padding:5px 10px;text-decoration:none;}
+.topbar .links a:hover{background:var(--crimson);}
+.layout{display:grid;grid-template-columns:290px 1fr;gap:0;max-width:1180px;margin:0 auto;}
+.toc{background:var(--paper);border-right:1px solid var(--line);height:calc(100vh - 62px);overflow:auto;padding:12px 10px 40px;}
+.toc h3{font-family:var(--serif);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson-dark);margin:6px 8px 8px;}
+.toc input{width:100%;padding:7px 10px;border:1px solid var(--line);font-size:13px;margin-bottom:8px;background:#fff;}
+.toc .item{display:block;font-size:12.5px;color:var(--slate);padding:4px 8px;cursor:pointer;border-left:2px solid transparent;text-decoration:none;}
+.toc .item:hover{background:#F2ECE1;}
+.toc .item.l1{font-weight:700;color:var(--ink);margin-top:6px;}
+.toc .item.l2{padding-left:20px;}
+.toc .item.l3{padding-left:32px;color:#6E7787;}
+.toc .item.cur{color:var(--crimson-dark);border-left-color:var(--crimson);background:#F5EFE3;}
+.viewer{background:#DDD6C8;padding:14px 14px 20px;display:flex;flex-direction:column;align-items:center;height:calc(100vh - 62px);overflow:auto;}
+.pageframe{background:#fff;border:1px solid #C9BCA7;box-shadow:0 3px 14px rgba(60,40,20,.18);padding:6px;}
+.pageframe img{display:block;max-width:min(92vw,860px);max-height:calc(100vh - 210px);width:auto;height:auto;}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;background:var(--paper);border:1px solid var(--line);padding:7px 12px;border-radius:2px;}
+.bar button{font-family:var(--sans);font-size:13px;border:1px solid var(--crimson);background:#fff;color:var(--crimson-dark);padding:6px 13px;cursor:pointer;}
+.bar button:hover{background:var(--crimson);color:#fff;}
+.bar .pos{font-size:13px;color:var(--slate);min-width:150px;text-align:center;font-variant-numeric:tabular-nums;}
+.bar input[type=range]{flex:1;min-width:120px;accent-color:var(--crimson);}
+.bar select{font-size:13px;border:1px solid var(--line);padding:6px 8px;background:#fff;}
+.bar a{font-size:13px;color:var(--crimson-dark);}
+.hint{font-size:11.5px;color:var(--muted,#6E7787);margin-top:6px;text-align:center;}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--crimson);width:0;z-index:50;}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr;}
+  .toc{display:none;}
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>LOKLOK Thesis â€” Full Reader</h1>
-  <a class="btn" href="../">Thesis overview</a>
-  <a class="btn" href="../thesis_final.pdf">Download PDF</a>
-  <button id="titlePage" type="button">Title page</button>
-  <div class="spacer"></div>
-  <button id="prev" type="button">â† Previous</button>
-  <input id="pageInput" type="number" min="1" value="1" aria-label="Page number" style="width:78px">
-  <button id="go" type="button">Go</button>
-  <button id="next" type="button">Next â†’</button>
+<div class="progress" id="prog"></div>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html">LOKLOK &middot; Read the Thesis</a>
+    <nav class="links" aria-label="Back to site">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="../interactive/">Interactive</a>
+      <a href="../thesis_final.pdf">PDF</a>
+    </nav>
+  </div>
 </header>
+
 <div class="layout">
-  <aside>
-    <h2>Contents</h2>
-    <div class="toc" id="toc"></div>
+  <aside class="toc" aria-label="Table of contents">
+    <h3>Contents</h3>
+    <input id="filter" type="search" placeholder="Filter sections..." aria-label="Filter sections">
+    <div id="toclist"></div>
   </aside>
-  <main class="main">
-    <div class="toolbar">
-      <span class="pageinfo" id="pageInfo">Page 1 of 363</span>
-      <span class="hint">Use â† â†’ keys to move. The page list follows the PDF bookmarks.</span>
+  <main class="viewer">
+    <div class="pageframe"><img id="page" src="../pages/page-001.webp" alt="Thesis page"></div>
+    <div class="bar">
+      <button id="prev" aria-label="Previous page">&larr; Prev</button>
+      <button id="next" aria-label="Next page">Next &rarr;</button>
+      <span class="pos" id="pageInfo">Page 1 of 366</span>
+      <input id="slider" type="range" min="1" max="366" value="1" aria-label="Jump to page">
+      <select id="jump" aria-label="Jump to chapter"></select>
+      <a id="dlpage" href="../pages/page-001.webp" target="_blank" rel="noopener">Open page</a>
     </div>
-    <div class="chapter" id="chapter"></div>
-    <div class="stage">
-      <img id="pageImage" alt="Thesis page" loading="eager">
-      <div class="caption" id="caption"></div>
-    </div>
+    <div class="hint">Arrow keys and Page Up / Page Down navigate. The page images are 1:1 renders of the submitted PDF; the full text layer is in the PDF itself.</div>
   </main>
 </div>
-<script>
-const TOTAL = 363;
-const IMG = (n) => `../pages/page-${String(n).padStart(3,'0')}.webp`;
-let manifest = null;
-let current = 1;
 
-function clamp(n){ n = parseInt(n,10); if (!Number.isFinite(n)) n=1; return Math.min(TOTAL, Math.max(1,n)); }
-function nearestTitle(page){
-  if(!manifest || !manifest.toc) return '';
-  let best = null;
-  for(const e of manifest.toc){ if(e.page <= page) best = e; else break; }
-  return best ? best.title : '';
-}
-function setPage(n, push=true){
-  current = clamp(n);
-  document.getElementById('pageImage').src = IMG(current);
-  document.getElementById('pageInput').value = current;
-  document.getElementById('pageInfo').textContent = `Page ${current} of ${TOTAL}`;
-  const t = nearestTitle(current);
-  document.getElementById('chapter').textContent = t;
-  document.getElementById('caption').textContent = t ? `PDF page ${current} â€” ${t}` : `PDF page ${current}`;
-  document.getElementById('pageImage').alt = `Thesis page ${current}${t?': '+t:''}`;
-  if(push) history.replaceState(null,'',`?page=${current}`);
-  document.getElementById('pageImage').scrollIntoView({block:'start', behavior:'smooth'});
-}
-function buildToc(){
-  const box = document.getElementById('toc');
-  box.innerHTML = '';
-  if(!manifest || !manifest.toc) return;
-  for(const e of manifest.toc){
-    if(e.level > 2) continue;
-    const a = document.createElement('a');
-    a.href = `?page=${e.page}`;
-    a.textContent = e.title;
-    a.className = 'l'+e.level;
-    a.onclick = (ev)=>{ ev.preventDefault(); setPage(e.page); };
-    box.appendChild(a);
+<script>
+(function () {
+  'use strict';
+  var TOTAL = 366;
+  var el = {
+    img: document.getElementById('page'),
+    prev: document.getElementById('prev'),
+    next: document.getElementById('next'),
+    info: document.getElementById('pageInfo'),
+    slider: document.getElementById('slider'),
+    jump: document.getElementById('jump'),
+    dl: document.getElementById('dlpage'),
+    list: document.getElementById('toclist'),
+    filter: document.getElementById('filter'),
+    prog: document.getElementById('prog'),
+  };
+  var toc = [];
+  var cur = 1;
+
+  function pad(n) { return String(n).padStart(3, '0'); }
+  function show(n) {
+    cur = Math.min(TOTAL, Math.max(1, n));
+    el.img.src = '../pages/page-' + pad(cur) + '.webp';
+    el.img.alt = 'Thesis page ' + cur;
+    el.info.textContent = 'Page ' + cur + ' of ' + TOTAL;
+    el.slider.value = cur;
+    el.dl.href = '../pages/page-' + pad(cur) + '.webp';
+    el.prog.style.width = (cur / TOTAL * 100) + '%';
+    var best = null;
+    toc.forEach(function (t) {
+      if (t.page <= cur && (!best || t.page >= best.page)) best = t;
+    });
+    if (best) { el.jump.value = best.page; }
+    document.querySelectorAll('.toc .item').forEach(function (a) {
+      a.classList.toggle('cur', +a.dataset.p === cur || (best && +a.dataset.p === best.page && !document.querySelector('.toc .item.cur[data-p="' + cur + '"]')));
+    });
+    history.replaceState(null, '', '?p=' + cur);
   }
-}
-fetch('../pages/manifest.json').then(r=>r.json()).then(data=>{
-  manifest = data;
-  buildToc();
-  const q = new URLSearchParams(location.search).get('page');
-  setPage(q || 1, false);
-}).catch(()=>{ setPage(1,false); });
-document.getElementById('prev').onclick = ()=>setPage(current-1);
-document.getElementById('titlePage').onclick = ()=>setPage(1);
-document.getElementById('zoom').onchange = (e)=>{ document.documentElement.style.setProperty('--zoom', e.target.value + '%'); };
-document.getElementById('next').onclick = ()=>setPage(current+1);
-document.getElementById('go').onclick = ()=>setPage(document.getElementById('pageInput').value);
-document.getElementById('pageInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') setPage(e.target.value); });
-document.addEventListener('keydown', (e)=>{ if(e.target.tagName==='INPUT') return; if(e.key==='ArrowLeft') setPage(current-1); if(e.key==='ArrowRight') setPage(current+1); });
+  function nav(d) { show(cur + d); }
+
+  fetch('../pages/manifest.json').then(function (r) { return r.json(); }).then(function (m) {
+    toc = m.toc || [];
+    toc.forEach(function (t) {
+      var a = document.createElement('a');
+      a.className = 'item l' + t.level;
+      a.textContent = t.title;
+      a.dataset.p = t.page;
+      a.href = '#';
+      a.addEventListener('click', function (e) { e.preventDefault(); show(t.page); });
+      el.list.appendChild(a);
+    });
+    toc.forEach(function (t) {
+      if (t.level === 1) {
+        var o = document.createElement('option');
+        o.value = t.page; o.textContent = t.title;
+        el.jump.appendChild(o);
+      }
+    });
+    el.jump.addEventListener('change', function () { show(+el.jump.value); });
+    el.filter.addEventListener('input', function () {
+      var q = el.filter.value.toLowerCase();
+      document.querySelectorAll('.toc .item').forEach(function (a) {
+        a.style.display = a.textContent.toLowerCase().indexOf(q) >= 0 ? '' : 'none';
+      });
+    });
+  });
+
+  el.prev.addEventListener('click', function () { nav(-1); });
+  el.next.addEventListener('click', function () { nav(1); });
+  el.slider.addEventListener('input', function () { show(+el.slider.value); });
+  document.addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { nav(1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { nav(-1); }
+    else if (e.key === 'Home') { show(1); }
+    else if (e.key === 'End') { show(TOTAL); }
+  });
+
+  var q = new URLSearchParams(location.search).get('p');
+  show(q ? +q : 1);
+})();
 </script>
 </body>
 </html>
-
-
-
-

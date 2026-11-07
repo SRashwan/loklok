@@ -1,0 +1,555 @@
+{
+ "headline": {
+  "sr_eval": {
+   "est": 0.827,
+   "lo": 0.779,
+   "hi": 0.875,
+   "t": 33.93,
+   "d": 1.52
+  },
+  "sr_comp": {
+   "est": 11.3,
+   "lo": 10.64,
+   "hi": 11.95,
+   "t": 33.74,
+   "d": 1.51
+  },
+  "engagement": {
+   "est": -0.183,
+   "lo": -0.188,
+   "hi": -0.178,
+   "t": -74.41,
+   "d": -3.33
+  },
+  "engagement_terminal": -0.217
+ },
+ "decomposition": {
+  "main": {
+   "A": 0.1905,
+   "B": 0.6265,
+   "C": -0.0121
+  },
+  "interactions": {
+   "AB": 0.0216,
+   "AC": -0.0084,
+   "BC": 0.3791,
+   "ABC": 0.0886
+  }
+ },
+ "sweep": {
+  "draws": 256,
+  "median": 0.567,
+  "mean": 0.593,
+  "q25": 0.383,
+  "q75": 0.802,
+  "min": -0.244,
+  "max": 1.81,
+  "positive_pct": 96.5,
+  "prcc": {
+   "cred_dbi": 0.77,
+   "cred_brs": 0.31,
+   "cred_echo": -0.27
+  }
+ },
+ "designs": [
+  {
+   "name": "Within-persona",
+   "worlds": 1,
+   "sr": [
+    0.827,
+    0.827,
+    0.827
+   ],
+   "eng": [
+    -0.217,
+    -0.217,
+    -0.217
+   ]
+  },
+  {
+   "name": "Agent-randomized",
+   "worlds": 40,
+   "sr": [
+    0.63,
+    0.384,
+    0.851
+   ],
+   "eng": [
+    -0.232,
+    -0.248,
+    -0.211
+   ]
+  },
+  {
+   "name": "Design-based",
+   "worlds": 400,
+   "sr": [
+    0.807,
+    0.47,
+    1.109
+   ],
+   "eng": [
+    -0.217,
+    -0.244,
+    -0.188
+   ]
+  },
+  {
+   "name": "Cluster-randomized",
+   "worlds": 20,
+   "sr": [
+    0.659,
+    0.338,
+    0.948
+   ],
+   "eng": [
+    -0.226,
+    -0.261,
+    -0.18
+   ]
+  }
+ ],
+ "design_effects": {
+  "A": {
+   "within": 0.19,
+   "between": [
+    0.038,
+    -0.075,
+    0.131
+   ],
+   "design": [
+    0.182,
+    0.011,
+    0.336
+   ]
+  },
+  "B": {
+   "within": 0.626,
+   "between": [
+    0.628,
+    0.467,
+    0.869
+   ],
+   "design": [
+    0.627,
+    0.471,
+    0.79
+   ]
+  },
+  "BC_effect": {
+   "within": 0.379,
+   "between": [
+    0.43,
+    0.063,
+    0.626
+   ],
+   "design": [
+    0.379,
+    0.048,
+    0.72
+   ]
+  }
+ },
+ "controls": {
+  "placebo_D_sr": -0.003,
+  "placebo_D_comp": -0.082,
+  "negative": [
+   0.001,
+   -0.008,
+   0.0
+  ],
+  "mechanism": {
+   "dbi_B": 1.299,
+   "brs_A": 0.019,
+   "echo_BC": -0.34
+  },
+  "stress_60row": [
+   0.808,
+   0.76,
+   0.856
+  ],
+  "stress_content": 0.636,
+  "bootstrap": [
+   0.839,
+   0.805,
+   0.884
+  ],
+  "topologies": {
+   "ER": 0.827,
+   "WS": 0.826,
+   "BA": 0.832
+  }
+ },
+ "measured": {
+  "n": 52,
+  "collected": 60,
+  "removed": 8,
+  "pb_mean": 5.12,
+  "pb_sd": 0.87,
+  "rho": 0.67,
+  "alpha_brs": 0.957,
+  "alpha_pb": 0.947,
+  "omega_pb": 0.962,
+  "cfa": "poor fit; no structural validity claimed"
+ },
+ "qual": {
+  "units": 193,
+  "coders": 3,
+  "codes": 25,
+  "kappa": [
+   0.762,
+   0.852,
+   0.861
+  ],
+  "loo_f1": [
+   0.991,
+   0.989,
+   0.998
+  ],
+  "models": [
+   {
+    "name": "Qwen 7B zero-shot",
+    "f1": 0.193,
+    "fabrication": 0.32
+   },
+   {
+    "name": "Qwen 7B gold 5-fold",
+    "f1": 0.32,
+    "fabrication": 0.161
+   },
+   {
+    "name": "Claude first pass",
+    "f1": 0.452,
+    "fabrication": null
+   }
+  ],
+  "gate": {
+   "positives": 8,
+   "kappa": 0.6,
+   "fabrication": 0.05,
+   "passed": 0
+  }
+ },
+ "gemini": {
+  "sr": [
+   2.65,
+   2.342,
+   2.967
+  ],
+  "comp": 31.15,
+  "engagement": [
+   0.163,
+   0.121,
+   0.2
+  ],
+  "mae": 0.655,
+  "rmse": 0.842,
+  "r": 0.269,
+  "rho": 0.071
+ },
+ "reliability": {
+  "nmls": {
+   "alpha": 0.948,
+   "omega": 0.953,
+   "lambda6": 0.952,
+   "k": 35
+  },
+  "mcs": {
+   "alpha": 0.738,
+   "omega": 0.816,
+   "lambda6": 0.719,
+   "k": 8
+  },
+  "icc": 0.953
+ },
+ "cells": [
+  {
+   "cell": "G0 [0,0,0]",
+   "a": 0,
+   "b": 0,
+   "c": 0,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  },
+  {
+   "cell": "A [1,0,0]",
+   "a": 1,
+   "b": 0,
+   "c": 0,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  },
+  {
+   "cell": "B [0,1,0]",
+   "a": 0,
+   "b": 1,
+   "c": 0,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  },
+  {
+   "cell": "C [0,0,1]",
+   "a": 0,
+   "b": 0,
+   "c": 1,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  },
+  {
+   "cell": "AB [1,1,0]",
+   "a": 1,
+   "b": 1,
+   "c": 0,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  },
+  {
+   "cell": "AC [1,0,1]",
+   "a": 1,
+   "b": 0,
+   "c": 1,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  },
+  {
+   "cell": "BC [0,1,1]",
+   "a": 0,
+   "b": 1,
+   "c": 1,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  },
+  {
+   "cell": "G1 [1,1,1]",
+   "a": 1,
+   "b": 1,
+   "c": 1,
+   "sr": 0.0,
+   "sr_comp": null,
+   "engagement": null
+  }
+ ],
+ "codebook": [
+  {
+   "code": "C01",
+   "positives": 2,
+   "kappa12": 0.32752613240418116,
+   "kappa13": 0.6643478260869565,
+   "kappa23": 0.5649887302779865,
+   "kappa_median": 0.5649887302779865
+  },
+  {
+   "code": "C02",
+   "positives": 1,
+   "kappa12": 0.27931292008961905,
+   "kappa13": 1.0,
+   "kappa23": 0.27931292008961905,
+   "kappa_median": 0.27931292008961905
+  },
+  {
+   "code": "C03",
+   "positives": 2,
+   "kappa12": 0.5649887302779865,
+   "kappa13": 1.0,
+   "kappa23": 0.5649887302779865,
+   "kappa_median": 0.5649887302779865
+  },
+  {
+   "code": "C04",
+   "positives": 5,
+   "kappa12": 0.9064469219583131,
+   "kappa13": 1.0,
+   "kappa23": 0.9064469219583131,
+   "kappa_median": 0.9064469219583131
+  },
+  {
+   "code": "C05",
+   "positives": 8,
+   "kappa12": 0.6547406082289804,
+   "kappa13": 0.7616303005351996,
+   "kappa23": 0.8835244417622209,
+   "kappa_median": 0.7616303005351996
+  },
+  {
+   "code": "C06",
+   "positives": 12,
+   "kappa12": 0.7535121328224776,
+   "kappa13": 0.8489433863814244,
+   "kappa23": 0.8013994649104754,
+   "kappa_median": 0.8013994649104754
+  },
+  {
+   "code": "C07",
+   "positives": 19,
+   "kappa12": 0.68902885601289,
+   "kappa13": 0.8346753469247901,
+   "kappa23": 0.8464598249801114,
+   "kappa_median": 0.8346753469247901
+  },
+  {
+   "code": "C08",
+   "positives": 0,
+   "kappa12": 0.0,
+   "kappa13": null,
+   "kappa23": 0.0,
+   "kappa_median": 0.0
+  },
+  {
+   "code": "C09",
+   "positives": 9,
+   "kappa12": 0.724206916261789,
+   "kappa13": 0.7919511318720804,
+   "kappa23": 0.7895310796074155,
+   "kappa_median": 0.7895310796074155
+  },
+  {
+   "code": "C10",
+   "positives": 5,
+   "kappa12": 0.8862698880377136,
+   "kappa13": 0.8862698880377136,
+   "kappa23": 1.0,
+   "kappa_median": 0.8862698880377136
+  },
+  {
+   "code": "C11",
+   "positives": 2,
+   "kappa12": 0.49608355091383816,
+   "kappa13": 0.6643478260869565,
+   "kappa23": 0.7974816369359916,
+   "kappa_median": 0.6643478260869565
+  },
+  {
+   "code": "C12",
+   "positives": 12,
+   "kappa12": 0.7022261406215561,
+   "kappa13": 0.8491008600469117,
+   "kappa23": 0.846215139442231,
+   "kappa_median": 0.846215139442231
+  },
+  {
+   "code": "I01",
+   "positives": 19,
+   "kappa12": 0.801060226770726,
+   "kappa13": 0.8710324089542265,
+   "kappa23": 0.8637967537050106,
+   "kappa_median": 0.8637967537050106
+  },
+  {
+   "code": "I02",
+   "positives": 1,
+   "kappa12": 0.6643478260869565,
+   "kappa13": 1.0,
+   "kappa23": 0.6643478260869565,
+   "kappa_median": 0.6643478260869565
+  },
+  {
+   "code": "I03",
+   "positives": 16,
+   "kappa12": 0.8948610858906846,
+   "kappa13": 0.8459696727853152,
+   "kappa23": 0.8948610858906846,
+   "kappa_median": 0.8948610858906846
+  },
+  {
+   "code": "I04",
+   "positives": 3,
+   "kappa12": 0.43534230544177877,
+   "kappa13": 0.7974816369359916,
+   "kappa23": 0.5911016949152542,
+   "kappa_median": 0.5911016949152542
+  },
+  {
+   "code": "I05",
+   "positives": 4,
+   "kappa12": 0.854559155990957,
+   "kappa13": 0.854559155990957,
+   "kappa23": 1.0,
+   "kappa_median": 0.854559155990957
+  },
+  {
+   "code": "I06",
+   "positives": 9,
+   "kappa12": 0.8835244417622209,
+   "kappa13": 0.8695945945945946,
+   "kappa23": 0.8835244417622209,
+   "kappa_median": 0.8835244417622209
+  },
+  {
+   "code": "I07",
+   "positives": 11,
+   "kappa12": 0.9537724550898203,
+   "kappa13": 0.9496477954604748,
+   "kappa23": 0.9036445332001997,
+   "kappa_median": 0.9496477954604748
+  },
+  {
+   "code": "I08",
+   "positives": 3,
+   "kappa12": 0.6619964973730297,
+   "kappa13": 0.7974816369359916,
+   "kappa23": 0.854559155990957,
+   "kappa_median": 0.7974816369359916
+  },
+  {
+   "code": "I09",
+   "positives": 17,
+   "kappa12": 0.6187277755827736,
+   "kappa13": 0.6723259762308998,
+   "kappa23": 0.9387496033005395,
+   "kappa_median": 0.6723259762308998
+  },
+  {
+   "code": "I10",
+   "positives": 4,
+   "kappa12": 0.854559155990957,
+   "kappa13": 0.854559155990957,
+   "kappa23": 1.0,
+   "kappa_median": 0.854559155990957
+  },
+  {
+   "code": "I11",
+   "positives": 8,
+   "kappa12": 0.9306503772906936,
+   "kappa13": 0.9306503772906936,
+   "kappa23": 1.0,
+   "kappa_median": 0.9306503772906936
+  },
+  {
+   "code": "I12",
+   "positives": 26,
+   "kappa12": 0.822854520422212,
+   "kappa13": 0.878936143520261,
+   "kappa23": 0.8941305540318157,
+   "kappa_median": 0.878936143520261
+  },
+  {
+   "code": "I13",
+   "positives": 10,
+   "kappa12": 0.7674698795180723,
+   "kappa13": 0.8156638013371538,
+   "kappa23": 0.9496477954604748,
+   "kappa_median": 0.8156638013371538
+  }
+ ],
+ "anchors": {
+  "abstract": 9,
+  "guide": 37,
+  "intro": 39,
+  "theory": 73,
+  "platform": 96,
+  "method": 119,
+  "results": 200,
+  "upgrade": 227,
+  "qual_validation": 246,
+  "triangulation": 250,
+  "discussion": 256,
+  "defense_map": 339
+ }
+}

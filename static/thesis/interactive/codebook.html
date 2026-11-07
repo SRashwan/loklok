@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The codebook examiner: all 25 LOKLOK qualitative codes with human agreement and machine performance.">
+<title>Applet V: The Codebook Examiner | LOKLOK Thesis</title>
+<link rel="stylesheet" href="../css/thesis.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="../index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="../index.html">Overview</a>
+      <a href="../results.html">Results</a>
+      <a href="index.html">Interactive</a>
+      <a href="../read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; Interactive &rarr; <span>V. The codebook examiner</span></div>
+
+<div class="wrap">
+  <p class="kicker">Applet V</p>
+  <h1>The codebook examiner</h1>
+  <p class="lede">Twelve deductive mechanism codes (C01-C12) and thirteen inductive codes (I01-I13),
+  coded by three independent humans on 193 segments. The chart shows human-human agreement; the gate
+  row shows whether a mechanism code met the pre-set usability rule for machine coding
+  (8 positives, machine kappa at least .60, at most 5% fabrication).</p>
+
+  <div class="applet rv">
+    <div class="controls">
+      <div class="control"><label>Filter</label>
+        <span class="chip on" id="fAll">All 25</span>
+        <span class="chip" id="fC">Mechanism C01-C05</span>
+        <span class="chip" id="fSort">Sort by kappa</span></div>
+    </div>
+    <canvas id="plot" width="940" height="520" role="img" aria-label="Per-code agreement and prevalence chart"></canvas>
+    <p id="readout" class="note"></p>
+  </div>
+
+  <div class="callout">Human kappa here is between coders; the gate kappa is machine-versus-human.
+  No mechanism code met the gate, so E1-E3 were not eligible and the qualitative layer remains an
+  assumption audit. Machine micro-F1: Qwen 7B .193 zero-shot, .320 with gold exemplars, Claude
+  first pass .452.</div>
+  <p><a class="btn" href="index.html">&larr; Back to the laboratory</a></p>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div class="legal">Saved human-coding outputs; model comparisons are failed comparators, not ground truth. &copy; 2026 Sherif M. A. E. Rashwan.</div>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var canvas = document.getElementById('plot');
+  var ctx = canvas.getContext('2d');
+  var data = null, filter = 'all', sorted = false;
+
+  function draw() {
+    var codes = data.codebook.slice();
+    if (filter === 'c') codes = codes.filter(function (c) { return /^C0[1-5]$/.test(c.code); });
+    if (sorted) codes.sort(function (a, b) { return (a.kappa_median || 0) - (b.kappa_median || 0); });
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#FDFCFA'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    var P = { x0: 56, y0: 34, x1: canvas.width - 30, y1: canvas.height - 64 };
+    var bw = (P.x1 - P.x0) / codes.length;
+    var maxPos = Math.max.apply(null, codes.map(function (c) { return c.positives; })) || 1;
+
+    /* kappa 0.6 guide */
+    var y60 = P.y1 - 0.6 * (P.y1 - P.y0);
+    ctx.strokeStyle = '#C7A252'; ctx.setLineDash([5, 5]); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(P.x0, y60); ctx.lineTo(P.x1, y60); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#8A6A1F'; ctx.font = '11px Helvetica';
+    ctx.fillText('kappa .60 (gate threshold for machine-vs-human)', P.x0 + 4, y60 - 5);
+
+    codes.forEach(function (c, i) {
+      var x = P.x0 + i * bw;
+      var k = c.kappa_median === null ? 0 : c.kappa_median;
+      var h = k * (P.y1 - P.y0);
+      var mech = /^C0[1-5]$/.test(c.code);
+      ctx.fillStyle = mech ? '#B31B1B' : '#16325C';
+      ctx.fillRect(x + 3, P.y1 - h, bw - 6, h);
+      /* prevalence dot */
+      ctx.fillStyle = '#C7A252';
+      ctx.beginPath();
+      ctx.arc(x + bw / 2, P.y1 - 8 - (c.positives / maxPos) * (P.y0 - 24), 3.4, 0, 7);
+      ctx.fill();
+      ctx.save();
+      ctx.translate(x + bw / 2, P.y1 + 12); ctx.rotate(-Math.PI / 2.4);
+      ctx.fillStyle = '#46536B'; ctx.font = 'bold 10px Helvetica'; ctx.textAlign = 'right';
+      ctx.fillText(c.code, 0, 0);
+      ctx.restore();
+      ctx.textAlign = 'left';
+      if (codes.length <= 15) {
+        ctx.fillStyle = '#46536B'; ctx.font = '10px Helvetica'; ctx.textAlign = 'center';
+        ctx.fillText(k.toFixed(2), x + bw / 2, P.y1 - h - 5);
+        ctx.textAlign = 'left';
+      }
+    });
+    ctx.fillStyle = '#46536B'; ctx.font = '12px Helvetica';
+    ctx.fillText('Median pairwise human kappa by code (bars); gold dots = positive segments', P.x0, 16);
+
+    var below = codes.filter(function (c) { return c.kappa_median !== null && c.kappa_median < 0.6; });
+    document.getElementById('readout').innerHTML =
+      'Codes below .60 median pairwise human kappa: <b>' +
+      (below.map(function (c) { return c.code + ' (' + c.kappa_median.toFixed(2) + ')'; }).join(', ') || 'none') +
+      '</b>. C08 has no positive labels and is not estimable. C04 (.91-1.00) and C05 (.66-.88) are the
+      most consistent mechanism codes, but C04 had only five positives. Machine coding met the gate for
+      none of them.';
+  }
+
+  getThesis().then(function (d) {
+    data = d;
+    function bind(id, f) {
+      document.getElementById(id).addEventListener('click', function () {
+        ['fAll', 'fC', 'fSort'].forEach(function (x) { document.getElementById(x).classList.remove('on'); });
+        document.getElementById(id).classList.add('on');
+        f(); draw();
+      });
+    }
+    bind('fAll', function () { filter = 'all'; });
+    bind('fC', function () { filter = 'c'; });
+    bind('fSort', function () { sorted = !sorted; });
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
