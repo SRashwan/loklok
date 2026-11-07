@@ -161,9 +161,7 @@
     var effect = aOn ? (within ? '+0.190' : '+0.038 [thesis: -0.075, 0.131]') : 'BRS path off: no A effect';
     document.getElementById('readout').innerHTML =
       'Final mean BRS: <b>' + end.toFixed(3) + '</b>. Illustrative A contrast: <b>' + effect +
-      '</b>. With within-persona assignment every agent carries A, so the anchor spreads across the whole
-      network; with between-agent assignment only half the agents carry it, and the effect is diluted
-      by interference, exactly as the triangulation reports.';
+      '</b>. With within-persona assignment every agent carries A, so the anchor spreads across the whole network; with between-agent assignment only half the agents carry it, and the effect is diluted by interference, exactly as the triangulation reports.';
   }
   function bind(id) {
     document.getElementById(id).addEventListener('click', function () {

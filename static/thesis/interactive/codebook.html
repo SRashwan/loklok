@@ -113,9 +113,7 @@
     document.getElementById('readout').innerHTML =
       'Codes below .60 median pairwise human kappa: <b>' +
       (below.map(function (c) { return c.code + ' (' + c.kappa_median.toFixed(2) + ')'; }).join(', ') || 'none') +
-      '</b>. C08 has no positive labels and is not estimable. C04 (.91-1.00) and C05 (.66-.88) are the
-      most consistent mechanism codes, but C04 had only five positives. Machine coding met the gate for
-      none of them.';
+      '</b>. C08 has no positive labels and is not estimable. C04 (.91-1.00) and C05 (.66-.88) are the most consistent mechanism codes, but C04 had only five positives. Machine coding met the gate for none of them.';
   }
 
   getThesis().then(function (d) {
