@@ -46,11 +46,18 @@
     if (href.indexOf(here) === 0 && here !== '') a.classList.add('cur');
   });
 
-  /* thesis data helper */
+  /* thesis data helper: resolve the data file relative to this script,
+     so it works from /thesis/ and from /thesis/interactive/ alike */
+  var DATA_BASE = (function () {
+    var s = document.currentScript ? document.currentScript.src : '';
+    var m = s.match(/^(.*\/)js\/site\.js/);
+    return m ? m[1] : 'data/';
+  })();
   window.THESIS = null;
   window.getThesis = function () {
     if (window.THESIS) return Promise.resolve(window.THESIS);
-    return fetch('data/thesis_data.json').then(function (r) { return r.json(); })
+    var url = DATA_BASE + 'data/thesis_data.json';
+    return fetch(url).then(function (r) { return r.json(); })
       .then(function (d) { window.THESIS = d; return d; });
   };
   window.fmt = function (x, d) {
