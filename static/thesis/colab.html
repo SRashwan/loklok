@@ -53,6 +53,13 @@
   <p class="counts rv" id="counts" style="font-size:13px;color:var(--muted);"></p>
   <div class="nbgrid rv" id="grid"></div>
 
+  <h2 class="rv" style="margin-top:34px;">Legacy and ground-truth notebooks</h2>
+  <p class="rv" style="font-size:14.5px;color:var(--slate);">Earlier notebooks from the project's history: the
+  FGD analysis pipeline, the ground-truth formation for the Uber, self-report, and platform corpora,
+  and the gated LLM-agent extension. They are preserved as the historical record; the results the
+  thesis actually uses come from the final 14 notebooks above and the validated CSVs.</p>
+  <div class="nbgrid rv" id="legacygrid"></div>
+
   <div class="callout rv">Results lines are the notebook's own saved outputs, cross-checked against
   the pipeline CSVs and the thesis sections they cite. Where a notebook re-ran an earlier variant,
   the line says so rather than double-counting the finding.</div>
@@ -125,6 +132,26 @@
       });
     });
     render();
+  });
+
+  fetch('data/legacy_colab.json').then(function (r) { return r.json(); }).then(function (d) {
+    var box = document.getElementById('legacygrid');
+    d.legacy.forEach(function (nb) {
+      var card = document.createElement('div');
+      card.className = 'nb';
+      var badges = nb.badges.concat([nb.code_cells ? nb.code_cells + ' code cells' : '', nb.cells ? nb.cells + ' cells total' : ''])
+        .filter(Boolean)
+        .map(function (b) { return '<span class="tag">' + esc(b) + '</span>'; }).join('');
+      card.innerHTML =
+        '<h3>' + esc(nb.title) + '</h3>' +
+        '<div class="purp">' + esc(nb.purpose) + '</div>' +
+        '<div class="meta">' + badges + '</div>' +
+        '<div class="actions">' +
+        '<a href="https://nbviewer.org/github/SRashwan/loklok/blob/main/static/thesis/code/colab/' + esc(nb.file) + '" target="_blank" rel="noopener">nbviewer</a>' +
+        '<a href="code/colab/' + esc(nb.file) + '">Raw notebook</a>' +
+        '</div>';
+      box.appendChild(card);
+    });
   });
 })();
 </script>

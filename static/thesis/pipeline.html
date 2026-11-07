@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The LOKLOK pipeline, stage by stage: sources, ground truth, debiasing, persona generation, the eight filters, the session loop, and the checks.">
+<title>The Pipeline | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+.diag{background:#fff;border:1px solid var(--line);padding:10px;overflow-x:auto;margin:14px 0;}
+.diag .node{cursor:pointer;}
+.diag .node rect{fill:#16325C;stroke:#0E1420;transition:fill .2s;}
+.diag .node text{fill:#fff;font-size:10.5px;font-family:var(--sans);}
+.diag .node:hover rect,.diag .node:focus rect{fill:var(--crimson);outline:none;}
+.diag .node.gt rect{fill:#8A6A1F;}
+.diag .node.persona rect{fill:#7C1414;}
+.diag .node.out rect{fill:#0E7490;}
+.diag .edge{stroke:#C7A252;stroke-width:1.5;fill:none;marker-end:url(#arrp);}
+.explain{background:var(--paper-2);border:1px solid var(--line);padding:14px 16px;margin:12px 0;font-size:14.5px;}
+.explain b{color:var(--crimson-dark);}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;align-items:start;}
+.stage .txt{font-size:14.5px;}
+.stage .img{border:1px solid var(--line);background:#fff;padding:6px;}
+@media (max-width:900px){.stage{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>The Pipeline</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Pipeline sections">
+      <h3>The Pipeline</h3>
+      <a class="cur" href="pipeline.html">Contents</a>
+      <a href="#overview">1. The pipeline at a glance</a>
+      <a href="#groundtruth">2. Ground truth, and how it was formed</a>
+      <a href="#embedding">3. Sources and embeddings</a>
+      <a href="#debiasing">4. Debiasing</a>
+      <a href="#personas">5. Persona generation, step by step</a>
+      <a href="#filters">6. The eight filters</a>
+      <a href="#loop">7. The session loop and scoring</a>
+      <a href="#checks">8. The checks around the loop</a>
+    </nav>
+    <article>
+      <p class="kicker">Chapters 5 and 6 &middot; the main pipeline of the upgrade</p>
+      <h1>The pipeline, block by block</h1>
+      <div class="double-rule"></div>
+      <p class="lede">One pipeline turns the project's sources into the headline numbers: measured
+      records become a ground truth, embeddings enrich them, debiasing balances them, a spectral
+      manifold shapes them, 500 personas are drawn, the eight-filter session loop runs, GRM-IRT
+      scoring produces the Student Ratings, and the checks audit the whole chain. Click every block
+      below; each stage is then explained in its own section.</p>
+
+      <h2 id="overview">1. The pipeline at a glance</h2>
+      <div class="diag" style="text-align:center;">
+        <svg viewBox="0 0 1120 560" role="img" aria-label="The LOKLOK pipeline; click a block">
+          <defs>
+            <marker id="arrp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C7A252"/></marker>
+          </defs>
+          <g class="node gt" tabindex="0" data-exp="p0"><rect x="30" y="70" width="170" height="60" rx="4"/><text x="115" y="94" text-anchor="middle">Sources, 4 streams</text><text x="115" y="112" text-anchor="middle">FGD, self-report, PO, corpora</text></g>
+          <g class="node gt" tabindex="0" data-exp="p1"><rect x="30" y="200" width="170" height="60" rx="4"/><text x="115" y="224" text-anchor="middle">Ground truth</text><text x="115" y="242" text-anchor="middle">measured 52 rows + human gold</text></g>
+          <g class="node" tabindex="0" data-exp="p2"><rect x="250" y="70" width="170" height="60" rx="4"/><text x="335" y="94" text-anchor="middle">BGE-M3 embeddings</text><text x="335" y="112" text-anchor="middle">5,258 docs, 32 PCs</text></g>
+          <g class="node" tabindex="0" data-exp="p3"><rect x="250" y="200" width="170" height="60" rx="4"/><text x="335" y="224" text-anchor="middle">Debias DML + IPW</text><text x="335" y="242" text-anchor="middle">0.887 to 0.042 nuisance</text></g>
+          <g class="node persona" tabindex="0" data-exp="p4"><rect x="470" y="70" width="170" height="60" rx="4"/><text x="555" y="94" text-anchor="middle">Spectral manifold</text><text x="555" y="112" text-anchor="middle">PCA + LLE + Laplacian, 6 axes</text></g>
+          <g class="node persona" tabindex="0" data-exp="p5"><rect x="470" y="200" width="170" height="60" rx="4"/><text x="555" y="224" text-anchor="middle">Persona prior Q0</text><text x="555" y="242" text-anchor="middle">Gaussian KDE, 500 draws</text></g>
+          <g class="node" tabindex="0" data-exp="p6"><rect x="690" y="70" width="170" height="60" rx="4"/><text x="775" y="94" text-anchor="middle">8 cells x 18 sessions</text><text x="775" y="112" text-anchor="middle">2^3 A/B/C combinations</text></g>
+          <g class="node" tabindex="0" data-exp="p7"><rect x="690" y="200" width="170" height="60" rx="4"/><text x="775" y="224" text-anchor="middle">Eight filters</text><text x="775" y="242" text-anchor="middle">Hamiltonian ... Entropy</text></g>
+          <g class="node out" tabindex="0" data-exp="p8"><rect x="910" y="70" width="170" height="60" rx="4"/><text x="995" y="94" text-anchor="middle">GRM-IRT scoring</text><text x="995" y="112" text-anchor="middle">NMLS 35, MCS+PB 8</text></g>
+          <g class="node out" tabindex="0" data-exp="p9"><rect x="910" y="200" width="170" height="60" rx="4"/><text x="995" y="224" text-anchor="middle">Student Ratings</text><text x="995" y="242" text-anchor="middle">SR eval, SR comp, engagement</text></g>
+          <g class="node" tabindex="0" data-exp="p10"><rect x="910" y="330" width="170" height="56" rx="4"/><text x="995" y="354" text-anchor="middle">Checks</text><text x="995" y="370" text-anchor="middle">sweep, triangulation, controls</text></g>
+          <path class="edge" d="M200,100 L248,100"/>
+          <path class="edge" d="M200,230 L248,230"/>
+          <path class="edge" d="M420,100 L468,100"/>
+          <path class="edge" d="M420,230 L468,230"/>
+          <path class="edge" d="M555,130 L555,198"/>
+          <path class="edge" d="M640,100 L688,100"/>
+          <path class="edge" d="M640,230 L688,230"/>
+          <path class="edge" d="M860,100 L908,100"/>
+          <path class="edge" d="M860,230 L908,230"/>
+          <path class="edge" d="M995,130 L995,198"/>
+          <path class="edge" d="M995,260 L995,328"/>
+          <path class="edge" d="M30,130 L30,198" marker-end="none"/>
+          <path class="edge" d="M115,330 L995,330 L995,300 L995,262" marker-end="none" stroke-dasharray="6 5"/>
+          <text x="115" y="460" text-anchor="middle" style="font-size:11px;fill:#46536B;">Ground truth feeds the anchors (G0 = PB mean 5.119); dashed loop: checks audit the outputs back into the design</text>
+        </svg>
+      </div>
+      <div class="explain" id="pipexp"><b>Click a block</b> for its role. Golden blocks are ground
+      truth, red blocks are persona construction, teal blocks are the outputs.</div>
+
+      <h2 id="groundtruth">2. Ground truth, and how it was formed</h2>
+      <p>The thesis uses the term ground truth for three things only, and states how each was formed:</p>
+      <table class="data">
+        <thead><tr><th>Ground truth</th><th>How it was formed</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>Measured wave (N = 52)</td><td>60 collected questionnaires; a 21-field duplicate screen removed 8 duplicate vectors; the retained 52 rows are the analysis matrix</td><td>Anchors the model level (G0 = PB mean 5.119) and the persona spread; descriptive only</td></tr>
+          <tr><td>Human coding gold (193 segments)</td><td>Three independent coders filled the same workbook; the majority label of the three formed the gold (human_gold_majority.csv), under a pre-set usability gate</td><td>The reference against which machine coding is judged; no mechanism code met the gate, reported honestly</td></tr>
+          <tr><td>Participant-observation accounts (60)</td><td>Researcher-recorded rider narratives, thematically coded manually</td><td>Design vocabulary for the platform, not statistical evidence</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">What is <b>not</b> ground truth: the Qwen and Claude machine labels, the
+      LLM-generated FGD summaries, and the synthetic NMLS responses. The thesis keeps this
+      distinction explicit everywhere.</div>
+
+      <h2 id="embedding">3. Sources and embeddings</h2>
+      <div class="stage">
+        <div class="txt">
+          <p>Four streams enter the pipeline: the 160-segment FGD transcript, the 185-segment
+          self-report transcript, 60 participant-observation accounts, and 4,828 corpus documents,
+          totalling 5,258 texts. BGE-M3 (dense output only, zero-shot) embeds each text to 1,024
+          dimensions; the block is projected to 32 principal components and appended to the 31
+          quantitative features (198 total). The source ablation shows this block is contextual:
+          removing it changes the contrast by only -0.009.</p>
+        </div>
+        <div class="img"><img src="figures/fig5_process1_embedding_v8.jpg" alt="Embedding stage of the pipeline">
+        <p class="meta">Stage figure: the embedding stream.</p></div>
+      </div>
+
+      <h2 id="debiasing">4. Debiasing</h2>
+      <p>DML partials out the nuisance functions and IPW reweights by inverse propensity. The maximum
+      nuisance correlation falls from 0.887 to 0.042 after DML; IPW reintroduces some imbalance
+      (0.127), which is reported rather than hidden. These debiased rows, not the raw questionnaire,
+      define the manifold the personas are drawn from.</p>
+
+      <h2 id="personas">5. Persona generation, step by step</h2>
+      <div class="stage">
+        <div class="txt">
+          <ol>
+            <li><b>Input.</b> The 52 debiased measured rows.</li>
+            <li><b>Manifold.</b> PCA + LLE + Laplacian eigenmaps project them to six axes (condition
+            number 4.82); university labels do not separate the anchors (distance ratio 0.974), so no
+            group claim rides on them.</li>
+            <li><b>Distribution.</b> A Gaussian KDE (or a shrunken multivariate normal if
+            ill-conditioned) fits the distribution Q0 over those six axes.</li>
+            <li><b>Draw.</b> 500 personas are sampled from Q0, each carrying traits: critical
+            scrutiny (0.2-0.8), echo susceptibility, and co-host preference.</li>
+            <li><b>Anchoring.</b> The G0 arm is pinned to the measured PB mean (5.119); the treatment
+            weights are declared design inputs, not estimates.</li>
+          </ol>
+          <p><b>Why this is honest:</b> the 500 personas are a computational population. The thesis
+          says explicitly they are not 500 respondents, and the intervals describe variation across
+          generated personas, not human sampling error.</p>
+        </div>
+        <div class="img"><img src="figures/fig5_calibrated_architecture.jpg" alt="Calibrated architecture figure">
+        <p class="meta">Stage figure: the calibrated architecture.</p></div>
+      </div>
+
+      <h2 id="filters">6. The eight filters</h2>
+      <div class="stage">
+        <div class="txt">
+          <p>Each session passes the state tensor through eight filters. The ablation shows only
+          three are outcome-active in this wiring; the rest are reported as inert rather than
+          removed silently.</p>
+          <table class="data">
+            <thead><tr><th>Filter</th><th>Role in the loop</th><th>Outcome-active?</th></tr></thead>
+            <tbody>
+              <tr><td>Hamiltonian</td><td>Free-energy diagnostic</td><td>Diagnostic only</td></tr>
+              <tr><td>Laplace</td><td>Diffusion smoothing</td><td>No change when off</td></tr>
+              <tr><td>Lyapunov</td><td>Contraction/stability</td><td>Negligible</td></tr>
+              <tr><td>DeGroot</td><td>Consensus with the BRS anchor</td><td><b>Yes: -0.233 when off</b></td></tr>
+              <tr><td>Lagrange</td><td>Diversity-constrained choice (MORE)</td><td><b>Yes: -0.750 when off</b></td></tr>
+              <tr><td>Hilbert</td><td>Embedding-geometry diversity</td><td><b>Yes: -0.453 when off</b></td></tr>
+              <tr><td>Percolation</td><td>Propagation and moderation</td><td>No change when off</td></tr>
+              <tr><td>Entropy</td><td>Echo cooling</td><td>No change when off</td></tr>
+            </tbody>
+          </table>
+          <p>Full equations and live simulations: <a href="algorithms.html">the Algorithms page</a>.</p>
+        </div>
+        <div class="img"><img src="figures/fig5_process2_factorial.jpg" alt="Factorial stage figure">
+        <p class="meta">Stage figure: the factorial design.</p></div>
+      </div>
+
+      <h2 id="loop">7. The session loop and scoring</h2>
+      <div class="stage">
+        <div class="txt">
+          <p>Each persona is cloned across the 8 cells and run for 18 sessions; the state tensor
+          (opinion, BRS, echo, chosen diversity, Hamiltonian, engagement, gate, latent trajectories)
+          propagates through the filters. Terminal states are scored by the Samejima GRM-IRT model:
+          the 35-item NMLS profile becomes SR comp (0-100) and the evaluative trajectory becomes
+          SR eval (1-7) with a calibration shift that pins G0 to the measured mean.</p>
+          <p>$$\Delta\mathrm{SR}_{\mathrm{eval}} = +0.827\,[0.779, 0.875],\quad
+          \Delta\mathrm{SR}_{\mathrm{comp}} = +11.30,\quad \Delta\mathrm{eng} = -0.183$$</p>
+        </div>
+        <div class="img"><img src="figures/fig5_process3_tensor.jpg" alt="Tensor stage figure">
+        <p class="meta">Stage figure: the state tensor.</p></div>
+      </div>
+
+      <h2 id="checks">8. The checks around the loop</h2>
+      <ul>
+        <li><b>256-point sweep</b> over six mechanism parameters and five weights: 96.5% positive, median +0.567, top PRCC cred_dbi +0.77.</li>
+        <li><b>One-at-a-time ablations</b> of filters and sources, and the Zewail gate ablation (+0.194 when off).</li>
+        <li><b>Randomized-assignment triangulation</b> across four designs: the diversity path survives all; the BRS path does not.</li>
+        <li><b>Placebo and negative controls</b> pass; the machine-coding gate is the honest null.</li>
+      </ul>
+      <p><a class="btn" href="ratings.html">How to read the Student Ratings &rarr;</a>
+      <a class="btn" href="interactive/sim.html">Run the loop yourself &rarr;</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="framework.html">Framework</a></li><li><a href="colab.html">Colab scripts</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+<script>
+(function () {
+  'use strict';
+  var EXPS = {
+    p0: '<b>Sources, four streams.</b> The FGD transcript, the self-report transcript, the participant-observation accounts, and the 4,828-document corpora. They supply the qualitative vocabulary and the embedding block.',
+    p1: '<b>Ground truth.</b> The measured 52-row wave and the three-coder majority gold (193 segments). Formed by the duplicate screen and the majority rule; anchors the model, never trains it.',
+    p2: '<b>BGE-M3 embeddings.</b> 5,258 texts embedded (dense, zero-shot) and projected to 32 PCs, appended to the 31 quantitative features. Contextual, not load-bearing (-0.009 when dropped).',
+    p3: '<b>Debias DML + IPW.</b> Nuisance correlation 0.887 to 0.042; residual imbalance 0.127 reported. The debiased rows define the manifold.',
+    p4: '<b>Spectral manifold.</b> PCA + LLE + Laplacian eigenmaps to six axes, condition number 4.82; university labels do not separate (ratio 0.974).',
+    p5: '<b>Persona prior Q0.</b> A Gaussian KDE over the manifold; 500 personas drawn with scrutiny, echo susceptibility, and co-host traits. Computational population, not respondents.',
+    p6: '<b>8 cells x 18 sessions.</b> The within-persona 2^3 factorial: every persona runs all A/B/C combinations; the triangulation re-assigns them under four designs.',
+    p7: '<b>Eight filters.</b> Hamiltonian, Laplace, Lyapunov, DeGroot, Lagrange, Hilbert, Percolation, Entropy. Only DeGroot, Lagrange, and Hilbert are outcome-active.',
+    p8: '<b>GRM-IRT scoring.</b> Samejima graded response model over the 35-item NMLS and the 8-item MCS+PB; reliability alpha .948 / .738 reported as model properties.',
+    p9: '<b>Student Ratings.</b> SR eval +0.827, SR comp +11.30, engagement -0.183: the measurement surface. Full interpretation guide: the Student Ratings page.',
+    p10: '<b>Checks.</b> The 256-point sweep, ablations, the four-design triangulation, placebo and negative controls, and the honest null gate.',
+  };
+  document.querySelectorAll('.diag .node').forEach(function (g) {
+    g.addEventListener('click', function () { document.getElementById('pipexp').innerHTML = EXPS[g.getAttribute('data-exp')]; });
+    g.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); g.click(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

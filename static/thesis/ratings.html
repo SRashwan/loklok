@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Student Ratings in the LOKLOK thesis: the two formats, how they are scored, and exactly how a reviewer should interpret every number.">
+<title>Student Ratings | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+.guide{border:1px solid var(--line);background:#fff;margin:10px 0;}
+.guide .row{display:grid;grid-template-columns:150px 1fr 1fr;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13.5px;align-items:start;}
+.guide .row.head{background:var(--crimson-dark);color:#fff;font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;}
+.guide .row.head .c{color:#fff;}
+.guide .row .c:first-child{font-weight:700;color:var(--crimson-dark);}
+.guide .row.head .c:first-child{color:#fff;}
+.guide .row .c{color:var(--slate);}
+@media (max-width:860px){.guide .row{grid-template-columns:1fr;gap:4px;}.guide .row.head{display:none;}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" id="topnav" aria-label="Primary"></nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>Student Ratings</span></div>
+
+<div class="wrap">
+  <div class="grid-side">
+    <nav class="sidenav" aria-label="Student Ratings sections">
+      <h3>Student Ratings</h3>
+      <a class="cur" href="ratings.html">Contents</a>
+      <a href="#what">1. What they are</a>
+      <a href="#sreval">2. SR eval: the evaluative rating</a>
+      <a href="#srcomp">3. SR comp: the competence profile</a>
+      <a href="#engagement">4. Engagement: the cost</a>
+      <a href="#scoring">5. How scoring works</a>
+      <a href="#interpret">6. The reviewer's interpretation guide</a>
+      <a href="#misreadings">7. Common misreadings to avoid</a>
+    </nav>
+    <article>
+      <p class="kicker">Chapters 3, 5 and 6 &middot; the measurement surface, decoded</p>
+      <h1>The Student Ratings, fully explained</h1>
+      <div class="double-rule"></div>
+      <p class="lede">Three numbers carry the thesis: +0.827, +11.30, and -0.183. This page explains
+      exactly what each one is, how it is produced, how it is measured, and how a reviewer should and
+      should not read it.</p>
+
+      <h2 id="what">1. What the Student Ratings are</h2>
+      <p>The Student Rating is the thesis's proposed measurement surface: two distinct formats in
+      which a student's exposure to a broadcast is summarized, plus the engagement state that always
+      accompanies them. They are deliberately <b>not</b> the platform's broadcaster reputation score
+      (BRS); the BRS is a feature, the Student Ratings are the outcomes.</p>
+      <table class="data">
+        <thead><tr><th>Format</th><th>Scale</th><th>Source in the model</th><th>Headline delta</th></tr></thead>
+        <tbody>
+          <tr><td>SR eval</td><td>1-7</td><td>Latent credibility trajectory, calibration-shifted</td><td>+0.827 [0.779, 0.875]</td></tr>
+          <tr><td>SR comp</td><td>0-100</td><td>35-item NMLS profile, GRM-IRT scored</td><td>+11.30 [10.64, 11.95]</td></tr>
+          <tr><td>Engagement</td><td>0-1</td><td>Declared state-outcome mapping</td><td>-0.183 [-0.188, -0.178]</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="sreval">2. SR eval: the evaluative rating (1-7)</h2>
+      <p><b>What it is.</b> A seven-point evaluative judgment of the broadcast, produced inside the
+      model from the latent credibility trajectory. G0 is anchored to the measured perceived-benefit
+      mean (5.119), so the scale is tied to the real questionnaire, not free-floating.</p>
+      <p><b>The headline.</b> The epistemic-first configuration G1 raises it by
+      \(\Delta\mathrm{SR}_{\mathrm{eval}} = +0.827\) points, t(499) = 33.93, Cohen's \(d_z\) = 1.52,
+      95% interval [0.779, 0.875]. The interval describes variation across the 500 generated
+      personas, not uncertainty about humans.</p>
+      <p><b>What moves it.</b> B (diversity and cooling) contributes +0.6265; A (BRS) +0.1905;
+      B x C +0.3791. Under between-agent assignment the total falls to +0.630 [0.384, 0.851], which
+      is the interference finding.</p>
+
+      <h2 id="srcomp">3. SR comp: the competence profile (0-100)</h2>
+      <p><b>What it is.</b> A competence-format rating built from the published 35-item New Media
+      Literacy Scale (NMLS) across its four domains (functional and critical consumption and
+      prosumption), scored with the Samejima graded response model and rescaled to a 0-100 display.
+      The instrument is used as published; it is not redefined.</p>
+      <p><b>The headline.</b> \(\Delta\mathrm{SR}_{\mathrm{comp}} = +11.30\) points,
+      t(499) = 33.74, \(d_z\) = 1.51.</p>
+      <p><b>The caveat, stated plainly.</b> The responses are simulated from the GRM given each
+      persona's latent trait; no human completed the NMLS in this study. Reliability (alpha .948,
+      omega .953, ICC .953) is a property of the generating model, not human validation.</p>
+
+      <h2 id="engagement">4. Engagement: the cost, measured</h2>
+      <p><b>What it is.</b> The declared engagement mapping,</p>
+      <div class="eq">$$\mathrm{eng} = 0.74 + 0.35(e - .30) - 0.10(\mathrm{dbi} - 1) + 0.08(q - .5)$$</div>
+      <p>so engagement rises with echo and falls with chosen diversity: the very shape of the
+      trade-off. The thesis reports both the session average (-0.183) and the terminal measure
+      (-0.217), and the cost per one evaluative point is about 0.22 (0.26 terminal). The G0 value
+      falls from 0.713 to 0.530 in G1.</p>
+
+      <h2 id="scoring">5. How scoring works</h2>
+      <ol>
+        <li><b>Generate responses.</b> For each persona and battery item, responses are drawn from
+        the graded response model given the item difficulties \(b_k\) and discrimination \(a\).</li>
+        <li><b>Score the profile.</b> SR comp is the sum of expected category scores over the 35
+        NMLS items, rescaled to 0-100.</li>
+        <li><b>Shift to the anchor.</b> A single calibration shift pins the G0 evaluative mean to
+        the measured PB mean of 5.119; the same shift applies to both arms, so the delta is
+        unaffected by it.</li>
+        <li><b>Report both frameworks.</b> Frequentist paired intervals and a Bayesian one-sample
+        normal summary of the same differences are shown side by side and labeled as re-expressions,
+        not independent evidence.</li>
+      </ol>
+
+      <h2 id="interpret">6. The reviewer's interpretation guide</h2>
+      <div class="guide">
+        <div class="row head"><div class="c">Number</div><div class="c">What it means</div><div class="c">What it does NOT mean</div></div>
+        <div class="row"><div class="c">+0.827 SR eval</div><div class="c">Inside the specified model with declared weights, the epistemic-first design produces a large evaluative advantage over the engagement-first status quo.</div><div class="c">It is not a measured human effect; no student was randomized, and no field causal claim is made.</div></div>
+        <div class="row"><div class="c">[0.779, 0.875]</div><div class="c">The spread across the 500 generated personas: the contrast is uniformly positive across them.</div><div class="c">It is not a confidence interval about human students, and its narrowness does not signal certainty about the real world.</div></div>
+        <div class="row"><div class="c">+11.30 SR comp</div><div class="c">The competence profile moves meaningfully in the epistemic direction, simulated through the published NMLS.</div><div class="c">It is not evidence that human media literacy rises; the battery was not administered to people.</div></div>
+        <div class="row"><div class="c">-0.183 engagement</div><div class="c">The declared cost of the epistemic gain: the model trades audience retention for judgment quality, and the thesis foregrounds this trade-off.</div><div class="c">It is not a forecast of app churn; the mapping is a declared design assumption.</div></div>
+        <div class="row"><div class="c">+0.630 between agents</div><div class="c">The same contrast under between-agent assignment: the diversity path survives, the BRS path dilutes (+0.190 to +0.038).</div><div class="c">It is not a failure; it is the interference result that bounds what the reputation feature can promise.</div></div>
+        <div class="row"><div class="c">96.5% positive draws</div><div class="c">Across the 256-draw sweep, the contrast is almost always positive, but its size depends on one declared link (cred_dbi, PRCC +0.77).</div><div class="c">It is not a probability about the real platform; the sweep brackets the declared assumptions.</div></div>
+        <div class="row"><div class="c">t(499), d_z, p-values</div><div class="c">Conventional summaries of the paired differences over personas, reported per APA standards.</div><div class="c">They do not turn simulated differences into human evidence; the thesis follows the ASA p-value statement.</div></div>
+      </div>
+
+      <h2 id="misreadings">7. Common misreadings to avoid</h2>
+      <ul>
+        <li>"The platform improves student judgment by 0.83 points." No: the model implies a contrast under declared assumptions; the human claim is explicitly future work.</li>
+        <li>"The narrow interval proves robustness." No: it reflects deterministic simulation given the seed and persona count.</li>
+        <li>"Reliability high, so the scales are valid." No: the CFA fit was poor, and structural validity is not claimed.</li>
+        <li>"Engagement fell, so the design fails." No: the trade-off is the contribution; both sides are reported as the result to manage.</li>
+      </ul>
+
+      <div class="callout">Every number on this page is model-conditional unless its tier says otherwise.
+      The <a href="quality.html">Quality page</a> holds the full ledger; the
+      <a href="interactive/stats.html">inference animation</a> shows the two frameworks accumulate
+      the same +0.827 live.</div>
+      <p><a class="btn" href="pipeline.html">How the pipeline produces them &rarr;</a>
+      <a class="btn" href="framework.html">Where they sit in the framework &rarr;</a></p>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>All model-based numbers are conditional on the stated design and are not human treatment effects.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="quality.html">Research quality</a></li><li><a href="blueprint.html">Platform blueprint</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>

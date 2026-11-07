@@ -1,0 +1,126 @@
+{
+ "legacy": [
+  {
+   "file": "legacy/FGD_Analysis_Notebook.ipynb",
+   "title": "FGD_Analysis_Notebook",
+   "purpose": "Notebook file was truncated in the archive; its raw JSON is preserved for reference.",
+   "cells": 0,
+   "code_cells": 0,
+   "legacy": true,
+   "badges": [
+    "legacy",
+    "truncated"
+   ]
+  },
+  {
+   "file": "legacy/FGD_Colab_Ready.ipynb",
+   "title": "Focus Group Discussion — GPU transcription and analysis",
+   "purpose": "Set Colab runtime to **T4 GPU**, then run the cells in order. The ZIP download includes the mastered compact `audio.wav`, transcript, Q&A/themes report, CSV, JSON and DOCX. Silence >1.2 seconds is reduced to 0.35 seconds; timestamps refer to compact audio. Audio sources have no visual frames: video ",
+   "cells": 7,
+   "code_cells": 6,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/FGD_LOKLOK_GroundTruth_Bridge_Colab.ipynb",
+   "title": "LOKLOK-compatible FGD ground-truth candidate (Drive-native)",
+   "purpose": "Run **after** `FGD_Multimodal_Masters_Thesis_Colab_FINAL.ipynb`. It reads the FGD package ZIP that the FGD notebook saved on your Drive (`FGD_DIR/FGD_COMPLETE_OUTPUT/FGD_THESIS_PACKAGE.zip`) and emits a structurally compatible but **review-blocked** `fgd-s2/session.json` package. The candidate is de",
+   "cells": 4,
+   "code_cells": 3,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/FGD_Multimodal_Masters_Thesis_Colab.ipynb",
+   "title": "Multimodal Focus Group Discussion: Master’s Thesis Analysis",
+   "purpose": "Upload the original MP4 to retain video + audio evidence. Run with Colab T4 GPU. The notebook produces a clearly labeled machine-assisted, human-validation-required thesis working package. It samples video frames for observable interaction/context, not identity or emotion inference; speaker labels a",
+   "cells": 2,
+   "code_cells": 1,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/FGD_Multimodal_Masters_Thesis_Colab_FINAL.ipynb",
+   "title": "Step 9 — Package everything into a DOCX + ZIP on your Drive",
+   "purpose": "Runs the full focus-group workflow against the recording stored in your Google Drive: **Drive source → audio mastering → faster-whisper large-v3 transcription → optional PyAnnote speaker diarization → optional Qwen-VL frame captions → Qwen2.5-3B thematic analysis → thesis report → DOCX + ZIP saved o",
+   "cells": 22,
+   "code_cells": 11,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/FGD_Multimodal_Masters_Thesis_Colab_FIXED (2).ipynb",
+   "title": "Step 8 — Package everything into a downloadable zip",
+   "purpose": "**What changed vs. your previous version (and why it kept failing):** 1. **Removed the Python 3.10 / Miniconda downgrade.** The `wget -qO miniconda.sh https://anaconda.com` line was not a real installer URL, and rebuilding a parallel Python inside a live Colab runtime is fragile and unnecessary — Co",
+   "cells": 22,
+   "code_cells": 12,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/LOKLOK_LLM_Extension_Gated_Colab.ipynb",
+   "title": "LOKLOK LLM extension — gated Colab execution",
+   "purpose": "This notebook never bypasses the project’s approval gate. It runs safe tests by default and exports an integration-ready results candidate only after a researcher has explicitly opened every gate in a separate, sanitized working copy.",
+   "cells": 5,
+   "code_cells": 4,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/LOKLOK_Qual_Colab_T4.ipynb",
+   "title": "How to read the results (and what not to claim)",
+   "purpose": "**What this notebook does** 1. Cleans the two transcripts (FGD, self-report) and flags noise, repeated fragments and moderator speech. 2. Codes every usable segment with a 25-code codebook using a **local** open model (no text leaves Colab). 3. Verifies every evidence quote against the source text (",
+   "cells": 14,
+   "code_cells": 12,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/SocialMedia_Platform_GroundTruth_Kaggle.ipynb",
+   "title": "Done — integration next steps (see generated `README.md`)",
+   "purpose": "Automatic discovery + ingestion of **all available social-media platform datasets** on Kaggle (X/Twitter, Reddit, YouTube, Instagram, Facebook, TikTok, Discord, Telegram, LinkedIn, general), coded through the thesis codebook into aggregated ground-truth anchors compatible with `governance/corpus.py`",
+   "cells": 13,
+   "code_cells": 9,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/selfreport_ground_truth.ipynb",
+   "title": "How to read the outputs (paste-ready orientation)",
+   "purpose": "**Thesis:** *The Social Media Radio Innovation and Its Impact on University Students' Ratings* **Researcher:** Sherif Mohamed Abd Elmonem Rashwan (Teaching Assistant, Radio & TV, ACU) **Framework:** Epistemic Systems Theory (EST) · **Platform:** LOKLOK **Evidence role:** this notebook turns a record",
+   "cells": 22,
+   "code_cells": 20,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  },
+  {
+   "file": "legacy/uber_ground_truth.ipynb",
+   "title": "How to read the outputs (paste-ready orientation)",
+   "purpose": "**Thesis:** *The Social Media Radio Innovation and Its Impact on University Students' Ratings* **Researcher:** Sherif Mohamed Abd Elmonem Rashwan (Teaching Assistant, Radio & TV, ACU) **Framework:** Epistemic Systems Theory (EST) · **Platform:** LOKLOK **Evidence role:** this notebook turns the **Ub",
+   "cells": 21,
+   "code_cells": 19,
+   "legacy": true,
+   "badges": [
+    "legacy"
+   ]
+  }
+ ]
+}
