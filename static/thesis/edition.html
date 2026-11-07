@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The interactive edition of the LOKLOK thesis: linked citations, section jumps, and searchable chapters.">
+<title>Interactive Edition | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<style>
+body.ed{margin:0;background:#EFE9DD;font-family:var(--sans);color:var(--ink);}
+.ed .topbar2{background:var(--crimson-dark);color:#fff;border-bottom:3px solid var(--gold);}
+.ed .topbar2 .in{max-width:1200px;margin:0 auto;padding:9px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+.ed .topbar2 a{color:#fff;font-size:13px;text-decoration:none;}
+.ed .topbar2 a:hover{text-decoration:underline;}
+.ed .topbar2 .brand{font-family:var(--serif);font-size:17px;font-weight:700;}
+.ed .layout{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:300px 1fr;gap:0;background:var(--paper);min-height:calc(100vh - 120px);}
+.ed .toc{background:#FBF8F3;border-right:1px solid var(--line);padding:12px 10px 60px;position:sticky;top:0;height:calc(100vh - 60px);overflow:auto;align-self:start;}
+.ed .toc input{width:100%;padding:7px 10px;border:1px solid var(--line);font-size:13px;margin-bottom:8px;background:#fff;}
+.ed .toc .ch{display:block;font-size:13px;color:var(--slate);padding:6px 8px;cursor:pointer;border-left:2px solid transparent;}
+.ed .toc .ch:hover{background:var(--paper-2);}
+.ed .toc .ch.cur{color:var(--crimson-dark);font-weight:700;border-left-color:var(--crimson);background:#F5EFE3;}
+.ed .article{padding:26px 34px 80px;max-width:820px;}
+.ed .article h1{font-family:var(--serif);font-size:30px;margin:0 0 6px;}
+.ed .article .meta{font-size:12.5px;color:var(--muted);margin-bottom:18px;}
+.ed .article p{font-size:16.5px;line-height:1.72;margin:0 0 14px;color:#2A3140;}
+.ed .article .cite{color:var(--crimson-dark);text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer;}
+.ed .article .seclink{color:var(--crimson-dark);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold);}
+.ed .article .figlink{color:var(--crimson-dark);font-weight:600;text-decoration:none;border-bottom:1px dashed var(--gold);}
+.ed .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 18px;}
+.ed .toolbar button{font-size:12.5px;border:1px solid var(--crimson);background:#fff;color:var(--crimson-dark);padding:5px 12px;cursor:pointer;}
+.ed .toolbar button:hover{background:var(--crimson);color:#fff;}
+.pop{position:fixed;z-index:70;background:#fff;border:1px solid var(--line-dark);border-left:4px solid var(--crimson);
+  box-shadow:0 8px 24px rgba(15,30,50,.25);max-width:400px;padding:14px 16px;font-size:13px;line-height:1.55;display:none;}
+.pop .pt{font-weight:700;color:var(--crimson-dark);margin-bottom:4px;}
+.pop .abs{color:var(--slate);margin-top:6px;border-top:1px dashed var(--line);padding-top:6px;}
+.pop a{font-size:12px;font-weight:700;}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--crimson);width:0;z-index:80;}
+@media (max-width:900px){.ed .layout{grid-template-columns:1fr;}.ed .toc{position:static;height:auto;max-height:260px;}}
+</style>
+</head>
+<body class="ed">
+<div class="progress" id="prog"></div>
+<header class="topbar2">
+  <div class="in">
+    <span class="brand">LOKLOK &middot; Interactive Edition</span>
+    <a href="index.html">Thesis home</a>
+    <a href="read/">Page-by-page reader</a>
+    <a href="references.html">Reference shelf</a>
+    <a href="thesis_final.pdf">PDF</a>
+    <a href="edition.html#formats">Formats</a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="toc">
+    <input id="q" type="search" placeholder="Find a section..." aria-label="Find a section">
+    <div id="chapters"></div>
+  </aside>
+  <main class="article">
+    <div class="toolbar" id="toolbar" style="display:none;">
+      <button id="prev">&#8592; Prev</button>
+      <button id="next">Next &#8594;</button>
+      <button id="bigger">A+</button>
+      <button id="smaller">A-</button>
+      <a class="btn" id="pdfpage" style="padding:5px 12px;font-size:12.5px;" href="read/" target="_blank" rel="noopener">Open in PDF reader</a>
+    </div>
+    <h1 id="title"></h1>
+    <div class="meta" id="meta"></div>
+    <div id="content"></div>
+  </main>
+</div>
+
+<div class="pop" id="pop" role="tooltip"></div>
+
+<section id="formats" style="max-width:1200px;margin:0 auto;padding:30px 34px 60px;background:var(--paper);border-top:3px double var(--crimson-dark);">
+  <h2 style="font-family:var(--serif);font-size:24px;">The interactive formats, and why they exist</h2>
+  <table class="data" style="max-width:900px;">
+    <thead><tr><th>Format</th><th>What it gives you</th><th>Who requires it</th></tr></thead>
+    <tbody>
+      <tr><td><a href="edition.html">Interactive edition (this page)</a></td><td>Linked author-year citations with hover abstracts, Section and Figure jumps into the PDF reader, chapter search, font controls</td><td>Readers and reviewers</td></tr>
+      <tr><td><a href="downloads/thesis_jats.xml">JATS XML</a></td><td>The NLM Journal Publishing 1.3 XML with front matter, full body, and a reference list with DOIs: the machine-readable scholarly record</td><td>PubMed Central, Springer, Elsevier, PLOS, many journal submission systems</td></tr>
+      <tr><td><a href="downloads/loklok_thesis.epub">EPUB3</a></td><td>A reflowable book edition with a linked table of contents: readable on any e-reader, phone, or screen reader</td><td>Accessibility and e-book distribution</td></tr>
+      <tr><td><a href="thesis_final.pdf">The PDF, hyperlinked and archived</a></td><td>912 internal links, 311 bookmarks, and full document metadata (title, author, subject, keywords) as required for archival deposit</td><td>University libraries, ProQuest-style depositories, print-on-demand</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:14px;color:var(--slate);">Citation popovers come from the <a href="references.html">reference shelf</a>; section jumps use the
+  <a href="read/">page-by-page reader</a>. The JATS file follows the Journal Publishing DTD with a full ref-list, so a
+  publisher can ingest it directly into their submission system.</p>
+</section>
+
+<script src="js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var MANIFEST = null, REFS = null, REFMAP = {}, cur = null, fs = 16.5;
+  var pop = document.getElementById('pop');
+  var content = document.getElementById('content');
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  function popAt(e, html) {
+    pop.innerHTML = html;
+    pop.style.display = 'block';
+    var w = pop.offsetWidth, h = pop.offsetHeight;
+    var x = Math.min(window.innerWidth - w - 14, Math.max(10, e.clientX + 12));
+    var y = Math.min(window.innerHeight - h - 14, Math.max(10, e.clientY + 14));
+    pop.style.left = x + 'px'; pop.style.top = y + 'px';
+  }
+  document.addEventListener('click', function (e) { if (!pop.contains(e.target) && !e.target.classList.contains('cite')) pop.style.display = 'none'; });
+
+  function buildRefMap() {
+    REFMAP = {};
+    REFS.forEach(function (r) {
+      var last = r.last.replace(/,$/, '').split(' ')[0];
+      var key = last.toLowerCase() + '|' + r.year;
+      (REFMAP[key] = REFMAP[key] || []).push(r);
+    });
+  }
+
+  function enhance(text) {
+    var html = esc(text);
+    /* author-year citations */
+    html = html.replace(/([A-Z][A-Za-z'\-]+)( et al\.)?,? \((\d{4})\)/g, function (m, name, etal, yr) {
+      var key = name.toLowerCase() + '|' + yr;
+      var cands = REFMAP[key] || [];
+      if (!cands.length) return m;
+      var title = cands.length === 1 ? cands[0].text : cands.length + ' entries for ' + name + ' (' + yr + '): ' + cands.map(function (c) { return c.last + ', ' + c.year; }).join('; ');
+      return '<a class="cite" tabindex="0" data-refs="' + esc(key) + '" title="' + esc(title) + '">' + m + '</a>';
+    });
+    /* section links */
+    html = html.replace(/Section\s+(\d+(?:\.\d+)+)/g, function (m, num) {
+      var page = (MANIFEST.sections || {})[num];
+      if (!page) return m;
+      return '<a class="seclink" href="read/?p=' + page + '" target="_blank" rel="noopener" title="Open Section ' + num + ' in the PDF reader (page ' + page + ')">' + m + '</a>';
+    });
+    /* figure and table links */
+    html = html.replace(/(Figure|Table)\s+(\d+(?:\.\d+)?)/g, function (m, kind, num) {
+      var href = kind === 'Figure' ? 'results.html#figures' : 'results.html#triangulation';
+      return '<a class="figlink" href="' + href + '" target="_blank" rel="noopener" title="See ' + kind + ' ' + num + ' on the results page">' + m + '</a>';
+    });
+    /* appendix links */
+    html = html.replace(/Appendix\s+([A-Z])/g, function (m, letter) {
+      var ch = MANIFEST.chapters.find(function (c) { return c.title.toUpperCase().indexOf('APPENDIX') >= 0 && c.title[0] === letter; });
+      if (!ch) return m;
+      return '<a class="seclink" href="read/?p=' + ch.page + '" target="_blank" rel="noopener">' + m + '</a>';
+    });
+    return html;
+  }
+
+  function loadChapter(id) {
+    cur = id;
+    fetch('data/edition/' + id + '.json').then(function (r) { return r.json(); }).then(function (d) {
+      document.getElementById('title').textContent = d.title;
+      document.getElementById('meta').textContent = 'Pages ' + d.page + ' onward &middot; interactive edition with linked citations and sections';
+      var out = '';
+      d.paragraphs.forEach(function (p) { out += '<p>' + enhance(p) + '</p>'; });
+      content.innerHTML = out;
+      document.getElementById('toolbar').style.display = 'flex';
+      document.getElementById('pdfpage').href = 'read/?p=' + d.page;
+      document.querySelectorAll('.toc .ch').forEach(function (a) { a.classList.toggle('cur', a.dataset.id === id); });
+      document.getElementById('prog').style.width = '4%';
+      window.scrollTo(0, 0);
+    });
+  }
+
+  fetch('data/edition_manifest.json').then(function (r) { return r.json(); }).then(function (m) {
+    MANIFEST = m;
+    var box = document.getElementById('chapters');
+    m.chapters.forEach(function (c) {
+      var a = document.createElement('a');
+      a.className = 'ch'; a.dataset.id = c.id; a.textContent = c.title;
+      a.href = '#';
+      a.addEventListener('click', function (e) { e.preventDefault(); loadChapter(c.id); });
+      box.appendChild(a);
+    });
+    document.getElementById('q').addEventListener('input', function () {
+      var q = this.value.toLowerCase();
+      box.querySelectorAll('.ch').forEach(function (a) { a.style.display = a.textContent.toLowerCase().indexOf(q) >= 0 ? '' : 'none'; });
+    });
+    document.getElementById('prev').addEventListener('click', function () {
+      var i = m.chapters.findIndex(function (c) { return c.id === cur; });
+      if (i > 0) loadChapter(m.chapters[i - 1].id);
+    });
+    document.getElementById('next').addEventListener('click', function () {
+      var i = m.chapters.findIndex(function (c) { return c.id === cur; });
+      if (i >= 0 && i < m.chapters.length - 1) loadChapter(m.chapters[i + 1].id);
+    });
+    document.getElementById('bigger').addEventListener('click', function () { fs += 1; applySize(); });
+    document.getElementById('smaller').addEventListener('click', function () { fs = Math.max(13, fs - 1); applySize(); });
+    loadChapter(m.chapters[6].id);
+  });
+
+  function applySize() {
+    document.querySelectorAll('.article p').forEach(function (p) { p.style.fontSize = fs + 'px'; });
+  }
+
+  fetch('data/references.json').then(function (r) { return r.json(); }).then(function (d) {
+    REFS = d.refs; buildRefMap();
+  });
+
+  document.addEventListener('click', function (e) {
+    if (e.target.classList && e.target.classList.contains('cite')) {
+      var key = e.target.getAttribute('data-refs');
+      var cands = REFMAP[key] || [];
+      if (!cands.length) return;
+      var inner = cands.map(function (c) {
+        return '<div class="pt">' + esc(c.first) + ' (' + c.year + ')</div><div>' + esc(c.text) + '</div>' +
+          (c.abstract ? '<div class="abs"><b>Abstract.</b> ' + esc(c.abstract) + '</div>' : '') +
+          (c.url ? '<div style="margin-top:6px;"><a href="' + esc(c.url) + '" target="_blank" rel="noopener">Open source &rarr;</a></div>' : '') +
+          '<div style="margin-top:4px;"><a href="references.html" target="_blank" rel="noopener">Open in the reference shelf &rarr;</a></div>';
+      }).join('<hr style="border:none;border-top:1px dashed var(--line);margin:8px 0;">');
+      popAt(e, inner);
+    }
+  });
+})();
+</script>
+</body>
+</html>

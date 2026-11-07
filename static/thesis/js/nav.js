@@ -18,6 +18,7 @@
     { id: 'algorithms', label: 'Algorithms', href: 'algorithms.html' },
     { id: 'blueprint', label: 'Blueprint', href: 'blueprint.html' },
     { id: 'quality', label: 'Quality', href: 'quality.html' },
+    { id: 'edition', label: 'Interactive Edition', href: 'edition.html' },
     { id: 'references', label: 'References', href: 'references.html' },
     { id: 'downloads', label: 'Downloads', href: 'downloads.html' },
     { id: 'university', label: 'University &amp; People', href: 'university.html' },
