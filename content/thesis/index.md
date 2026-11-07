@@ -25,8 +25,8 @@ November 2026
 ## Read the full thesis
 
 - [**Read the full thesis page by page**](read/) ? all 355 pages in the browser.
-- [Complete thesis PDF](thesis_final.pdf) — 355 pages, 39/39 package checks passed.
-- [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) — 21 pages, English first, Arabic second.
+- [Complete thesis PDF](thesis_final.pdf) - 355 pages, 39/39 package checks passed.
+- [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) - 21 pages, English first, Arabic second.
 - [English summary](Supervisor_Summary_EN.pdf)
 - [Arabic summary](Supervisor_Summary_AR.pdf)
 - [Thesis code and notebooks](downloads/loklok_code.zip)
@@ -39,11 +39,13 @@ The 52-student wave is measured, cross-sectional, and descriptive. The 500 perso
 
 ## Abstract
 
-The thesis asks whether a social-media radio platform can improve the epistemic quality of what students hear, trust, and learn without destroying engagement. It develops Epistemic Systems Theory (EST), specifies the LOKLOK platform, and evaluates the theory in two evidence streams: a measured wave of 52 university students who used Uber in 6th of October City, and a reproducible calibrated in-silico experiment built from the field wave, focus-group material, a document corpus, and participant observation.
+This thesis asks whether the design of a social media radio platform can improve how university students judge what they hear, without losing the audience. It proposes LOKLOK, a platform built on four ideas: a reputation score for broadcasters, recommendations constrained to keep viewpoints varied, moderation with prompts for reflection, and a built-in measurement surface. Epistemic Systems Theory is offered as the framework that links these design choices to audience judgment.
 
-The model comparison is a within-persona \(2^3\) design: 500 personas, eight A/B/C cells, 18 sessions per cell, eight mathematical filters, a Zewail-inspired attention gate, and a GRM-IRT measurement model. The central finding is an epistemic–engagement trade-off, not universal superiority: the model produces a large evaluative and competence-format gain at a measurable engagement cost.
+A live trial was not possible, so the evidence has three layers. The measured layer is a questionnaire completed by 52 students (60 were collected and 8 were removed) who were riding Uber in 6th of October City, Giza. Perceived benefit averaged 5.12 on a seven-point scale (SD = 0.87) and correlated with the overall star rating (rho = .67). The credibility and perceived-benefit scales were both reliable (alpha = .96 and .95), but the factor model fitted poorly, so no claim of structural validity is made. The qualitative layer, a group-session transcript and a researcher's self-report, was used to check assumptions and contains little participant speech about the mechanisms themselves. The modelling layer is a calibrated in-silico experiment: 500 synthetic personas, drawn from the debiased distribution anchored in the 52 respondents, were run through eight combinations of three design components over 18 listening sessions, with the status-quo arm anchored to the measured mean.
 
----
+In this model the full design raised the evaluative rating by 0.83 points (95% interval 0.78 to 0.88) and a competence-format rating by 11.3 points on a 100-point scale, while engagement fell by 0.18 on a 0 to 1 scale. Most of the gain came from the diversity component, with moderation contributing mainly through its interaction with it. Across 256 draws that varied the assumed weights and mechanism parameters, the contrast was positive in 96.5% of cases but ranged from -0.24 to +1.81, and it depended chiefly on one declared link between exposure diversity and credibility.
+
+These are model-based implications, not treatment effects. The sample is a convenience sample, and no field causal test is claimed. The thesis contributes an explicit route from theory to a testable platform design, and a plan for a real deployment.
 
 ## Key results
 
@@ -199,12 +201,12 @@ The defensible conclusion is that architecture, audience judgment, and measureme
 
 ### 8.1 What is in the package
 
-- `thesis_final.pdf` — complete thesis.
-- `Supervisor_Summary_EN_AR.pdf` — bilingual review summary.
-- `downloads/loklok_code.zip` — pipeline, R scripts, platform reference, and Colab notebooks.
-- `downloads/loklok_data.zip` — measured data, raw survey/FGD files, self-report transcript, and model outputs.
-- `downloads/loklok_figures.zip` — all figures and plotting data.
-- `figures/` — individually browsable figures on this page.
+- `thesis_final.pdf` - complete thesis.
+- `Supervisor_Summary_EN_AR.pdf` - bilingual review summary.
+- `downloads/loklok_code.zip` - pipeline, R scripts, platform reference, and Colab notebooks.
+- `downloads/loklok_data.zip` - measured data, raw survey/FGD files, self-report transcript, and model outputs.
+- `downloads/loklok_figures.zip` - all figures and plotting data.
+- `figures/` - individually browsable figures on this page.
 
 ### 8.2 Exact reproduction steps
 
