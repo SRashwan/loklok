@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LOKLOK Thesis — Full Reader</title>
+<title>LOKLOK Thesis â€” Full Reader</title>
 <style>
   :root { --ink:#1f2328; --muted:#606a76; --line:#d8dee6; --paper:#ffffff; --soft:#f4f6f8; --accent:#1f4e79; }
   * { box-sizing: border-box; }
@@ -40,15 +40,15 @@
 </head>
 <body>
 <header>
-  <h1>LOKLOK Thesis — Full Reader</h1>
+  <h1>LOKLOK Thesis â€” Full Reader</h1>
   <a class="btn" href="../">Thesis overview</a>
   <a class="btn" href="../thesis_final.pdf">Download PDF</a>
   <button id="titlePage" type="button">Title page</button>
   <div class="spacer"></div>
-  <button id="prev" type="button">← Previous</button>
+  <button id="prev" type="button">â† Previous</button>
   <input id="pageInput" type="number" min="1" value="1" aria-label="Page number" style="width:78px">
   <button id="go" type="button">Go</button>
-  <button id="next" type="button">Next →</button>
+  <button id="next" type="button">Next â†’</button>
 </header>
 <div class="layout">
   <aside>
@@ -57,8 +57,8 @@
   </aside>
   <main class="main">
     <div class="toolbar">
-      <span class="pageinfo" id="pageInfo">Page 1 of 355</span>
-      <span class="hint">Use ← → keys to move. The page list follows the PDF bookmarks.</span>
+      <span class="pageinfo" id="pageInfo">Page 1 of 358</span>
+      <span class="hint">Use â† â†’ keys to move. The page list follows the PDF bookmarks.</span>
     </div>
     <div class="chapter" id="chapter"></div>
     <div class="stage">
@@ -68,7 +68,7 @@
   </main>
 </div>
 <script>
-const TOTAL = 355;
+const TOTAL = 358;
 const IMG = (n) => `../pages/page-${String(n).padStart(3,'0')}.webp`;
 let manifest = null;
 let current = 1;
@@ -87,7 +87,7 @@ function setPage(n, push=true){
   document.getElementById('pageInfo').textContent = `Page ${current} of ${TOTAL}`;
   const t = nearestTitle(current);
   document.getElementById('chapter').textContent = t;
-  document.getElementById('caption').textContent = t ? `PDF page ${current} — ${t}` : `PDF page ${current}`;
+  document.getElementById('caption').textContent = t ? `PDF page ${current} â€” ${t}` : `PDF page ${current}`;
   document.getElementById('pageImage').alt = `Thesis page ${current}${t?': '+t:''}`;
   if(push) history.replaceState(null,'',`?page=${current}`);
   document.getElementById('pageImage').scrollIntoView({block:'start', behavior:'smooth'});
@@ -122,3 +122,4 @@ document.addEventListener('keydown', (e)=>{ if(e.target.tagName==='INPUT') retur
 </script>
 </body>
 </html>
+

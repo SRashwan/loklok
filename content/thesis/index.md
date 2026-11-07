@@ -1,4 +1,4 @@
----
+﻿---
 title: "LOKLOK Thesis"
 description: "The Social Media Radio Innovation and Its Impact on University Students' Ratings: An Exploratory Study"
 tags: ["Thesis", "LOKLOK", "Social Media Radio", "EST", "ABM"]
@@ -24,8 +24,8 @@ November 2026
 
 ## Read the full thesis
 
-- [**Read the full thesis page by page**](read/) ? all 355 pages in the browser.
-- [Complete thesis PDF](thesis_final.pdf) - 355 pages, 39/39 package checks passed.
+- [**Read the full thesis page by page**](read/) ? all 358 pages in the browser.
+- [Complete thesis PDF](thesis_final.pdf) - 358 pages, 41/41 package checks passed.
 - [Bilingual supervisor summary PDF](Supervisor_Summary_EN_AR.pdf) - 21 pages, English first, Arabic second.
 - [English summary](Supervisor_Summary_EN.pdf)
 - [Arabic summary](Supervisor_Summary_AR.pdf)
@@ -41,11 +41,15 @@ The 52-student wave is measured, cross-sectional, and descriptive. The 500 perso
 
 This thesis asks whether the design of a social media radio platform can improve how university students judge what they hear, without losing the audience. It proposes LOKLOK, a platform built on four ideas: a reputation score for broadcasters, recommendations constrained to keep viewpoints varied, moderation with prompts for reflection, and a built-in measurement surface. Epistemic Systems Theory is offered as the framework that links these design choices to audience judgment.
 
-A live trial was not possible, so the evidence has three layers. The measured layer is a questionnaire completed by 52 students (60 were collected and 8 were removed) who were riding Uber in 6th of October City, Giza. Perceived benefit averaged 5.12 on a seven-point scale (SD = 0.87) and correlated with the overall star rating (rho = .67). The credibility and perceived-benefit scales were both reliable (alpha = .96 and .95), but the factor model fitted poorly, so no claim of structural validity is made. The qualitative layer, a group-session transcript and a researcher's self-report, was used to check assumptions and contains little participant speech about the mechanisms themselves. The modelling layer is a calibrated in-silico experiment: 500 synthetic personas, drawn from the debiased distribution anchored in the 52 respondents, were run through eight combinations of three design components over 18 listening sessions, with the status-quo arm anchored to the measured mean.
+A live trial was not possible, so the evidence has three layers. The measured layer is a questionnaire completed by 52 students (60 were collected and 8 were removed) who were riding Uber in 6th of October City, Giza. Perceived benefit averaged 5.12 on a seven-point scale (SD = 0.87) and correlated with the overall star rating (rho = .67). The credibility and perceived-benefit scales were both reliable (alpha = .96 and .95), but the factor model fitted poorly, so no claim of structural validity is made. The qualitative layer, a group-session transcript and a researcher's self-report, was used to check assumptions and contains little participant speech about the mechanisms themselves. Three independent coders labelled 193 segments with pairwise Cohen's kappa of .76 to .86, but a local 7B model (micro-F1 .19) and a first-pass assistant coding (.45) did not reach the code-level reliability gate for any mechanism code; the qualitative layer therefore remains an assumption audit rather than model evidence. The modelling layer is a calibrated in-silico experiment: 500 synthetic personas, drawn from the debiased distribution anchored in the 52 respondents, were run through eight combinations of three design components over 18 listening sessions, with the status-quo arm anchored to the measured mean.
 
 In this model the full design raised the evaluative rating by 0.83 points (95% interval 0.78 to 0.88) and a competence-format rating by 11.3 points on a 100-point scale, while engagement fell by 0.18 on a 0 to 1 scale. Most of the gain came from the diversity component, with moderation contributing mainly through its interaction with it. Across 256 draws that varied the assumed weights and mechanism parameters, the contrast was positive in 96.5% of cases but ranged from -0.24 to +1.81, and it depended chiefly on one declared link between exposure diversity and credibility.
 
 These are model-based implications, not treatment effects. The sample is a convenience sample, and no field causal test is claimed. The thesis contributes an explicit route from theory to a testable platform design, and a plan for a real deployment.
+
+## Qualitative machine-coding audit
+
+Three independent human coders labelled 193 usable FGD/self-report segments on a 25-code codebook. Pairwise Cohen's kappa was .762, .852, and .861, and the majority label formed the human gold. The local Qwen2.5-7B V1 pass reached micro-F1 .189, and 30.2% of its evidence quotes were not exact substrings of the source. A first-pass Claude coding reached micro-F1 .452, with I01 and I07 usable and C12, I03, I06, and I13 descriptive only. No mechanism code C01 to C05 passed the pre-specified usability gate: C05 was the only one with eight reference positives, and it was dropped at kappa .259 for Qwen and .390 for Claude. E1 to E3 were therefore not run. The qualitative layer remains an assumption audit and candidate design vocabulary, not a calibration target or an input to the simulated contrast.
 
 ## Key results
 
@@ -53,14 +57,14 @@ These are model-based implications, not treatment effects. The sample is a conve
 |---|---:|---:|---|
 | \(\Delta\mathrm{SR}_{\mathrm{eval}}\) | **+0.827** | [0.779, 0.875] | \(t(499)=33.93\), \(p<.001\), \(d_z=1.52\) |
 | \(\Delta\mathrm{SR}_{\mathrm{comp}}\) | **+11.30** | [10.64, 11.95] | \(t(499)=33.74\), \(p<.001\), \(d_z=1.51\) |
-| \(\Delta\) engagement | **−0.183** | [−0.188, −0.178] | \(t(499)=−74.41\), \(p<.001\), \(d_z=−3.33\) |
+| \(\Delta\) engagement | **âˆ’0.183** | [âˆ’0.188, âˆ’0.178] | \(t(499)=âˆ’74.41\), \(p<.001\), \(d_z=âˆ’3.33\) |
 | Bayesian \(\Delta\mathrm{SR}_{\mathrm{eval}}\) | +0.8265 | HDI [0.7793, 0.8764] | normal summary, not independent evidence |
 | 256-point joint sweep | median +0.567 | IQR [0.383, 0.802] | 96.5% positive; default at 78.5th percentile |
 | Anchor bootstrap | +0.839 | [0.805, 0.884] | 50 resamples; 100% positive |
 | 60-row sensitivity | +0.808 | [0.760, 0.856] | exclusion rule changes magnitude only |
 | Gemini persona pilot | +2.650 | [2.342, 2.967] | single-shot appraisal; not 18-session simulation |
 
-Main effects: A **+0.1905**, B **+0.6265**, C **−0.0121**; B×C **+0.3791**. The diversity-seeking path dominates. The top joint-sweep driver is `cred_dbi` (PRCC +0.77), not BRS or echo. The negative `cred_echo` PRCC is a sign convention because the weight itself is negative.
+Main effects: A **+0.1905**, B **+0.6265**, C **âˆ’0.0121**; BÃ—C **+0.3791**. The diversity-seeking path dominates. The top joint-sweep driver is `cred_dbi` (PRCC +0.77), not BRS or echo. The negative `cred_echo` PRCC is a sign convention because the weight itself is negative.
 
 ---
 
@@ -89,7 +93,7 @@ Hypotheses: H1 structural credibility, H2 diversity mechanism, H3 psychometric v
 
 | Proposition | Hypothesis | Evidence in this thesis | Verdict |
 |---|---|---|---|
-| EST-P1: architecture shapes structural credibility | H1, H4, H5 | Measured PB–star and BRS associations; model BRS path; no field randomisation | Partial; model-conditional, not a field causal claim |
+| EST-P1: architecture shapes structural credibility | H1, H4, H5 | Measured PBâ€“star and BRS associations; model BRS path; no field randomisation | Partial; model-conditional, not a field causal claim |
 | EST-P2: diversity and cooling | H2 | MORE/Lagrange is the dominant model path; cooling and echo terms implemented; topology check is network-independent | Supported within the model; field mechanism untested |
 | EST-P3: measurement accountability | H3 | High internal consistency; poor single-factor CFA; invariance not estimated | Mixed: reliability supported, structural validity not established |
 | EST-P4: participatory performance | H7 | Prospective claim-appraisal task; no human task data | Untested; future study required |
@@ -100,7 +104,7 @@ In short: H1 is partially supported but not identified as a field effect; H2 is 
 
 ## 3. Data and measurement
 
-The measured wave began with 60 raw questionnaires. A 21-field duplicate screen removed eight duplicate vectors, leaving 52 analysis records. The instrument contains an 11-item broadcaster-rating battery (BRS), a five-item perceived-benefit battery (PB), a star rating, ride duration, interaction level, and context items. Internal consistency is high (BRS α=.957, PB α=.947, ω=.964/.962), but the single-factor CFA fit is poor. Reliability and validity are reported separately.
+The measured wave began with 60 raw questionnaires. A 21-field duplicate screen removed eight duplicate vectors, leaving 52 analysis records. The instrument contains an 11-item broadcaster-rating battery (BRS), a five-item perceived-benefit battery (PB), a star rating, ride duration, interaction level, and context items. Internal consistency is high (BRS Î±=.957, PB Î±=.947, Ï‰=.964/.962), but the single-factor CFA fit is poor. Reliability and validity are reported separately.
 
 The qualitative stream contains a 160-segment FGD transcript, a 185-segment self-report transcript, 60 participant-observation accounts, 4,828 corpus documents, and 25 programme briefs. The 52 retained records supply 31 quantitative features; the semantic block supplies 167 features; the total is 198.
 
@@ -112,9 +116,9 @@ The process is: assemble 5,258 document texts; clean and truncate each text to t
 
 ### 3.2 Embedding and latent-space diagnostics
 
-The 5,258 vectors are unit length. The first two principal components explain 44.9% of the variance (36.9% and 8.0%). Within-stream cosine similarity is highest for participant observation (0.785), followed by stimuli (0.568), corpora (0.559), FGD (0.531), and self-report (0.466). Cross-stream similarity is lower (0.38–0.48), and the cosine silhouette is 0.196: moderate, not clean, separation.
+The 5,258 vectors are unit length. The first two principal components explain 44.9% of the variance (36.9% and 8.0%). Within-stream cosine similarity is highest for participant observation (0.785), followed by stimuli (0.568), corpora (0.559), FGD (0.531), and self-report (0.466). Cross-stream similarity is lower (0.38â€“0.48), and the cosine silhouette is 0.196: moderate, not clean, separation.
 
-The six-axis manifold is a debiasing coordinate system, not a six-factor psychological model. For the 52 anchors, the covariance condition number is 4.815 and the largest absolute off-diagonal correlation is 0.434. The first two principal components explain 49.9% of the latent variance. Mean within-university distance is 3.211 and mean between-university distance is 3.295 (ratio 0.974): university labels do not separate the anchors. The 500 personas are draws from the fitted Q₀; the figure shows the 52 anchors, not 500 respondents.
+The six-axis manifold is a debiasing coordinate system, not a six-factor psychological model. For the 52 anchors, the covariance condition number is 4.815 and the largest absolute off-diagonal correlation is 0.434. The first two principal components explain 49.9% of the latent variance. Mean within-university distance is 3.211 and mean between-university distance is 3.295 (ratio 0.974): university labels do not separate the anchors. The 500 personas are draws from the fitted Qâ‚€; the figure shows the 52 anchors, not 500 respondents.
 
 ![BGE-M3 document vector space and similarity](figures/fig_embedding_space.png)
 
@@ -128,13 +132,13 @@ The six-axis manifold is a debiasing coordinate system, not a six-factor psychol
 
 ## 4. Model and inference
 
-The pipeline applies DML and IPW debiasing, then a spectral manifold (PCA + LLE + Laplacian eigenmaps). The maximum nuisance correlation falls from 0.887 to 0.042 after DML; IPW reintroduces some imbalance (0.127), which is reported rather than hidden. The retained six-axis condition number is 4.82. A Gaussian KDE (or a shrunken multivariate normal if ill-conditioned) defines Q₀; 500 personas are drawn.
+The pipeline applies DML and IPW debiasing, then a spectral manifold (PCA + LLE + Laplacian eigenmaps). The maximum nuisance correlation falls from 0.887 to 0.042 after DML; IPW reintroduces some imbalance (0.127), which is reported rather than hidden. The retained six-axis condition number is 4.82. A Gaussian KDE (or a shrunken multivariate normal if ill-conditioned) defines Qâ‚€; 500 personas are drawn.
 
-Each persona is cloned across the \(2^3=8\) A/B/C cells and run for 18 sessions. The state tensor is propagated through eight filters: Hamiltonian, Laplace, Lyapunov, DeGroot, Lagrange, Hilbert, Percolation, and Entropy. The Zewail pump–probe gate multiplies the evidence anchor and attentive-retention term. The terminal state is scored by a Samejima GRM-IRT model for the 35-item NMLS and the 8-item MCS+PB battery. G0 is anchored to the measured PB mean of 5.119; treatment weights are declared design inputs, not estimates from the 52 respondents.
+Each persona is cloned across the \(2^3=8\) A/B/C cells and run for 18 sessions. The state tensor is propagated through eight filters: Hamiltonian, Laplace, Lyapunov, DeGroot, Lagrange, Hilbert, Percolation, and Entropy. The Zewail pumpâ€“probe gate multiplies the evidence anchor and attentive-retention term. The terminal state is scored by a Samejima GRM-IRT model for the 35-item NMLS and the 8-item MCS+PB battery. G0 is anchored to the measured PB mean of 5.119; treatment weights are declared design inputs, not estimates from the 52 respondents.
 
 Inference is reported in two frameworks. The frequentist analysis uses paired t-tests, Cohen's \(d_z\), 95% repeated-sampling intervals, a full-factorial decomposition, and Wasserstein distances. The Bayesian analysis is a one-sample normal summary of the same paired differences. It is a model-internal re-expression, not independent evidence; its interval width depends on the chosen persona count. The joint sweep, not \(P(\Delta>0)\), is the relevant uncertainty statement.
 
-A Gemini persona-agent pilot used 24 measured personas × 8 conditions = 192 calls. It is a single-shot appraisal of the condition description, not an 18-session LLM simulation. It tests whether the direction of the result survives a different agent formalism.
+A Gemini persona-agent pilot used 24 measured personas Ã— 8 conditions = 192 calls. It is a single-shot appraisal of the condition description, not an 18-session LLM simulation. It tests whether the direction of the result survives a different agent formalism.
 
 ---
 
@@ -142,17 +146,17 @@ A Gemini persona-agent pilot used 24 measured personas × 8 conditions = 192 cal
 
 ### 5.1 Main contrast and decomposition
 
-The evaluative gain is +0.827 points on the 1–7 scale, the competence-format gain is +11.30 points on the 0–100 scale, and engagement falls by −0.183 on the 0–1 scale. The engagement cost is substantial in standardized terms (\(d_z=-3.33\)).
+The evaluative gain is +0.827 points on the 1â€“7 scale, the competence-format gain is +11.30 points on the 0â€“100 scale, and engagement falls by âˆ’0.183 on the 0â€“1 scale. The engagement cost is substantial in standardized terms (\(d_z=-3.33\)).
 
-Factorial decomposition: A +0.1905, B +0.6265, C −0.0121; A×B +0.0216, A×C −0.0084, B×C +0.3791, A×B×C +0.0886. MORE dominates; BRS adds a smaller main effect; ERIC matters conditionally through diversity and cooling. Because B×C is nearly half of the total contrast, a share-of-main-effects attribution is misleading and is not used.
+Factorial decomposition: A +0.1905, B +0.6265, C âˆ’0.0121; AÃ—B +0.0216, AÃ—C âˆ’0.0084, BÃ—C +0.3791, AÃ—BÃ—C +0.0886. MORE dominates; BRS adds a smaller main effect; ERIC matters conditionally through diversity and cooling. Because BÃ—C is nearly half of the total contrast, a share-of-main-effects attribution is misleading and is not used.
 
 ### 5.2 What drives the result
 
 The leave-one-filter-out ablation shows that only DeGroot, Lagrange, and Hilbert change the terminal contrast in this wiring. Disabling DeGroot lowers \(\Delta\mathrm{SR}_{\mathrm{eval}}\) by 0.233 [0.197, 0.269], disabling Lagrange by 0.750 [0.713, 0.787], and disabling Hilbert by 0.453 [0.402, 0.503]. Lagrange is the operationalisation of factor B, so the Lagrange-off run is a second switch-off of the diversity objective, not independent evidence for a separate filter. Laplace, Percolation, and Entropy leave the contrast unchanged, and Lyapunov is negligible. The Hamiltonian is a diagnostic and does not enter the outcome.
 
-The source ablation shows that the quantitative block carries most of the contrast. Dropping all semantic features changes \(\Delta\mathrm{SR}\) by only −0.009 [−0.029, 0.010]; shuffling the semantic matrix changes it by −0.019 [−0.039, 0.001]. The shuffled-text and quantitative-only runs remain close to the full contrast (+0.808 and +0.818). The 52 respondents therefore set the intercept and the persona spread; the contrast is carried by the mechanism and the state-outcome weights. The semantic block is contextual, not load-bearing.
+The source ablation shows that the quantitative block carries most of the contrast. Dropping all semantic features changes \(\Delta\mathrm{SR}\) by only âˆ’0.009 [âˆ’0.029, 0.010]; shuffling the semantic matrix changes it by âˆ’0.019 [âˆ’0.039, 0.001]. The shuffled-text and quantitative-only runs remain close to the full contrast (+0.808 and +0.818). The 52 respondents therefore set the intercept and the persona spread; the contrast is carried by the mechanism and the state-outcome weights. The semantic block is contextual, not load-bearing.
 
-The 256-point joint sweep varies six mechanism parameters and five state-outcome weights, including zero. The contrast ranges from −0.244 to +1.810 (mean +0.593, median +0.567, IQR [0.383, 0.802]); 96.5% of draws are positive. The default +0.827 sits at the 78.5th percentile. The top PRCCs are `cred_dbi` +0.77, `cred_brs` +0.31, and `cred_echo` −0.27. The negative echo value is a sign convention: the weight itself is negative. In one sentence: a diversity-seeking selection rule raises chosen diversity, and chosen diversity is assumed to raise perceived credibility. That is the causal chain the thesis tests, not a claim that the field data identified the weight.
+The 256-point joint sweep varies six mechanism parameters and five state-outcome weights, including zero. The contrast ranges from âˆ’0.244 to +1.810 (mean +0.593, median +0.567, IQR [0.383, 0.802]); 96.5% of draws are positive. The default +0.827 sits at the 78.5th percentile. The top PRCCs are `cred_dbi` +0.77, `cred_brs` +0.31, and `cred_echo` âˆ’0.27. The negative echo value is a sign convention: the weight itself is negative. In one sentence: a diversity-seeking selection rule raises chosen diversity, and chosen diversity is assumed to raise perceived credibility. That is the causal chain the thesis tests, not a claim that the field data identified the weight.
 
 ![Frequentist and Bayesian comparison](figures/fig_freq_bayes.png)
 
@@ -162,11 +166,11 @@ The 256-point joint sweep varies six mechanism parameters and five state-outcome
 
 The contrast is stable to the 60-row file (+0.808 [0.760, 0.856] vs +0.827), to 50 anchor-bootstrap resamples (mean +0.839, 95% [0.805, 0.884], 100% positive), and to ER/WS/BA topology (+0.827/+0.826/+0.832). The topology result follows from structure: the graph enters only through BRS diffusion, and A is the smallest effect. The dominant B path is network-independent; the topology check confirms that structure rather than adding an independent robustness result.
 
-The held-out predictive comparison uses 52 rows and 198 features. Psychometrics alone predict PB best (R²=.915); adding 167 semantic features lowers PB R² to .583, and semantic-only has negative R². In this sample, the semantic block does not improve held-out prediction. With 52 rows and 167 features, that is expected from overfitting alone; it is not evidence that semantics are uninformative in a larger sample. The content-supply stress test sets a heuristic poor-content share of 0.763 from the Uber-review star mean of 1.69; it is an arbitrary stress parameter, not a measured radio-propaganda rate. It lowers \(\Delta\mathrm{SR}\) to +0.636, paired −0.191 [−0.261, −0.122]; the sign remains positive.
+The held-out predictive comparison uses 52 rows and 198 features. Psychometrics alone predict PB best (RÂ²=.915); adding 167 semantic features lowers PB RÂ² to .583, and semantic-only has negative RÂ². In this sample, the semantic block does not improve held-out prediction. With 52 rows and 167 features, that is expected from overfitting alone; it is not evidence that semantics are uninformative in a larger sample. The content-supply stress test sets a heuristic poor-content share of 0.763 from the Uber-review star mean of 1.69; it is an arbitrary stress parameter, not a measured radio-propaganda rate. It lowers \(\Delta\mathrm{SR}\) to +0.636, paired âˆ’0.191 [âˆ’0.261, âˆ’0.122]; the sign remains positive.
 
 ### 5.4 Gemini pilot
 
-The Gemini arm reproduced the direction of the evaluative gain but overstated it (+2.650 [2.342, 2.967] vs +0.827), overstated the competence gain (+31.15 vs +11.30), and reversed the engagement sign (+0.163 vs −0.183). The eight-cell SR_eval comparison had MAE 0.655, RMSE 0.842, Pearson r=0.269, and Spearman ρ=0.071. A single-shot LLM appraisal sees the explicit architecture description but does not run the state updates, echo accumulation, or attention gate; it has no mechanism for the engagement cost. The pilot is a methodological triangulation, not human data and not an 18-session simulation.
+The Gemini arm reproduced the direction of the evaluative gain but overstated it (+2.650 [2.342, 2.967] vs +0.827), overstated the competence gain (+31.15 vs +11.30), and reversed the engagement sign (+0.163 vs âˆ’0.183). The eight-cell SR_eval comparison had MAE 0.655, RMSE 0.842, Pearson r=0.269, and Spearman Ï=0.071. A single-shot LLM appraisal sees the explicit architecture description but does not run the state updates, echo accumulation, or attention gate; it has no mechanism for the engagement cost. The pilot is a methodological triangulation, not human data and not an 18-session simulation.
 
 ![Gemini persona-agent pilot](figures/fig_gemini_pilot.png)
 
@@ -184,9 +188,9 @@ The model's narrow intervals describe simulation variation; they are not human s
 
 ## 7. Conclusion and defense readiness
 
-The defensible conclusion is that architecture, audience judgment, and measurement should be studied together. EST supplies a falsifiable language; LOKLOK supplies a specified design; the measured wave supplies anchors and limits; the calibrated in-silico experiment shows what the specified design implies. The central finding is the epistemic–engagement trade-off, not a claim that architecture determines human outcomes. The strongest EST propositions remain conditional, and the human causal claim remains future work.
+The defensible conclusion is that architecture, audience judgment, and measurement should be studied together. EST supplies a falsifiable language; LOKLOK supplies a specified design; the measured wave supplies anchors and limits; the calibrated in-silico experiment shows what the specified design implies. The central finding is the epistemicâ€“engagement trade-off, not a claim that architecture determines human outcomes. The strongest EST propositions remain conditional, and the human causal claim remains future work.
 
-**Three numbers to remember:** +0.827 evaluative rating points, −0.183 engagement, and 96.5% positive joint-sweep draws.
+**Three numbers to remember:** +0.827 evaluative rating points, âˆ’0.183 engagement, and 96.5% positive joint-sweep draws.
 
 **Four expected viva questions**
 
@@ -218,7 +222,7 @@ The defensible conclusion is that architecture, audience judgment, and measureme
    `python 02_code/pipeline/generate_figures.py --root .`
 5. Optional R checks: `Rscript 02_code/R/01_measured_wave.R`, `Rscript 02_code/R/02_cfa_invariance.R`, `Rscript 02_code/R/03_bayes_crosscheck.R`.
 6. Compile the thesis with pdfLaTeX in three passes.
-7. Run `python 07_validation/validate_package.py` and confirm 39/39 checks.
+7. Run `python 07_validation/validate_package.py` and confirm 41/41 checks.
 
 ### 8.3 Planning logic
 
@@ -246,7 +250,7 @@ Every thesis figure is included below at web resolution. The complete high-resol
 
 ![Process 2: factorial design](figures/fig5_process2_factorial.jpg)
 
-*Process 2. Within-persona 2³ design and G0/G1 governance regimes.*
+*Process 2. Within-persona 2Â³ design and G0/G1 governance regimes.*
 
 ![Process 3: tensor ABM](figures/fig5_process3_tensor.jpg)
 
@@ -258,7 +262,7 @@ Every thesis figure is included below at web resolution. The complete high-resol
 
 ![Zewail gate](figures/fig6_zewail_diagram.jpg)
 
-*Zewail pump–probe attentional coherence gate (formal analogy).*
+*Zewail pumpâ€“probe attentional coherence gate (formal analogy).*
 
 ### Embedding and latent space
 
@@ -321,3 +325,4 @@ Rashwan, S. M. A. (2026). *The Social Media Radio Innovation and Its Impact on U
 ## Integrity note
 
 The measured N=52 matrix is never altered to improve significance. Simulated results are never presented as measured human effects. The synthetic NMLS profile is a measurement diagnostic, not human media literacy. The Hamiltonian is a formal diagnostic, not a physical law. The BRS is a proposed metric, not a validated consequential ranking instrument.
+
