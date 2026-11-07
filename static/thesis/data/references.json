@@ -1,0 +1,1057 @@
+{
+ "refs": [
+  {
+   "key": "fgd_librosa",
+   "text": "librosa. (n.d.). librosa.feature.rms (Version 0.11.0 documentation). https://librosa.org/doc/0.11.0/generated/librosa.feature.rms.html",
+   "first": "librosa.",
+   "last": "librosa.",
+   "year": null,
+   "url": "https://librosa.org/doc/0.11.0/generated/librosa.feature.rms.html",
+   "type": "software",
+   "topics": [
+    "Theory and method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "spearman1904",
+   "text": "Spearman, C. (1904). The proof and measurement of association between two things. The American Journal of Psychology, 15(1), 72-101. https://doi.org/10.2307/1412159",
+   "first": "Spearman, C.",
+   "last": "Spearman",
+   "year": 1904,
+   "url": "https://doi.org/10.2307/1412159",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": "The proof and measurement of association between two things: the origin of classical test theory and the reliability coefficient. Cited as the historical root of the measurement layer."
+  },
+  {
+   "key": "shannon1948",
+   "text": "Shannon, C. E. (1948). A mathematical theory of communication. Bell System Technical Journal, 27(3), 379-423. https://doi.org/10.1002/j.1538-7305.1948.tb01338.x",
+   "first": "Shannon, C. E.",
+   "last": "Shannon",
+   "year": 1948,
+   "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x",
+   "type": "article",
+   "topics": [
+    "Qualitative method",
+    "Information theory"
+   ],
+   "abstract": "A mathematical theory of communication: entropy, channel capacity, and the formalization of information. Cited for the information-theoretic reading of diversity."
+  },
+  {
+   "key": "cronbach1951",
+   "text": "Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. Psychometrika, 16(3), 297-334. https://doi.org/10.1007/BF02310555",
+   "first": "Cronbach, L. J.",
+   "last": "Cronbach",
+   "year": 1951,
+   "url": "https://doi.org/10.1007/BF02310555",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": "Introduces coefficient alpha as a lower-bound reliability estimate and discusses its conditions. The thesis reports alpha together with omega precisely because of this paper's caveats."
+  },
+  {
+   "key": "horton1956",
+   "text": "Horton, D., & Wohl, R. R. (1956). Mass communication and para-social interaction: Observations on intimacy at a distance. Psychiatry, 19(3), 215-229. https://doi.org/10.1080/00332747.1956.11023049",
+   "first": "Horton, D., & Wohl, R. R.",
+   "last": "Horton",
+   "year": 1956,
+   "url": "https://doi.org/10.1080/00332747.1956.11023049",
+   "type": "article",
+   "topics": [
+    "Parasocial relations",
+    "Information theory"
+   ],
+   "abstract": "Coins the parasocial interaction concept: intimacy at a distance between audiences and media personas. Cited in the literature review of radio listening."
+  },
+  {
+   "key": "samejima1969",
+   "text": "Samejima, F. (1969). Estimation of latent ability using a response pattern of graded scores. Psychometrika Monograph Supplement, 34(4, Pt. 2), 1-97. https://doi.org/10.1007/BF03372160",
+   "first": "Samejima, F.",
+   "last": "Samejima",
+   "year": 1969,
+   "url": "https://doi.org/10.1007/BF03372160",
+   "type": "online",
+   "topics": [
+    "Theory and method"
+   ],
+   "abstract": "The graded response model of item response theory: the probability that ability theta endorses level k or above. The thesis simulates its responses for the NMLS and MCS batteries."
+  },
+  {
+   "key": "degroot1974",
+   "text": "DeGroot, M. H. (1974). Reaching a consensus. Journal of the American Statistical Association, 69(345), 118-121. https://doi.org/10.1080/01621459.1974.10480137",
+   "first": "DeGroot, M. H.",
+   "last": "DeGroot",
+   "year": 1974,
+   "url": "https://doi.org/10.1080/01621459.1974.10480137",
+   "type": "article",
+   "topics": [
+    "Statistical method",
+    "Networks and consensus"
+   ],
+   "abstract": "The DeGroot consensus model: conditions under which iterative opinion averaging reaches consensus. The BRS diffusion step in the thesis is a DeGroot process with an evidence anchor."
+  },
+  {
+   "key": "chomsky2019",
+   "text": "Herman, E. S., & Chomsky, N. (1988). Manufacturing consent: The political economy of the mass media. Pantheon Books.",
+   "first": "Herman, E. S., & Chomsky, N.",
+   "last": "Herman",
+   "year": 1988,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Ethics and standards",
+    "Platform critique"
+   ],
+   "abstract": "Herman and Chomsky's propaganda model of mass media: how ownership and sourcing filter what audiences hear. Cited in the critical review of broadcasting and consent."
+  },
+  {
+   "key": "fgd_kitzinger1995",
+   "text": "Kitzinger, J. (1995). Qualitative research: Introducing focus groups. BMJ, 311(7000), 299-302. https://doi.org/10.1136/bmj.311.7000.299",
+   "first": "Kitzinger, J.",
+   "last": "Kitzinger",
+   "year": 1995,
+   "url": "https://doi.org/10.1136/bmj.311.7000.299",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "zewail1999",
+   "text": "Zewail, A. H. (1999). Femtochemistry: Atomic-scale dynamics of the chemical bond using ultrafast lasers (Nobel Lecture, December 8, 1999). Nobel Foundation. https://www.nobelprize.org/uploads/2018/06/zewail-lecture.pdf",
+   "first": "Zewail, A. H.",
+   "last": "Zewail",
+   "year": 1999,
+   "url": "https://www.nobelprize.org/uploads/2018/06/zewail-lecture.pdf",
+   "type": "online",
+   "topics": [
+    "Agents and simulation",
+    "Measurement and statistics",
+    "Ultrafast science"
+   ],
+   "abstract": "Zewail's Nobel lecture on femtochemistry: atomic-scale dynamics of the chemical bond using ultrafast lasers. The attention gate borrows its time-resolved coherence idea, explicitly as an analogy."
+  },
+  {
+   "key": "zewail2000",
+   "text": "Zewail, A. H. (2000). Femtochemistry: Atomic-scale dynamics of the chemical bond. The Journal of Physical Chemistry A, 104(24), 5660-5694. https://doi.org/10.1021/jp001460h",
+   "first": "Zewail, A. H.",
+   "last": "Zewail",
+   "year": 2000,
+   "url": "https://doi.org/10.1021/jp001460h",
+   "type": "article",
+   "topics": [
+    "Agents and simulation",
+    "Measurement and statistics",
+    "Ultrafast science"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "sobol2001",
+   "text": "Sobol, I. M. (2001). Global sensitivity indices for nonlinear mathematical models and their Monte Carlo estimates. Mathematics and Computers in Simulation, 55(1-3), 271-280. https://doi.org/10.1016/S0378-4754(00)00270-6",
+   "first": "Sobol, I. M.",
+   "last": "Sobol",
+   "year": 2001,
+   "url": "https://doi.org/10.1016/S0378-4754(00)00270-6",
+   "type": "article",
+   "topics": [
+    "Agents and simulation",
+    "Statistical method",
+    "Platforms and social media"
+   ],
+   "abstract": "Defines global sensitivity indices for nonlinear models and their Monte Carlo estimation. The thesis's 256-point sweep uses this family of sensitivity analysis."
+  },
+  {
+   "key": "fgd_hsieh2005",
+   "text": "Hsieh, H.-F., & Shannon, S. E. (2005). Three approaches to qualitative content analysis. Qualitative Health Research, 15(9), 1277-1288. https://doi.org/10.1177/1049732305276687",
+   "first": "Hsieh, H.-F., & Shannon, S. E.",
+   "last": "Hsieh",
+   "year": 2005,
+   "url": "https://doi.org/10.1177/1049732305276687",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "fgd_braun2006",
+   "text": "Braun, V., & Clarke, V. (2006). Using thematic analysis in psychology. Qualitative Research in Psychology, 3(2), 77-101. https://doi.org/10.1191/1478088706qp063oa",
+   "first": "Braun, V., & Clarke, V.",
+   "last": "Braun",
+   "year": 2006,
+   "url": "https://doi.org/10.1191/1478088706qp063oa",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "fgd_tong2007",
+   "text": "Tong, A., Sainsbury, P., & Craig, J. (2007). Consolidated criteria for reporting qualitative research (COREQ): A 32-item checklist for interviews and focus groups. International Journal for Quality in Health Care, 19(6), 349-357. https://doi.org/10.1093/intqhc/mzm042",
+   "first": "Tong, A., Sainsbury, P., & Craig, J.",
+   "last": "Tong",
+   "year": 2007,
+   "url": "https://doi.org/10.1093/intqhc/mzm042",
+   "type": "article",
+   "topics": [
+    "Agents and simulation",
+    "Journalism",
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "saltelli2010",
+   "text": "Saltelli, A., Annoni, P., Azzini, I., Campolongo, F., Ratto, M., & Tarantola, S. (2010). Variance based sensitivity analysis of model output: Design and estimator for the total sensitivity index. Computer Physics Communications, 181(2), 259-270. https://doi.org/10.1016/j.cpc.2009.09.018",
+   "first": "Saltelli, A., Annoni, P., Azzini, I., Campolongo, F., Ratto, M., & Tarantola, S.",
+   "last": "Saltelli",
+   "year": 2010,
+   "url": "https://doi.org/10.1016/j.cpc.2009.09.018",
+   "type": "article",
+   "topics": [
+    "Statistical method",
+    "Information theory"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "fgd_vannes2010",
+   "text": "van Nes, F., Abma, T., Jonsson, H., & Deeg, D. (2010). Language differences in qualitative research: Is meaning lost in translation? European Journal of Ageing, 7(4), 313-316. https://doi.org/10.1007/s10433-010-0168-y",
+   "first": "van Nes, F., Abma, T., Jonsson, H., & Deeg, D.",
+   "last": "van Nes",
+   "year": 2010,
+   "url": "https://doi.org/10.1007/s10433-010-0168-y",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "fgd_gale2013",
+   "text": "Gale, N. K., Heath, G., Cameron, E., Rashid, S., & Redwood, S. (2013). Using the framework method for the analysis of qualitative data in multi-disciplinary health research. BMC Medical Research Methodology, 13, Article 117. https://doi.org/10.1186/1471-2288-13-117",
+   "first": "Gale, N. K., Heath, G., Cameron, E., Rashid, S., & Redwood, S.",
+   "last": "Gale",
+   "year": 2013,
+   "url": "https://doi.org/10.1186/1471-2288-13-117",
+   "type": "online",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "gelman2013",
+   "text": "Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., & Rubin, D. B. (2013). Bayesian data analysis (3rd ed.). CRC Press. https://doi.org/10.1201/b16018",
+   "first": "Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., & Rubin, D. B.",
+   "last": "Gelman",
+   "year": 2013,
+   "url": "https://doi.org/10.1201/b16018",
+   "type": "book",
+   "topics": [
+    "Statistical method",
+    "Journalism"
+   ],
+   "abstract": "The standard textbook of Bayesian data analysis, from modeling to posterior computation and checking. The thesis's one-sample normal summary follows its conventions."
+  },
+  {
+   "key": "aera2014",
+   "text": "American Educational Research Association, American Psychological Association, & National Council on Measurement in Education. (2014). Standards for educational and psychological testing. American Educational Research Association.",
+   "first": "American Educational Research Association, American Psychological Association, & National Council on Measurement in Education.",
+   "last": "American Educational Research Association",
+   "year": 2014,
+   "url": null,
+   "type": "standard",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": "The joint AERA/APA/NCME Standards for educational and psychological testing: the canonical statement of validity, reliability, fairness, and testing practice. The thesis uses it as the accountability standard for its instruments (EST-P3)."
+  },
+  {
+   "key": "fgd_berger2015",
+   "text": "Berger, R. (2015). Now I see it, now I don't: Researcher's position and reflexivity in qualitative research. Qualitative Research, 15(2), 219-234. https://doi.org/10.1177/1468794112468475",
+   "first": "Berger, R.",
+   "last": "Berger",
+   "year": 2015,
+   "url": "https://doi.org/10.1177/1468794112468475",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "appelman2016",
+   "text": "Appelman, A., & Sundar, S. S. (2016). Measuring message credibility: Construction and validation of an exclusive scale. Journalism & Mass Communication Quarterly, 93(1), 59-79. https://doi.org/10.1177/1077699015606057",
+   "first": "Appelman, A., & Sundar, S. S.",
+   "last": "Appelman",
+   "year": 2016,
+   "url": "https://doi.org/10.1177/1077699015606057",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics",
+    "Journalism",
+    "Information theory"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "koc2016",
+   "text": "Koc, M., & Barut, E. (2016). Development and validation of New Media Literacy Scale (NMLS) for university students. Computers in Human Behavior, 63, 834-843. https://doi.org/10.1016/j.chb.2016.06.035",
+   "first": "Koc, M., & Barut, E.",
+   "last": "Koc",
+   "year": 2016,
+   "url": "https://doi.org/10.1016/j.chb.2016.06.035",
+   "type": "online",
+   "topics": [
+    "Media literacy",
+    "Measurement and statistics",
+    "Higher education"
+   ],
+   "abstract": "Develops and validates the New Media Literacy Scale (NMLS) for university students. The thesis's 35-item competence profile is this published instrument, scored without redefining it."
+  },
+  {
+   "key": "fgd_malterud2016",
+   "text": "Malterud, K., Siersma, V. D., & Guassora, A. D. (2016). Sample size in qualitative interview studies: Guided by information power. Qualitative Health Research, 26(13), 1753-1760. https://doi.org/10.1177/1049732315617444",
+   "first": "Malterud, K., Siersma, V. D., & Guassora, A. D.",
+   "last": "Malterud",
+   "year": 2016,
+   "url": "https://doi.org/10.1177/1049732315617444",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "putnick2016",
+   "text": "Putnick, D. L., & Bornstein, M. H. (2016). Measurement invariance conventions and reporting: The state of the art and future directions for psychological research. Developmental Review, 41, 71-90. https://doi.org/10.1016/j.dr.2016.06.004",
+   "first": "Putnick, D. L., & Bornstein, M. H.",
+   "last": "Putnick",
+   "year": 2016,
+   "url": "https://doi.org/10.1016/j.dr.2016.06.004",
+   "type": "online",
+   "topics": [
+    "Measurement and statistics",
+    "Journalism"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "wasserstein2016",
+   "text": "Wasserstein, R. L., & Lazar, N. A. (2016). The ASA statement on p-values: Context, process, and purpose. The American Statistician, 70(2), 129-133. https://doi.org/10.1080/00031305.2016.1154108",
+   "first": "Wasserstein, R. L., & Lazar, N. A.",
+   "last": "Wasserstein",
+   "year": 2016,
+   "url": "https://doi.org/10.1080/00031305.2016.1154108",
+   "type": "article",
+   "topics": [
+    "Statistical method"
+   ],
+   "abstract": "The ASA statement on p-values: context, process, and purpose. The thesis cites it when refusing to over-read the narrow simulated intervals."
+  },
+  {
+   "key": "wu2016",
+   "text": "Wu, T. (2016). The attention merchants: The epic scramble to get inside our heads. Knopf.",
+   "first": "Wu, T.",
+   "last": "Wu",
+   "year": 2016,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Attention",
+    "Platform critique"
+   ],
+   "abstract": "A history of attention harvesting from newspapers to social platforms. Cited for the attention economy the engagement-first regime inherits."
+  },
+  {
+   "key": "appelbaum2018",
+   "text": "Appelbaum, M., Cooper, H., Kline, R. B., Mayo-Wilson, E., Nezu, A. M., & Rao, S. M. (2018). Journal article reporting standards for quantitative research in psychology: The APA Publications and Communications Board task force report. American Psychologist, 73(1), 3-25. https://doi.org/10.1037/amp0000191",
+   "first": "Appelbaum, M., Cooper, H., Kline, R. B., Mayo-Wilson, E., Nezu, A. M., & Rao, S. M.",
+   "last": "Appelbaum",
+   "year": 2018,
+   "url": "https://doi.org/10.1037/amp0000191",
+   "type": "standard",
+   "topics": [
+    "Journalism",
+    "Information theory"
+   ],
+   "abstract": "The APA quantitative Journal Article Reporting Standards (JARS): a checklist for transparent reporting of quantitative research. The thesis follows it in its results and supplementary tables."
+  },
+  {
+   "key": "bail2018",
+   "text": "Bail, C. A., Argyle, L. P., Brown, T. W., Bumpus, J. P., Chen, H., Hunzaker, M. B. F., Lee, J., Mann, M., Merhout, F., & Volfovsky, A. (2018). Exposure to opposing views on social media can increase political polarization. Proceedings of the National Academy of Sciences, 115(37), 9216-9221. https://doi.org/10.1073/pnas.1804840115",
+   "first": "Bail, C. A., Argyle, L. P., Brown, T. W., Bumpus, J. P., Chen, H., Hunzaker, M. B. F., Lee, J., Mann, M., Merhout, F., & Volfovsky, A.",
+   "last": "Bail",
+   "year": 2018,
+   "url": "https://doi.org/10.1073/pnas.1804840115",
+   "type": "article",
+   "topics": [
+    "Bubbles and polarization",
+    "Agents and simulation",
+    "Platforms and social media"
+   ],
+   "abstract": "A field experiment showing that exposure to opposing political views on Twitter increased, rather than reduced, polarization. Cited for the diversity-versus-persuasion tension behind MORE."
+  },
+  {
+   "key": "boateng2018",
+   "text": "Boateng, G. O., Neilands, T. B., Frongillo, E. A., Melgar-Quiñonez, H. R., & Young, S. L. (2018). Best practices for developing and validating scales for health, social, and behavioral research: A primer. Frontiers in Public Health, 6, Article 149. https://doi.org/10.3389/fpubh.2018.00149",
+   "first": "Boateng, G. O., Neilands, T. B., Frongillo, E. A., Melgar-Quiñonez, H. R., & Young, S. L.",
+   "last": "Boateng",
+   "year": 2018,
+   "url": "https://doi.org/10.3389/fpubh.2018.00149",
+   "type": "online",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": "Best practices for developing and validating scales for health and social research, covering item generation, dimensionality, reliability, and validity. The thesis follows it for the BRS and PB batteries."
+  },
+  {
+   "key": "creswell2018",
+   "text": "Creswell, J. W., & Plano Clark, V. L. (2018). Designing and conducting mixed methods research (3rd ed.). SAGE.",
+   "first": "Creswell, J. W., & Plano Clark, V. L.",
+   "last": "Creswell",
+   "year": 2018,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Theory and method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "gillespie2018",
+   "text": "Gillespie, T. (2018). Custodians of the internet: Platforms, content moderation, and the hidden decisions that shape social media. Yale University Press.",
+   "first": "Gillespie, T.",
+   "last": "Gillespie",
+   "year": 2018,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Platforms and social media",
+    "Higher education",
+    "Journalism"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "levitt2018",
+   "text": "Levitt, H. M., Bamberg, M., Creswell, J. W., Frost, D. M., Josselson, R., & Suárez-Orozco, C. (2018). Journal article reporting standards for qualitative primary, qualitative meta-analytic, and mixed methods research in psychology: The APA Publications and Communications Board task force report. American Psychologist, 73(1), 26-46. https://doi.org/10.1037/amp0000151",
+   "first": "Levitt, H. M., Bamberg, M., Creswell, J. W., Frost, D. M., Josselson, R., & Suárez-Orozco, C.",
+   "last": "Levitt",
+   "year": 2018,
+   "url": "https://doi.org/10.1037/amp0000151",
+   "type": "standard",
+   "topics": [
+    "Journalism",
+    "Qualitative method",
+    "Information theory"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "mcneish2018",
+   "text": "McNeish, D. (2018). Thanks coefficient alpha, we'll take it from here. Psychological Methods, 23(3), 412-433. https://doi.org/10.1037/met0000144",
+   "first": "McNeish, D.",
+   "last": "McNeish",
+   "year": 2018,
+   "url": "https://doi.org/10.1037/met0000144",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "russo2018",
+   "text": "Russo, D. J., Van Roy, B., Kazerouni, A., Osband, I., & Wen, Z. (2018). A tutorial on Thompson sampling. Foundations and Trends in Machine Learning, 11(1), 1-96. https://doi.org/10.1561/2200000070",
+   "first": "Russo, D. J., Van Roy, B., Kazerouni, A., Osband, I., & Wen, Z.",
+   "last": "Russo",
+   "year": 2018,
+   "url": "https://doi.org/10.1561/2200000070",
+   "type": "article",
+   "topics": [
+    "Statistical method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "vosoughi2018",
+   "text": "Vosoughi, S., Roy, D., & Aral, S. (2018). The spread of true and false news online. Science, 359(6380), 1146-1151. https://doi.org/10.1126/science.aap9559",
+   "first": "Vosoughi, S., Roy, D., & Aral, S.",
+   "last": "Vosoughi",
+   "year": 2018,
+   "url": "https://doi.org/10.1126/science.aap9559",
+   "type": "article",
+   "topics": [
+    "Platforms and social media",
+    "Journalism"
+   ],
+   "abstract": "A large-scale study of rumor cascades on Twitter showing false news spreads farther, faster, and deeper than true news. Cited for the misinformation dynamics the platform moderates."
+  },
+  {
+   "key": "braun2019",
+   "text": "Braun, V., & Clarke, V. (2019). Reflecting on reflexive thematic analysis. Qualitative Research in Sport, Exercise and Health, 11(4), 589-597. https://doi.org/10.1080/2159676X.2019.1628806",
+   "first": "Braun, V., & Clarke, V.",
+   "last": "Braun",
+   "year": 2019,
+   "url": "https://doi.org/10.1080/2159676X.2019.1628806",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "broido2019",
+   "text": "Broido, A. D., & Clauset, A. (2019). Scale-free networks are rare. Nature Communications, 10, Article 1017. https://doi.org/10.1038/s41467-019-08746-5",
+   "first": "Broido, A. D., & Clauset, A.",
+   "last": "Broido",
+   "year": 2019,
+   "url": "https://doi.org/10.1038/s41467-019-08746-5",
+   "type": "online",
+   "topics": [
+    "Measurement and statistics",
+    "Networks and consensus",
+    "Information theory"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "mihailidis2018",
+   "text": "Mihailidis, P. (2019). Civic media literacies: Re-imagining human connection in an age of digital abundance. Routledge.",
+   "first": "Mihailidis, P.",
+   "last": "Mihailidis",
+   "year": 2019,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Agents and simulation"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "morris2019",
+   "text": "Morris, T. P., White, I. R., & Crowther, M. J. (2019). Using simulation studies to evaluate statistical methods. Statistics in Medicine, 38(11), 2074-2102. https://doi.org/10.1002/sim.8086",
+   "first": "Morris, T. P., White, I. R., & Crowther, M. J.",
+   "last": "Morris",
+   "year": 2019,
+   "url": "https://doi.org/10.1002/sim.8086",
+   "type": "article",
+   "topics": [
+    "Agents and simulation",
+    "Statistical method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "raykov2019",
+   "text": "Raykov, T., & Marcoulides, G. A. (2019). Thanks coefficient alpha, we still need you! Educational and Psychological Measurement, 79(1), 200-210. https://doi.org/10.1177/0013164417725127",
+   "first": "Raykov, T., & Marcoulides, G. A.",
+   "last": "Raykov",
+   "year": 2019,
+   "url": "https://doi.org/10.1177/0013164417725127",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "spinelli2019",
+   "text": "Spinelli, M., & Dann, L. (2019). Podcasting: The audio media revolution. Bloomsbury Academic.",
+   "first": "Spinelli, M., & Dann, L.",
+   "last": "Spinelli",
+   "year": 2019,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Radio and audio"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "sullivan2019",
+   "text": "Sullivan, J. L. (2019). The platforms of podcasting: Past and present. Social Media + Society, 5(4). https://doi.org/10.1177/2056305119880002",
+   "first": "Sullivan, J. L.",
+   "last": "Sullivan",
+   "year": 2019,
+   "url": "https://doi.org/10.1177/2056305119880002",
+   "type": "article",
+   "topics": [
+    "Radio and audio",
+    "Platforms and social media"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "voitalov2019",
+   "text": "Voitalov, I., van der Hoorn, P., van der Hofstad, R., & Krioukov, D. (2019). Scale-free networks well done. Physical Review Research, 1(3), Article 033034. https://doi.org/10.1103/PhysRevResearch.1.033034",
+   "first": "Voitalov, I., van der Hoorn, P., van der Hofstad, R., & Krioukov, D.",
+   "last": "Voitalov",
+   "year": 2019,
+   "url": "https://doi.org/10.1103/PhysRevResearch.1.033034",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics",
+    "Networks and consensus"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "xia2019",
+   "text": "Xia, Y., & Yang, Y. (2019). RMSEA, CFI, and TLI in structural equation modeling with ordered categorical data: The story they tell depends on the estimation methods. Behavior Research Methods, 51(1), 409-428. https://doi.org/10.3758/s13428-018-1055-2",
+   "first": "Xia, Y., & Yang, Y.",
+   "last": "Xia",
+   "year": 2019,
+   "url": "https://doi.org/10.3758/s13428-018-1055-2",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "zuboff2019",
+   "text": "Zuboff, S. (2019). The age of surveillance capitalism: The fight for a human future at the new frontier of power. PublicAffairs.",
+   "first": "Zuboff, S.",
+   "last": "Zuboff",
+   "year": 2019,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Agents and simulation",
+    "Platform critique"
+   ],
+   "abstract": "Analyzes surveillance capitalism and the extraction of behavioral data. Cited in the critical review of platform incentives behind engagement-first ranking."
+  },
+  {
+   "key": "ashley2020",
+   "text": "Ashley, S. (2020). News literacy and democracy. Routledge. https://doi.org/10.4324/9780429460227",
+   "first": "Ashley, S.",
+   "last": "Ashley",
+   "year": 2020,
+   "url": "https://doi.org/10.4324/9780429460227",
+   "type": "book",
+   "topics": [
+    "Media literacy",
+    "Journalism"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "flora2020",
+   "text": "Flora, D. B. (2020). Your coefficient alpha is probably wrong, but which coefficient omega is right? A tutorial on using R to obtain better reliability estimates. Advances in Methods and Practices in Psychological Science, 3(4), 484-501. https://doi.org/10.1177/2515245920951747",
+   "first": "Flora, D. B.",
+   "last": "Flora",
+   "year": 2020,
+   "url": "https://doi.org/10.1177/2515245920951747",
+   "type": "article",
+   "topics": [
+    "Agents and simulation",
+    "Measurement and statistics"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "kiger2020",
+   "text": "Kiger, M. E., & Varpio, L. (2020). Thematic analysis of qualitative data: AMEE Guide No. 131. Medical Teacher, 42(8), 846-854. https://doi.org/10.1080/0142159X.2020.1755030",
+   "first": "Kiger, M. E., & Varpio, L.",
+   "last": "Kiger",
+   "year": 2020,
+   "url": "https://doi.org/10.1080/0142159X.2020.1755030",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "sundar2020",
+   "text": "Sundar, S. S. (2020). Rise of machine agency: A framework for studying the psychology of human-AI interaction (HAII). Journal of Computer-Mediated Communication, 25(1), 74-88. https://doi.org/10.1093/jcmc/zmz026",
+   "first": "Sundar, S. S.",
+   "last": "Sundar",
+   "year": 2020,
+   "url": "https://doi.org/10.1093/jcmc/zmz026",
+   "type": "article",
+   "topics": [
+    "Agents and simulation",
+    "Information theory"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "fgd_braun2021",
+   "text": "Braun, V., & Clarke, V. (2021). One size fits all? What counts as quality practice in (reflexive) thematic analysis? Qualitative Research in Psychology, 18(3), 328-352. https://doi.org/10.1080/14780887.2020.1769238",
+   "first": "Braun, V., & Clarke, V.",
+   "last": "Braun",
+   "year": 2021,
+   "url": "https://doi.org/10.1080/14780887.2020.1769238",
+   "type": "article",
+   "topics": [
+    "Qualitative method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "pennycookattention2021",
+   "text": "Pennycook, G., Epstein, Z., Mosleh, M., Arechar, A. A., Eckles, D., & Rand, D. G. (2021). Shifting attention to accuracy can reduce misinformation online. Nature, 592, 590-595. https://doi.org/10.1038/s41586-021-03344-2",
+   "first": "Pennycook, G., Epstein, Z., Mosleh, M., Arechar, A. A., Eckles, D., & Rand, D. G.",
+   "last": "Pennycook",
+   "year": 2021,
+   "url": "https://doi.org/10.1038/s41586-021-03344-2",
+   "type": "online",
+   "topics": [
+    "Misinformation",
+    "Platforms and social media",
+    "Attention"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "pennycook2021",
+   "text": "Pennycook, G., & Rand, D. G. (2021). The psychology of fake news. Trends in Cognitive Sciences, 25(5), 388-402. https://doi.org/10.1016/j.tics.2021.02.007",
+   "first": "Pennycook, G., & Rand, D. G.",
+   "last": "Pennycook",
+   "year": 2021,
+   "url": "https://doi.org/10.1016/j.tics.2021.02.007",
+   "type": "article",
+   "topics": [
+    "Misinformation",
+    "Journalism"
+   ],
+   "abstract": "Reviews the psychology of fake news, emphasizing analytic reasoning and accuracy motives over partisan motives. Cited for the reflection prompt and cooling design rationale."
+  },
+  {
+   "key": "vraga2021",
+   "text": "Vraga, E. K., & Tully, M. (2021). News literacy, social media behaviors, and skepticism toward information on social media. Information, Communication & Society, 24(2), 150-166. https://doi.org/10.1080/1369118X.2019.1637445",
+   "first": "Vraga, E. K., & Tully, M.",
+   "last": "Vraga",
+   "year": 2021,
+   "url": "https://doi.org/10.1080/1369118X.2019.1637445",
+   "type": "article",
+   "topics": [
+    "Media literacy",
+    "Platforms and social media",
+    "Journalism"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "yavuzalp2021",
+   "text": "Yavuzalp, N., Demirbağ, M., & Bahçivan, E. (2021). A structural equation modeling on pandemic session dataset: Turkish university students' new media literacy. Journal of Educational Technology and Online Learning, 4(3), 531-545. https://doi.org/10.31681/jetol.973845",
+   "first": "Yavuzalp, N., Demirbağ, M., & Bahçivan, E.",
+   "last": "Yavuzalp",
+   "year": 2021,
+   "url": "https://doi.org/10.31681/jetol.973845",
+   "type": "article",
+   "topics": [
+    "Media literacy",
+    "Measurement and statistics",
+    "Platforms and social media"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "chambers2022",
+   "text": "Chambers, C. D., & Tzavella, L. (2022). The past, present and future of Registered Reports. Nature Human Behaviour, 6, 29-42. https://doi.org/10.1038/s41562-021-01193-7",
+   "first": "Chambers, C. D., & Tzavella, L.",
+   "last": "Chambers",
+   "year": 2022,
+   "url": "https://doi.org/10.1038/s41562-021-01193-7",
+   "type": "online",
+   "topics": [
+    "Theory and method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "ecker2022",
+   "text": "Ecker, U. K. H., Lewandowsky, S., Cook, J., Schmid, P., Fazio, L. K., Brashier, N., Kendeou, P., Vraga, E. K., & Amazeen, M. A. (2022). The psychological drivers of misinformation belief and its resistance to correction. Nature Reviews Psychology, 1, 13-29. https://doi.org/10.1038/s44159-021-00006-y",
+   "first": "Ecker, U. K. H., Lewandowsky, S., Cook, J., Schmid, P., Fazio, L. K., Brashier, N., Kendeou, P., Vraga, E. K., & Amazeen, M. A.",
+   "last": "Ecker",
+   "year": 2022,
+   "url": "https://doi.org/10.1038/s44159-021-00006-y",
+   "type": "online",
+   "topics": [
+    "Misinformation"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "lakens2022",
+   "text": "Lakens, D. (2022). Sample size justification. Collabra: Psychology, 8(1), Article 33267. https://doi.org/10.1525/collabra.33267",
+   "first": "Lakens, D.",
+   "last": "Lakens",
+   "year": 2022,
+   "url": "https://doi.org/10.1525/collabra.33267",
+   "type": "article",
+   "topics": [
+    "Theory and method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "pennycook2022",
+   "text": "Pennycook, G., & Rand, D. G. (2022). Accuracy prompts are a replicable and generalizable approach for reducing the spread of misinformation. Nature Communications, 13, Article 2333. https://doi.org/10.1038/s41467-022-30073-5",
+   "first": "Pennycook, G., & Rand, D. G.",
+   "last": "Pennycook",
+   "year": 2022,
+   "url": "https://doi.org/10.1038/s41467-022-30073-5",
+   "type": "online",
+   "topics": [
+    "Misinformation",
+    "Information theory"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "rime2022",
+   "text": "Rime, J., Pike, C., & Collins, T. (2022). What is a podcast? Considering innovations in podcasting through the six-tensions framework. Convergence, 28(5), 1260-1282. https://doi.org/10.1177/13548565221104444",
+   "first": "Rime, J., Pike, C., & Collins, T.",
+   "last": "Rime",
+   "year": 2022,
+   "url": "https://doi.org/10.1177/13548565221104444",
+   "type": "article",
+   "topics": [
+    "Radio and audio"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "aher2023",
+   "text": "Aher, G. V., Arriaga, R. I., & Kalai, A. T. (2023). Using large language models to simulate multiple humans and replicate human subject studies. In A. Krause, E. Brunskill, K. Cho, B. Engelhardt, S. Sabato, & J. Scarlett (Eds.), Proceedings of the 40th International Conference on Machine Learning (Vol. 202, pp. 337-371). PMLR. https://proceedings.mlr.press/v202/aher23a.html",
+   "first": "Aher, G. V., Arriaga, R. I., & Kalai, A. T.",
+   "last": "Aher",
+   "year": 2023,
+   "url": "https://proceedings.mlr.press/v202/aher23a.html",
+   "type": "book",
+   "topics": [
+    "Agents and simulation",
+    "Journalism"
+   ],
+   "abstract": "Introduces methods for using large language models to simulate multiple humans and to replicate classical human subject studies, with attention to when simulated samples can and cannot substitute for people. The thesis cites it when bounding what persona-based agents may claim."
+  },
+  {
+   "key": "argyle2023",
+   "text": "Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C., & Wingate, D. (2023). Out of one, many: Using language models to simulate human samples. Political Analysis, 31(3), 337-351. https://doi.org/10.1017/pan.2023.2",
+   "first": "Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C., & Wingate, D.",
+   "last": "Argyle",
+   "year": 2023,
+   "url": "https://doi.org/10.1017/pan.2023.2",
+   "type": "article",
+   "topics": [
+    "Agents and simulation"
+   ],
+   "abstract": "\"Out of one, many\": shows that language models can generate conditionally distinct samples of human subpopulations. The thesis cites it in the Gemini pilot and the planned LLM-agent extension."
+  },
+  {
+   "key": "brady2023",
+   "text": "Brady, W. J., McLoughlin, K. L., Torres, M. P., Luo, K. F., Gendron, M., & Crockett, M. J. (2023). Overperception of moral outrage in online social networks inflates beliefs about intergroup hostility. Nature Human Behaviour, 7(6), 917-927. https://doi.org/10.1038/s41562-023-01582-0",
+   "first": "Brady, W. J., McLoughlin, K. L., Torres, M. P., Luo, K. F., Gendron, M., & Crockett, M. J.",
+   "last": "Brady",
+   "year": 2023,
+   "url": "https://doi.org/10.1038/s41562-023-01582-0",
+   "type": "article",
+   "topics": [
+    "Platforms and social media",
+    "Networks and consensus"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "dillion2023",
+   "text": "Dillion, D., Tandon, N., Gu, Y., & Gray, K. (2023). Can AI language models replace human participants? Trends in Cognitive Sciences, 27(7), 597-600. https://doi.org/10.1016/j.tics.2023.04.008",
+   "first": "Dillion, D., Tandon, N., Gu, Y., & Gray, K.",
+   "last": "Dillion",
+   "year": 2023,
+   "url": "https://doi.org/10.1016/j.tics.2023.04.008",
+   "type": "article",
+   "topics": [
+    "Agents and simulation",
+    "Ethics and standards"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "kline2023",
+   "text": "Kline, R. B. (2023). Principles and practice of structural equation modeling (5th ed.). Guilford Press.",
+   "first": "Kline, R. B.",
+   "last": "Kline",
+   "year": 2023,
+   "url": null,
+   "type": "book",
+   "topics": [
+    "Measurement and statistics",
+    "Journalism"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "lorenzspreen2023",
+   "text": "Lorenz-Spreen, P., Oswald, L., Lewandowsky, S., & Hertwig, R. (2023). A systematic review of worldwide causal and correlational evidence on digital media and democracy. Nature Human Behaviour, 7, 74-101. https://doi.org/10.1038/s41562-022-01460-1",
+   "first": "Lorenz-Spreen, P., Oswald, L., Lewandowsky, S., & Hertwig, R.",
+   "last": "Lorenz-Spreen",
+   "year": 2023,
+   "url": "https://doi.org/10.1038/s41562-022-01460-1",
+   "type": "online",
+   "topics": [
+    "Theory and method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "luceri2023",
+   "text": "Luceri, L., Pante, V., Burghardt, K., & Ferrara, E. (2023). Unmasking the web of deceit: Uncovering coordinated activity to expose information operations on Twitter [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2310.09884",
+   "first": "Luceri, L., Pante, V., Burghardt, K., & Ferrara, E.",
+   "last": "Luceri",
+   "year": 2023,
+   "url": "https://doi.org/10.48550/arXiv.2310.09884",
+   "type": "online",
+   "topics": [
+    "Misinformation"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "mcneish2023",
+   "text": "McNeish, D., & Wolf, M. G. (2023). Dynamic fit index cutoffs for confirmatory factor analysis models. Psychological Methods, 28(1), 61-88. https://doi.org/10.1037/met0000425",
+   "first": "McNeish, D., & Wolf, M. G.",
+   "last": "McNeish",
+   "year": 2023,
+   "url": "https://doi.org/10.1037/met0000425",
+   "type": "article",
+   "topics": [
+    "Measurement and statistics"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "park2023",
+   "text": "Park, J. S., O'Brien, J. C., Cai, C. J., Morris, M. R., Liang, P., & Bernstein, M. S. (2023). Generative agents: Interactive simulacra of human behavior. In Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology (Article 2, pp. 1-22). Association for Computing Machinery. https://doi.org/10.1145/3586183.3606763",
+   "first": "Park, J. S., O'Brien, J. C., Cai, C. J., Morris, M. R., Liang, P., & Bernstein, M. S.",
+   "last": "Park",
+   "year": 2023,
+   "url": "https://doi.org/10.1145/3586183.3606763",
+   "type": "online",
+   "topics": [
+    "Agents and simulation"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "bisbee2024",
+   "text": "Bisbee, J., Clinton, J. D., Dorff, C., Kenkel, B., & Larson, J. M. (2024). Synthetic replacements for human survey data? The perils of large language models. Political Analysis, 32(4), 401-416. https://doi.org/10.1017/pan.2024.5",
+   "first": "Bisbee, J., Clinton, J. D., Dorff, C., Kenkel, B., & Larson, J. M.",
+   "last": "Bisbee",
+   "year": 2024,
+   "url": "https://doi.org/10.1017/pan.2024.5",
+   "type": "article",
+   "topics": [
+    "Agents and simulation"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "park2024",
+   "text": "Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C., Morris, M. R., Willer, R., Liang, P., & Bernstein, M. S. (2024). Generative agent simulations of 1,000 people (Version 1) [Preprint]. arXiv. https://arxiv.org/abs/2411.10109v1",
+   "first": "Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C., Morris, M. R., Willer, R., Liang, P., & Bernstein, M. S.",
+   "last": "Park",
+   "year": 2024,
+   "url": "https://arxiv.org/abs/2411.10109v1",
+   "type": "online",
+   "topics": [
+    "Agents and simulation"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "podsakoff2024",
+   "text": "Podsakoff, P. M., Podsakoff, N. P., Williams, L. J., Huang, C., & Yang, J. (2024). Common method bias: It's bad, it's complex, it's widespread, and it's not easy to fix. Annual Review of Organizational Psychology and Organizational Behavior, 11, 17-61. https://doi.org/10.1146/annurev-orgpsych-110721-040030",
+   "first": "Podsakoff, P. M., Podsakoff, N. P., Williams, L. J., Huang, C., & Yang, J.",
+   "last": "Podsakoff",
+   "year": 2024,
+   "url": "https://doi.org/10.1146/annurev-orgpsych-110721-040030",
+   "type": "online",
+   "topics": [
+    "Theory and method"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "wajih2024",
+   "text": "Wajih, H. A., & Al-Yamani, T. A. (2024). Istikhdam al-shabab al-Misri li-tatbiqat al-bud kast fi mutaba'at al-qadaya al-siyasiyyah wa-al-iqtisadiyyah: Dirasah maydaniyyah [Egyptian youths' use of podcast applications to follow political and economic issues: A field study]. Majallat al-Buhuth wa-al-Dirasat al-I'lamiyyah, 30(30), 531-590. https://doi.org/10.21608/mjsm.2024.304291.1131",
+   "first": "Wajih, H. A., & Al-Yamani, T. A.",
+   "last": "Wajih",
+   "year": 2024,
+   "url": "https://doi.org/10.21608/mjsm.2024.304291.1131",
+   "type": "article",
+   "topics": [
+    "Radio and audio",
+    "Egyptian and Arab media"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "fgd_wcag2024",
+   "text": "World Wide Web Consortium. (2024). Web Content Accessibility Guidelines (WCAG) 2.2. https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+   "first": "World Wide Web Consortium.",
+   "last": "World Wide Web Consortium.",
+   "year": 2024,
+   "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+   "type": "software",
+   "topics": [
+    "Ethics and standards"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "grootkormelink2025",
+   "text": "Groot Kormelink, T., Hadden, B., Linssen, D., Santangelo, E., Blaauw, F., Kiewiet, L., & Keppel, P. (2025). Anytime, anyplace? The context-dependency of news podcast use. Journalism Studies, 26(8), 961-979. https://doi.org/10.1080/1461670X.2025.2487857",
+   "first": "Groot Kormelink, T., Hadden, B., Linssen, D., Santangelo, E., Blaauw, F., Kiewiet, L., & Keppel, P.",
+   "last": "Groot Kormelink",
+   "year": 2025,
+   "url": "https://doi.org/10.1080/1461670X.2025.2487857",
+   "type": "article",
+   "topics": [
+    "Radio and audio",
+    "Journalism"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "branda2026",
+   "text": "Branda, F. (2026). Use AI, but don't mask it. Nature, 655(8125), 1354. https://doi.org/10.1038/d41586-026-02347-1",
+   "first": "Branda, F.",
+   "last": "Branda",
+   "year": 2026,
+   "url": "https://doi.org/10.1038/d41586-026-02347-1",
+   "type": "article",
+   "topics": [
+    "Agents and simulation"
+   ],
+   "abstract": null
+  },
+  {
+   "key": "gauthier2026",
+   "text": "Gauthier, G., Hodler, R., Widmer, P., & Zhuravskaya, E. (2026). The political effects of X's feed algorithm. Nature, 652, 416-423. https://doi.org/10.1038/s41586-026-10098-2",
+   "first": "Gauthier, G., Hodler, R., Widmer, P., & Zhuravskaya, E.",
+   "last": "Gauthier",
+   "year": 2026,
+   "url": "https://doi.org/10.1038/s41586-026-10098-2",
+   "type": "online",
+   "topics": [
+    "Recommendation systems"
+   ],
+   "abstract": null
+  }
+ ],
+ "count": 77
+}

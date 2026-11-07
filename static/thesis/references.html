@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The complete interactive bibliography of the LOKLOK thesis: 77 references, searchable, sortable, with annotations and abstracts.">
+<title>References | The LOKLOK Thesis</title>
+<link rel="stylesheet" href="css/thesis.css">
+<style>
+.decades{display:flex;align-items:flex-end;gap:6px;margin:16px 0;flex-wrap:wrap;}
+.decade{display:block;text-align:center;cursor:pointer;border:1px solid var(--line);background:#fff;padding:8px 12px;min-width:74px;}
+.decade .n{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--crimson-dark);}
+.decade .y{font-size:10.5px;letter-spacing:.06em;color:var(--muted);}
+.decade.on{border-color:var(--crimson);background:var(--paper-2);}
+.decade .bar{width:34px;height:7px;background:#16325C;margin:4px auto 0;border-radius:2px;}
+.ref{background:#fff;border:1px solid var(--line);margin:8px 0;border-left:3px solid transparent;}
+.ref:hover{border-left-color:var(--gold);}
+.ref summary{cursor:pointer;padding:11px 14px;list-style:none;display:flex;gap:12px;align-items:baseline;font-size:14px;}
+.ref summary::-webkit-details-marker{display:none;}
+.ref summary .yr{font-family:var(--serif);font-weight:700;color:var(--crimson-dark);min-width:46px;}
+.ref summary .body{flex:1;color:var(--ink);}
+.ref summary .body .au{font-weight:700;color:var(--ink);}
+.ref summary .tags{margin-left:6px;}
+.ref .detail{padding:4px 14px 14px 72px;font-size:13px;color:var(--slate);border-top:1px dashed var(--line);}
+.ref .detail .full{margin:6px 0;}
+.ref .detail .abstract{background:var(--paper-2);border-left:3px solid var(--gold);padding:9px 12px;margin:8px 0;color:#4A4032;}
+.ref .detail .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.minibtn{font-size:11.5px;border:1px solid var(--line-dark);background:#fff;color:var(--slate);padding:4px 10px;cursor:pointer;border-radius:3px;text-decoration:none;}
+.minibtn:hover{border-color:var(--crimson);color:var(--crimson-dark);text-decoration:none;}
+.counts{font-size:13px;color:var(--muted);margin:8px 0 0;}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--crimson-dark);color:#fff;font-size:13.5px;padding:10px 20px;border-radius:4px;opacity:0;transition:opacity .3s;z-index:60;border:1px solid var(--gold);}
+.toast.show{opacity:1;}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <a class="wordmark" href="index.html" style="color:#fff;">LOKLOK
+      <small>Master's Thesis &middot; Ahram Canadian University</small></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="index.html">Overview</a>
+      <a href="abstract.html">Abstract</a>
+      <a href="guide.html">Reading Guide</a>
+      <a href="algorithms.html">Algorithms</a>
+      <a href="results.html">Results</a>
+      <a href="interactive/">Interactive</a>
+      <a href="references.html">References</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="university.html">University</a>
+      <a href="read/">Read Online</a>
+    </nav>
+  </div>
+</header>
+
+<div class="crumbs">Overview &rarr; <span>References</span></div>
+
+<div class="wrap">
+  <p class="kicker">Bibliography &middot; the complete reference list</p>
+  <h1>The references, made explorable</h1>
+  <div class="double-rule"></div>
+  <p class="lede rv">All <b data-count-total>77</b> references of the thesis in one interactive shelf.
+  Search any word, click a decade to filter by era, sort by year or author, and open any entry for
+  its full record: the annotation the thesis uses it for, the topic tags, and, for the cornerstone
+  works, a source-level abstract. Every citation is copyable.</p>
+
+  <div class="decades rv" id="decades"></div>
+
+  <div class="controls rv">
+    <div class="control" style="flex:2;min-width:260px;"><label for="q">Search title, author, or anything in the record</label>
+      <input id="q" type="search" style="width:100%;padding:8px 10px;border:1px solid var(--line-dark);font-size:14px;" placeholder="e.g. misinformation, DeGroot, kappa..."></div>
+    <div class="control"><label>Sort</label>
+      <span class="chip on" id="sYear">By year</span>
+      <span class="chip" id="sAuthor">By author</span></div>
+    <div class="control"><label>Type</label>
+      <span class="chip on" id="tAll">All</span>
+      <span class="chip" id="tArticle">Articles</span>
+      <span class="chip" id="tBook">Books</span>
+      <span class="chip" id="tOnline">Online</span>
+      <span class="chip" id="tStandard">Standards</span></div>
+    <div class="control"><label>Feeling curious?</label>
+      <span class="chip" id="rand">Surprise me</span></div>
+  </div>
+
+  <p class="counts rv" id="counts"></p>
+  <div id="list" class="rv"></div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<footer class="footer">
+  <div class="in">
+    <div><h4>The LOKLOK Thesis</h4><p>Bibliography parsed from the thesis LaTeX source; annotations describe how each source is used.</p></div>
+    <div><h4>Navigate</h4><ul><li><a href="index.html">Overview</a></li><li><a href="outreach.html">Share and cite</a></li><li><a href="read/">Read online</a></li></ul></div>
+    <div class="legal">&copy; 2026 Sherif Rashwan, Ahram Canadian University.</div>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script>
+(function () {
+  'use strict';
+  var ALL = null, sortBy = 'year', typeFilter = 'all', decade = null, query = '';
+  var listEl = document.getElementById('list');
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(t._h);
+    t._h = setTimeout(function () { t.classList.remove('show'); }, 2400);
+  }
+
+  function refs() {
+    var out = ALL.slice();
+    if (decade !== null) out = out.filter(function (r) { return r.year && Math.floor(r.year / 10) * 10 === decade; });
+    if (typeFilter !== 'all') out = out.filter(function (r) { return r.type === typeFilter; });
+    if (query) {
+      var q = query.toLowerCase();
+      out = out.filter(function (r) { return (r.text + ' ' + r.topics.join(' ')).toLowerCase().indexOf(q) >= 0; });
+    }
+    out.sort(function (a, b) {
+      if (sortBy === 'year') return ((a.year || 0) - (b.year || 0)) || a.last.localeCompare(b.last);
+      return a.last.localeCompare(b.last);
+    });
+    return out;
+  }
+
+  function render() {
+    var list = refs();
+    document.getElementById('counts').textContent = list.length + ' of ' + ALL.length + ' references shown' +
+      (decade !== null ? ' (decade ' + decade + 's)' : '') + (typeFilter !== 'all' ? ' (type: ' + typeFilter + ')' : '');
+    listEl.innerHTML = '';
+    list.forEach(function (r) {
+      var tags = r.topics.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('');
+      var det = document.createElement('details');
+      det.className = 'ref';
+      var yearTxt = r.year ? String(r.year) : 'n.d.';
+      det.innerHTML =
+        '<summary><span class="yr">' + yearTxt + '</span>' +
+        '<span class="body"><span class="au">' + esc(r.first) + '</span>. ' + esc(r.text.slice(r.first.length + 3)) + '</span>' +
+        '<span class="tags">' + tags + '</span></summary>' +
+        '<div class="detail">' +
+        '<div class="full"><b>Full record.</b> ' + esc(r.text) + '</div>' +
+        (r.abstract ? '<div class="abstract"><b>Abstract.</b> ' + esc(r.abstract) + '</div>' : '') +
+        '<div><b>In the thesis.</b> Cited for: ' + r.topics.join(', ') + '. Type: ' + r.type + '. Year: ' + yearTxt + '.</div>' +
+        '<div class="actions">' +
+        '<button class="minibtn" data-copy="' + esc(r.key) + '">Copy citation</button>' +
+        (r.url ? '<a class="minibtn" href="' + esc(r.url) + '" target="_blank" rel="noopener">Open source &rarr;</a>' : '') +
+        '</div></div>';
+      listEl.appendChild(det);
+    });
+    document.querySelectorAll('#list .minibtn[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var r = ALL.find(function (x) { return x.key === b.getAttribute('data-copy'); });
+        copyText(r ? r.text + ' https://srashwan.github.io/loklok/thesis/' : '');
+      });
+    });
+  }
+  function copyText(txt) {
+    function done() { toast('Citation copied to your clipboard.'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, done);
+    } else { done(); }
+  }
+
+  fetch('data/references.json').then(function (r) { return r.json(); }).then(function (d) {
+    ALL = d.refs;
+    document.querySelector('[data-count-total]').textContent = d.count;
+    var dec = document.getElementById('decades');
+    var byDecade = {};
+    ALL.forEach(function (r) { if (r.year) { var k = Math.floor(r.year / 10) * 10; byDecade[k] = (byDecade[k] || 0) + 1; } });
+    var maxn = Math.max.apply(null, Object.values(byDecade));
+    Object.keys(byDecade).sort().forEach(function (k) {
+      var el = document.createElement('span');
+      el.className = 'decade';
+      el.innerHTML = '<span class="n">' + byDecade[k] + '</span><span class="y">' + k + 's</span>' +
+        '<span class="bar" style="height:' + Math.max(4, Math.round(byDecade[k] / maxn * 40)) + 'px;"></span>';
+      el.addEventListener('click', function () {
+        decade = decade === +k ? null : +k;
+        document.querySelectorAll('.decade').forEach(function (x) { x.classList.remove('on'); });
+        if (decade !== null) el.classList.add('on');
+        render();
+      });
+      dec.appendChild(el);
+    });
+    render();
+  });
+
+  document.getElementById('q').addEventListener('input', function () { query = this.value.trim(); render(); });
+  document.getElementById('sYear').addEventListener('click', function () {
+    sortBy = 'year';
+    document.getElementById('sYear').classList.add('on'); document.getElementById('sAuthor').classList.remove('on'); render();
+  });
+  document.getElementById('sAuthor').addEventListener('click', function () {
+    sortBy = 'author';
+    document.getElementById('sAuthor').classList.add('on'); document.getElementById('sYear').classList.remove('on'); render();
+  });
+  [['tAll', 'all'], ['tArticle', 'article'], ['tBook', 'book'], ['tOnline', 'online'], ['tStandard', 'standard']].forEach(function (pair) {
+    document.getElementById(pair[0]).addEventListener('click', function () {
+      typeFilter = pair[1];
+      ['tAll', 'tArticle', 'tBook', 'tOnline', 'tStandard'].forEach(function (x) { document.getElementById(x).classList.remove('on'); });
+      this.classList.add('on');
+      render();
+    });
+  });
+  document.getElementById('rand').addEventListener('click', function () {
+    if (!ALL) return;
+    var r = ALL[Math.floor(Math.random() * ALL.length)];
+    query = ''; document.getElementById('q').value = ''; typeFilter = 'all'; decade = null;
+    ['tAll', 'tArticle', 'tBook', 'tOnline', 'tStandard'].forEach(function (x) { document.getElementById(x).classList.remove('on'); });
+    document.getElementById('tAll').classList.add('on');
+    document.querySelectorAll('.decade').forEach(function (x) { x.classList.remove('on'); });
+    render();
+    var idx = refs().findIndex(function (x) { return x.key === r.key; });
+    if (idx >= 0) {
+      var el = listEl.children[idx];
+      if (el) { el.open = true; el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
+  });
+})();
+</script>
+</body>
+</html>
